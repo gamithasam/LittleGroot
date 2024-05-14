@@ -12,6 +12,7 @@ import java.util.Map;
 import javax.swing.JComponent;
 import main.SVGImage;
 import java.sql.*;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,12 +21,14 @@ import javax.swing.JOptionPane;
  */
 
 class User {
+    protected final int eid;
     public final String fName;
     public final String lName;
     public final String role;
-    private final String passWord;
+    protected String passWord;
     
-    public User(String fName, String lName, String role, String passWord) {
+    public User(int eid, String fName, String lName, String role, String passWord) {
+        this.eid = eid;
         this.fName = fName;
         this.lName = lName;
         this.role = role;
@@ -39,8 +42,8 @@ class User {
 }
 
 class Manager extends User {
-    public Manager(String fName, String lName, String role, String passWord) {
-        super(fName, lName, role, passWord);
+    public Manager(int eid, String fName, String lName, String role, String passWord) {
+        super(eid, fName, lName, role, passWord);
     }
     
     @Override
@@ -58,23 +61,32 @@ public class Main extends javax.swing.JFrame {
     private static User user;
     
     // Function to create a user object
-    public static void createUserObj(String fName, String lName, String role, String passWord) {
+    public static void createUserObj(int eid, String fName, String lName, String role, String passWord) {
         switch (role) {
             case "Manager" :
-                user = new Manager(fName, lName, role, passWord);
+                user = new Manager(eid, fName, lName, role, passWord);
             default :
-                user = new User(fName, lName, role, passWord);
-        
+                user = new User(eid, fName, lName, role, passWord);
         }
     }
     
-    // Function to retrieve created user object
+    // Method to retrieve created user object
     public static User getUser() {
         return user;
     }
     
+    // Method to change password object
+    public static void passwordChange(String newPass) {
+        user.passWord = newPass;
+        System.out.println(user.passWord);
+    }
+    
     public Main() {
         initComponents();
+        
+        // Set user related componenets
+        lblUserName.setText(user.fName);
+        lblUserRole.setText(user.role);
         
         // Visibility off
         allFieldsScroll.setVisible(false);
@@ -136,7 +148,6 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        login = new uis.Login();
         sidebar = new javax.swing.JPanel();
         sVGSidebarTasks = new main.SVGImage();
         sVGSidebarAllFields = new main.SVGImage();
@@ -167,8 +178,6 @@ public class Main extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(850, 530));
         setSize(new java.awt.Dimension(850, 530));
         getContentPane().setLayout(null);
-        getContentPane().add(login);
-        login.setBounds(0, 0, 850, 530);
 
         sidebar.setBackground(new java.awt.Color(234, 234, 234));
         sidebar.setLayout(null);
@@ -461,39 +470,9 @@ public class Main extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Main().setVisible(true);
-            }
-        });
-    }
-
+    
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private uis.Add add;
     private uis.AllFields allFields1;
@@ -502,7 +481,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel lblLogoName;
     private javax.swing.JLabel lblUserName;
     private javax.swing.JLabel lblUserRole;
-    private uis.Login login;
     private javax.swing.JLabel pngProfilePic;
     private javax.swing.JLabel pngToolBarLogo;
     private main.SVGImage sVGSeparator;

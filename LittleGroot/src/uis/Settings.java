@@ -4,6 +4,13 @@
  */
 package uis;
 
+import java.awt.Cursor;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import java.sql.*;
+
 /**
  *
  * @author gamitha
@@ -13,8 +20,31 @@ public class Settings extends javax.swing.JPanel {
     /**
      * Creates new form Settings
      */
+    private void addFocusListener(JTextField textField) {
+        textField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (textField.getText().trim().isEmpty()) {
+                    textField.setVisible(false);
+                }
+            }
+        });
+    }
+    
     public Settings() {
         initComponents();
+        
+        // Set visibility off
+        txtOldPassword.setVisible(false);
+        txtNewPassword.setVisible(false);
+        txtVerifyPassword.setVisible(false);
+        
+        // Add focus listeners to textboxes
+        addFocusListener(txtOldPassword);
+        addFocusListener(txtNewPassword);
+        addFocusListener(txtVerifyPassword);
+       
+        // Set SVGs
         sVGAccountForm.setSvgImage("./svgcomponents/AccountForm.svg", 451, 52);
         sVGInfo1.setSvgImage("./svgcomponents/Info.svg", 16, 16);
         sVGInfo2.setSvgImage("./svgcomponents/Info.svg", 16, 16);
@@ -25,6 +55,15 @@ public class Settings extends javax.swing.JPanel {
         sVGVerifyPasswordsTextBox.setSvgImage("./svgcomponents/VerifyPasswordTextBox.svg", 159, 23);
         sVGChangePasswordBtn.setSvgImage("./svgcomponents/ChangePasswordBtn.svg", 124, 22);
         sVGAboutForm.setSvgImage("./svgcomponents/AboutForm.svg", 451, 52);
+        
+        // Set Cursors
+        Cursor txtCur = new Cursor(Cursor.TEXT_CURSOR);
+        Cursor hand = new Cursor(Cursor.HAND_CURSOR);
+        sVGOldPasswordTextBox.setCursor(txtCur);
+        sVGNewPasswordTextBox.setCursor(txtCur);
+        sVGVerifyPasswordsTextBox.setCursor(txtCur);
+        sVGChangePasswordBtn.setCursor(hand);
+        sVGLogoutBtn.setCursor(hand);
     }
 
     /**
@@ -47,6 +86,9 @@ public class Settings extends javax.swing.JPanel {
         sVGChangePasswordBtn = new main.SVGImage();
         lblAccount = new javax.swing.JLabel();
         sVGAboutForm = new main.SVGImage();
+        txtOldPassword = new javax.swing.JPasswordField();
+        txtNewPassword = new javax.swing.JPasswordField();
+        txtVerifyPassword = new javax.swing.JPasswordField();
         sVGOldPasswordTextBox = new main.SVGImage();
         sVGNewPasswordTextBox = new main.SVGImage();
         sVGVerifyPasswordsTextBox = new main.SVGImage();
@@ -102,6 +144,11 @@ public class Settings extends javax.swing.JPanel {
 
         sVGChangePasswordBtn.setForeground(new java.awt.Color(0, 0, 0));
         sVGChangePasswordBtn.setText("sVGChangePasswordBtn");
+        sVGChangePasswordBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sVGChangePasswordBtnMouseClicked(evt);
+            }
+        });
         add(sVGChangePasswordBtn);
         sVGChangePasswordBtn.setBounds(347, 290, 124, 22);
 
@@ -116,18 +163,57 @@ public class Settings extends javax.swing.JPanel {
         add(sVGAboutForm);
         sVGAboutForm.setBounds(20, 368, 451, 52);
 
+        txtOldPassword.setBackground(null);
+        txtOldPassword.setFont(new java.awt.Font("SF Pro Display", 0, 13)); // NOI18N
+        txtOldPassword.setForeground(new java.awt.Color(0, 0, 0));
+        txtOldPassword.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txtOldPassword.setBorder(null);
+        add(txtOldPassword);
+        txtOldPassword.setBounds(308, 174, 147, 17);
+
+        txtNewPassword.setBackground(null);
+        txtNewPassword.setFont(new java.awt.Font("SF Pro Display", 0, 13)); // NOI18N
+        txtNewPassword.setForeground(new java.awt.Color(0, 0, 0));
+        txtNewPassword.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txtNewPassword.setBorder(null);
+        add(txtNewPassword);
+        txtNewPassword.setBounds(308, 211, 147, 17);
+
+        txtVerifyPassword.setBackground(null);
+        txtVerifyPassword.setFont(new java.awt.Font("SF Pro Display", 0, 13)); // NOI18N
+        txtVerifyPassword.setForeground(new java.awt.Color(0, 0, 0));
+        txtVerifyPassword.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txtVerifyPassword.setBorder(null);
+        add(txtVerifyPassword);
+        txtVerifyPassword.setBounds(308, 248, 147, 17);
+
         sVGOldPasswordTextBox.setForeground(new java.awt.Color(0, 0, 0));
         sVGOldPasswordTextBox.setText("sVGOldPasswordTextBox");
+        sVGOldPasswordTextBox.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sVGOldPasswordTextBoxMouseClicked(evt);
+            }
+        });
         add(sVGOldPasswordTextBox);
         sVGOldPasswordTextBox.setBounds(302, 171, 159, 23);
 
         sVGNewPasswordTextBox.setForeground(new java.awt.Color(0, 0, 0));
         sVGNewPasswordTextBox.setText("sVGNewPasswordTextBox");
+        sVGNewPasswordTextBox.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sVGNewPasswordTextBoxMouseClicked(evt);
+            }
+        });
         add(sVGNewPasswordTextBox);
         sVGNewPasswordTextBox.setBounds(302, 208, 159, 23);
 
         sVGVerifyPasswordsTextBox.setForeground(new java.awt.Color(0, 0, 0));
         sVGVerifyPasswordsTextBox.setText("sVGVerifyPasswordsTextBox");
+        sVGVerifyPasswordsTextBox.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sVGVerifyPasswordsTextBoxMouseClicked(evt);
+            }
+        });
         add(sVGVerifyPasswordsTextBox);
         sVGVerifyPasswordsTextBox.setBounds(302, 245, 159, 23);
 
@@ -136,6 +222,70 @@ public class Settings extends javax.swing.JPanel {
         add(sVGChangePasswordForm);
         sVGChangePasswordForm.setBounds(20, 164, 451, 111);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void sVGOldPasswordTextBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGOldPasswordTextBoxMouseClicked
+        txtOldPassword.setVisible(true);
+        txtOldPassword.requestFocusInWindow();
+    }//GEN-LAST:event_sVGOldPasswordTextBoxMouseClicked
+
+    private void sVGNewPasswordTextBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGNewPasswordTextBoxMouseClicked
+        txtNewPassword.setVisible(true);
+        txtNewPassword.requestFocusInWindow();
+    }//GEN-LAST:event_sVGNewPasswordTextBoxMouseClicked
+
+    private void sVGVerifyPasswordsTextBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGVerifyPasswordsTextBoxMouseClicked
+        txtVerifyPassword.setVisible(true);
+        txtVerifyPassword.requestFocusInWindow();
+    }//GEN-LAST:event_sVGVerifyPasswordsTextBoxMouseClicked
+
+    private void sVGChangePasswordBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGChangePasswordBtnMouseClicked
+        String oldPass = txtOldPassword.getText();
+        String newPass = txtNewPassword.getText();
+        String verifyPass = txtVerifyPassword.getText();
+        
+        // Check whether verify pass is valid
+        if (newPass.equals(verifyPass)) {
+            // Validate old pass with the user password of the object
+            User user = Main.getUser();
+            if (oldPass.equals(user.passWord)) {
+                // Updates the password
+                Connection conn = null;
+                try {
+                    Class.forName("com.mysql.cj.jdbc.Driver");
+                    conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/LittleGroot", "root" , "toor");
+
+                    Statement st = conn.createStatement();
+                    int updatedRows = st.executeUpdate("UPDATE Employee SET Pass = '" + newPass + "' WHERE EmpID = " + user.eid);
+                    if(updatedRows > 0) {
+                        // Update the password of the object
+                        Main.passwordChange(newPass);
+                        // Clear the textboxes
+                        txtOldPassword.setText("");
+                        txtNewPassword.setText("");
+                        txtVerifyPassword.setText("");
+                        // Show message
+                        JOptionPane.showMessageDialog(null, "Password updated successfully!");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Failed to update password");
+                    }
+                } catch (ClassNotFoundException | SQLException e) {
+                    JOptionPane.showMessageDialog(null, "Database Connection Error");
+                } finally {
+                    if (conn != null) {
+                        try {
+                            conn.close();
+                        } catch (SQLException e) {
+                            JOptionPane.showMessageDialog(null, "Failed to close connection");
+                        }
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Incorrect Password");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "New password and verify password doesn't match");
+        }
+    }//GEN-LAST:event_sVGChangePasswordBtnMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -154,5 +304,8 @@ public class Settings extends javax.swing.JPanel {
     private main.SVGImage sVGNewPasswordTextBox;
     private main.SVGImage sVGOldPasswordTextBox;
     private main.SVGImage sVGVerifyPasswordsTextBox;
+    private javax.swing.JPasswordField txtNewPassword;
+    private javax.swing.JPasswordField txtOldPassword;
+    private javax.swing.JPasswordField txtVerifyPassword;
     // End of variables declaration//GEN-END:variables
 }

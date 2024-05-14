@@ -6,6 +6,8 @@ package uis;
 
 import java.awt.Cursor;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.sql.*;
@@ -270,7 +272,7 @@ public class Login extends javax.swing.JPanel {
     }//GEN-LAST:event_sVGPasswordClearMouseClicked
 
     private void sVGLoginBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGLoginBtnMouseClicked
-        // Validating Employee ID and setting it to a variable
+        // Validating Employee ID and set it to a variable
         String stringEID = txtEmpID.getText();
         int eID = 0;
         if (stringEID.matches("\\d{4}")) {
@@ -280,7 +282,7 @@ public class Login extends javax.swing.JPanel {
             return;
         }
      
-        // Settings password into a variable
+        // Set password into a variable
         String pass = txtPassword.getText();
         
         // Validate with the database
@@ -294,11 +296,17 @@ public class Login extends javax.swing.JPanel {
             
             if (rs.next()) {
                 // Create user objects
-                Main.createUserObj(rs.getString("Fname"), rs.getString("LName"), rs.getString("EmpRole"), pass);
+                Main.createUserObj(eID, rs.getString("Fname"), rs.getString("LName"), rs.getString("EmpRole"), pass);
                 
                 // Displays Message and continue
                 JOptionPane.showMessageDialog(null, "Successfully logged in!");
                 this.setVisible(false);
+                
+                // Open Main
+                Main mainFrame = new Main();
+                mainFrame.setVisible(true);
+                
+                // Close self
                 
             } else {
                 // Display Error Message
