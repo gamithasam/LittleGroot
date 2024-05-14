@@ -293,9 +293,15 @@ public class Login extends javax.swing.JPanel {
             ResultSet rs = st.executeQuery("SELECT * FROM Employee WHERE EmpID = '" + eID + "' AND Pass = '" + pass + "'");
             
             if (rs.next()) {
+                // Create user objects
+                Main.createUserObj(rs.getString("Fname"), rs.getString("LName"), rs.getString("EmpRole"), pass);
+                
+                // Displays Message and continue
                 JOptionPane.showMessageDialog(null, "Successfully logged in!");
                 this.setVisible(false);
+                
             } else {
+                // Display Error Message
                 JOptionPane.showMessageDialog(null, "Invalid login");
             }
             

@@ -19,11 +19,60 @@ import javax.swing.JOptionPane;
  * @author gamitha
  */
 
+class User {
+    public final String fName;
+    public final String lName;
+    public final String role;
+    private final String passWord;
+    
+    public User(String fName, String lName, String role, String passWord) {
+        this.fName = fName;
+        this.lName = lName;
+        this.role = role;
+        this.passWord = passWord;
+    }
+    
+    public String[] returnSidebarItems() {
+        String[] sidebarItems = {"Dashboard", "All Fields", "Tasks", "Inventory", "Add", "Settings"};
+        return sidebarItems;
+    }
+}
+
+class Manager extends User {
+    public Manager(String fName, String lName, String role, String passWord) {
+        super(fName, lName, role, passWord);
+    }
+    
+    @Override
+    public String[] returnSidebarItems() {
+        String[] sidebarItems = {"Dashboard", "All Fields", "Tasks", "Inventory", "Finance", "Employees", "Add", "Settings"};
+        return sidebarItems;
+    }
+}
+
 public class Main extends javax.swing.JFrame {
 
     /**
      * Creates new form Main
      */
+    private static User user;
+    
+    // Function to create a user object
+    public static void createUserObj(String fName, String lName, String role, String passWord) {
+        switch (role) {
+            case "Manager" :
+                user = new Manager(fName, lName, role, passWord);
+            default :
+                user = new User(fName, lName, role, passWord);
+        
+        }
+    }
+    
+    // Function to retrieve created user object
+    public static User getUser() {
+        return user;
+    }
+    
     public Main() {
         initComponents();
         
