@@ -307,6 +307,7 @@ public class Login extends javax.swing.JPanel {
                 mainFrame.setVisible(true);
                 
                 // Close self
+             //   setDefaultCloseOperation(JFrameEXIT_ON_CLOSE);
                 
             } else {
                 // Display Error Message

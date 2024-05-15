@@ -314,6 +314,20 @@
             </Component>
           </SubComponents>
         </Container>
+        <Component class="uis.Employees" name="employees">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+              <AbsoluteConstraints x="0" y="52" width="649" height="478"/>
+            </Constraint>
+          </Constraints>
+        </Component>
+        <Component class="uis.Inventory" name="inventory">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+              <AbsoluteConstraints x="0" y="52" width="649" height="478"/>
+            </Constraint>
+          </Constraints>
+        </Component>
         <Component class="uis.Add" name="add">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">

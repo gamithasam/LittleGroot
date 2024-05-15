@@ -16,6 +16,10 @@ public class LoginFrame extends javax.swing.JFrame {
     public LoginFrame() {
         initComponents();
     }
+    
+    public void disposeMe() {
+        dispose();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

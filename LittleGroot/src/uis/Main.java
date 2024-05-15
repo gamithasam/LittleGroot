@@ -92,6 +92,8 @@ public class Main extends javax.swing.JFrame {
         allFieldsScroll.setVisible(false);
         settings.setVisible(false);
         add.setVisible(false);
+        inventory.setVisible(false);
+        employees.setVisible(false);
         
         // Set SVGs
         sVGSidebar.setSvgImage("./svgcomponents/Sidebar.svg", 200, 530);
@@ -166,6 +168,8 @@ public class Main extends javax.swing.JFrame {
         lblLogoName = new javax.swing.JLabel();
         pngToolBarLogo = new javax.swing.JLabel();
         sVGToolBar = new main.SVGImage();
+        employees = new uis.Employees();
+        inventory = new uis.Inventory();
         add = new uis.Add();
         allFieldsScroll = new main.ScrollPaneWin11();
         allFields1 = new uis.AllFields();
@@ -309,6 +313,10 @@ public class Main extends javax.swing.JFrame {
 
         contentAreaNToolBar.add(toolBar);
         toolBar.setBounds(0, 0, 649, 52);
+        contentAreaNToolBar.add(employees);
+        employees.setBounds(0, 52, 649, 478);
+        contentAreaNToolBar.add(inventory);
+        inventory.setBounds(0, 52, 649, 478);
         contentAreaNToolBar.add(add);
         add.setBounds(0, 52, 649, 478);
 
@@ -383,9 +391,9 @@ public class Main extends javax.swing.JFrame {
 //        contentAreaMap.put("SidebarDashboard", dashboard);
         contentAreaMap.put("SidebarAllFields", allFieldsScroll);
 //        contentAreaMap.put("SidebarTasks", tasks);
-//        contentAreaMap.put("SidebarInventory", inventory);
+        contentAreaMap.put("SidebarInventory", inventory);
 //        contentAreaMap.put("SidebarFinance", finance);
-//        contentAreaMap.put("SidebarEmployees", employees);
+        contentAreaMap.put("SidebarEmployees", employees);
         contentAreaMap.put("SidebarAdd", add);
         contentAreaMap.put("SidebarSettings", settings);
 
@@ -428,7 +436,7 @@ public class Main extends javax.swing.JFrame {
 
     private void sVGSidebarInventoryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGSidebarInventoryMouseClicked
         // Select ContentArea
-        // TODO: Write your code here
+        selectContentArea("SidebarInventory");
         
         // Select Button
         selectSidebarButton("SidebarInventory");
@@ -444,7 +452,7 @@ public class Main extends javax.swing.JFrame {
 
     private void sVGSidebarEmployeesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGSidebarEmployeesMouseClicked
         // Select ContentArea
-        // TODO: Write your code here
+        selectContentArea("SidebarEmployees");
         
         // Select Button
         selectSidebarButton("SidebarEmployees");
@@ -478,6 +486,8 @@ public class Main extends javax.swing.JFrame {
     private uis.AllFields allFields1;
     private javax.swing.JScrollPane allFieldsScroll;
     private javax.swing.JPanel contentAreaNToolBar;
+    private uis.Employees employees;
+    private uis.Inventory inventory;
     private javax.swing.JLabel lblLogoName;
     private javax.swing.JLabel lblUserName;
     private javax.swing.JLabel lblUserRole;

@@ -64,6 +64,11 @@ public class Settings extends javax.swing.JPanel {
         sVGVerifyPasswordsTextBox.setCursor(txtCur);
         sVGChangePasswordBtn.setCursor(hand);
         sVGLogoutBtn.setCursor(hand);
+        
+        // Set user related
+        User user = Main.getUser();
+        lblUserName.setText(user.fName);
+        lblUserRole.setText(user.role);
     }
 
     /**
@@ -139,6 +144,11 @@ public class Settings extends javax.swing.JPanel {
 
         sVGLogoutBtn.setForeground(new java.awt.Color(0, 0, 0));
         sVGLogoutBtn.setText("sVGLogoutBtn");
+        sVGLogoutBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sVGLogoutBtnMouseClicked(evt);
+            }
+        });
         add(sVGLogoutBtn);
         sVGLogoutBtn.setBounds(414, 113, 57, 22);
 
@@ -163,7 +173,6 @@ public class Settings extends javax.swing.JPanel {
         add(sVGAboutForm);
         sVGAboutForm.setBounds(20, 368, 451, 52);
 
-        txtOldPassword.setBackground(null);
         txtOldPassword.setFont(new java.awt.Font("SF Pro Display", 0, 13)); // NOI18N
         txtOldPassword.setForeground(new java.awt.Color(0, 0, 0));
         txtOldPassword.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
@@ -171,7 +180,6 @@ public class Settings extends javax.swing.JPanel {
         add(txtOldPassword);
         txtOldPassword.setBounds(308, 174, 147, 17);
 
-        txtNewPassword.setBackground(null);
         txtNewPassword.setFont(new java.awt.Font("SF Pro Display", 0, 13)); // NOI18N
         txtNewPassword.setForeground(new java.awt.Color(0, 0, 0));
         txtNewPassword.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
@@ -179,7 +187,6 @@ public class Settings extends javax.swing.JPanel {
         add(txtNewPassword);
         txtNewPassword.setBounds(308, 211, 147, 17);
 
-        txtVerifyPassword.setBackground(null);
         txtVerifyPassword.setFont(new java.awt.Font("SF Pro Display", 0, 13)); // NOI18N
         txtVerifyPassword.setForeground(new java.awt.Color(0, 0, 0));
         txtVerifyPassword.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
@@ -286,6 +293,10 @@ public class Settings extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "New password and verify password doesn't match");
         }
     }//GEN-LAST:event_sVGChangePasswordBtnMouseClicked
+
+    private void sVGLogoutBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGLogoutBtnMouseClicked
+        
+    }//GEN-LAST:event_sVGLogoutBtnMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
