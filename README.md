@@ -1,11 +1,12 @@
 # LittleGroot: Farm Management System
 
-LittleGroot is a farm management system developed in Java. It is designed to streamline the process of managing a farm, from tracking finances to monitoring crop growth. It is developed as an assignment of the module "Object oriented programming with Java" at NIBM Kandy Innovation Center.
+LittleGroot is a farm management system developed in Java. It is designed to streamline the process of managing a farm, from tracking finances to monitoring crop growth. It is developed as an assignment of the module "Object-oriented programming with Java" at NIBM Kandy Innovation Center.
 
 ## Table of Contents
 
 - [Features Overview](#features-overview)
 - [System Workflow](#system-workflow)
+- [Database Setup](#database-setup)
 - [Development Methodology](#development-methodology)
 - [Design](#design)
 - [Team members](#team-members)
@@ -19,7 +20,7 @@ LittleGroot is a farm management system developed in Java. It is designed to str
 - Track finances (Work in progress)
 - Manage inventory
 - Manage tasks
-- Add measured field metrics such as Soil ph, Soild moisture, and Light intensity (Work in progress)
+- Add measured field metrics such as Soil pH, Soil moisture, and Light intensity (Work in progress)
 - Add employees (Only for Managers)
 - Reset passwords with security questions (Work in progress)
 - Change password
@@ -34,6 +35,13 @@ LittleGroot is a farm management system developed in Java. It is designed to str
 - Upon successful login, the application creates a User object and stores important details about the current user in its attributes. This helps reduce the number of database connections.
 - Based on the logged-in user's role, the application determines the class of the object to be created. If the user is a Manager, the object is created from the Manager subclass; otherwise, it is created in the User class. This use of inheritance enables the implementation of user type restrictions.
 - Logging out can be done via the Settings panel.
+
+## Database Setup
+1. Open MySQL Workbench and connect to your local MySQL server.
+2. In the Navigator panel on the left, click on “Data Import/Restore” under the “Management” section.
+3. Choose the option “Import from Self-Contained File” and select [this](https://github.com/gamithasam/LittleGroot/blob/master/Database/DatabaseDump.sql) .sql file.
+4. Click on “Start Import” to start the import process.
+This will recreate the database on your local MySQL server. Remember to replace the database connection details in the Java project with your local MySQL server details.
 
 ## Development Methodology
 
