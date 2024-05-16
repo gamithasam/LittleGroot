@@ -38,6 +38,7 @@ public class AddEmployees extends javax.swing.JPanel {
         txtLName.setVisible(false);
         txtPhone.setVisible(false);
         txtEmail.setVisible(false);
+        txtAddress.setVisible(false);
         txtPassword.setVisible(false);
         cmbRole.setVisible(false);
         
@@ -46,23 +47,26 @@ public class AddEmployees extends javax.swing.JPanel {
         addFocusListener(txtLName);
         addFocusListener(txtPhone);
         addFocusListener(txtEmail);
+        addFocusListener(txtAddress);
         addFocusListener(txtPassword);
         
         // Set SVGs
         sVGAddBtn.setSvgImage("./svgcomponents/AddBtn.svg", 39, 22);
-        sVGAddEmployeesForm.setSvgImage("./svgcomponents/AddEmployeesForm.svg", 451, 221);
+        sVGAddEmployeesForm.setSvgImage("./svgcomponents/AddEmployeesForm.svg", 451, 258);
         sVGAddEmployeesFName.setSvgImage("./svgcomponents/AddEmployeesFName.svg", 431, 37);
         sVGAddEmployeesLName.setSvgImage("./svgcomponents/AddEmployeesLName.svg", 431, 37);
         sVGAddEmployeesRole.setSvgImage("./svgcomponents/AddEmployeesRole.svg", 431, 36);
         sVGAddEmployeesPhone.setSvgImage("./svgcomponents/AddEmployeesPhone.svg", 431, 37);
         sVGAddEmployeesEmail.setSvgImage("./svgcomponents/AddEmployeesEmail.svg", 431, 37);
-        sVGAddEmployeesPass.setSvgImage("./svgcomponents/AddEmployeesAddress.svg", 431, 37);
+        sVGAddEmployeesAddress.setSvgImage("./svgcomponents/AddEmployeesAddress.svg", 431, 37);
+        sVGAddEmployeesPassword.setSvgImage("./svgcomponents/AddEmployeesPassword.svg", 431, 37);
         sVGAddEmployeesFNameTextBox.setSvgImage("./svgcomponents/AddEmployeesFNameTextBox.svg", 160, 23);
         sVGAddEmployeesLNameTextBox.setSvgImage("./svgcomponents/AddEmployeesLNameTextBox.svg", 160, 23);
         sVGAddEmployeesRoleComboBox.setSvgImage("./svgcomponents/AddEmployeesRoleComboBox.svg", 160, 21);
         sVGAddEmployeesPhoneTextBox.setSvgImage("./svgcomponents/AddEmployeesPhoneTextBox.svg", 160, 23);
         sVGAddEmployeesEmailTextBox.setSvgImage("./svgcomponents/AddEmployeesEmailTextBox.svg", 160, 23);
-        sVGAddEmployeesPassTextBox.setSvgImage("./svgcomponents/AddEmployeesAddressTextBox.svg", 160, 23);
+        sVGAddEmployeesAddressTextBox.setSvgImage("./svgcomponents/AddEmployeesAddressTextBox.svg", 160, 23);
+        sVGAddEmployeesPasswordTextBox.setSvgImage("./svgcomponents/AddEmployeesPasswordTextBox.svg", 160, 23);
         
         // Set Cursors
         Cursor txtCur = new Cursor(Cursor.TEXT_CURSOR);
@@ -71,7 +75,8 @@ public class AddEmployees extends javax.swing.JPanel {
         sVGAddEmployeesLNameTextBox.setCursor(txtCur);
         sVGAddEmployeesPhoneTextBox.setCursor(txtCur);
         sVGAddEmployeesEmailTextBox.setCursor(txtCur);
-        sVGAddEmployeesPassTextBox.setCursor(txtCur);
+        sVGAddEmployeesAddressTextBox.setCursor(txtCur);
+        sVGAddEmployeesPasswordTextBox.setCursor(txtCur);
         sVGAddBtn.setCursor(hand);
     }
 
@@ -88,21 +93,24 @@ public class AddEmployees extends javax.swing.JPanel {
         txtLName = new javax.swing.JTextField();
         txtPhone = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
-        txtPassword = new javax.swing.JTextField();
+        txtAddress = new javax.swing.JTextField();
+        txtPassword = new javax.swing.JPasswordField();
         cmbRole = new javax.swing.JComboBox<>();
         sVGAddBtn = new main.SVGImage();
         sVGAddEmployeesFNameTextBox = new main.SVGImage();
         sVGAddEmployeesLNameTextBox = new main.SVGImage();
         sVGAddEmployeesPhoneTextBox = new main.SVGImage();
         sVGAddEmployeesEmailTextBox = new main.SVGImage();
-        sVGAddEmployeesPassTextBox = new main.SVGImage();
+        sVGAddEmployeesAddressTextBox = new main.SVGImage();
         sVGAddEmployeesRoleComboBox = new main.SVGImage();
         sVGAddEmployeesFName = new main.SVGImage();
         sVGAddEmployeesLName = new main.SVGImage();
         sVGAddEmployeesRole = new main.SVGImage();
         sVGAddEmployeesPhone = new main.SVGImage();
         sVGAddEmployeesEmail = new main.SVGImage();
-        sVGAddEmployeesPass = new main.SVGImage();
+        sVGAddEmployeesAddress = new main.SVGImage();
+        sVGAddEmployeesPasswordTextBox = new main.SVGImage();
+        sVGAddEmployeesPassword = new main.SVGImage();
         sVGAddEmployeesForm = new main.SVGImage();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -143,14 +151,24 @@ public class AddEmployees extends javax.swing.JPanel {
         add(txtEmail);
         txtEmail.setBounds(307, 167, 147, 17);
 
+        txtAddress.setBackground(null);
+        txtAddress.setFont(new java.awt.Font("SF Pro Display", 0, 13)); // NOI18N
+        txtAddress.setForeground(new java.awt.Color(0, 0, 0));
+        txtAddress.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txtAddress.setBorder(null);
+        add(txtAddress);
+        txtAddress.setBounds(307, 204, 147, 17);
+
         txtPassword.setBackground(null);
         txtPassword.setFont(new java.awt.Font("SF Pro Display", 0, 13)); // NOI18N
         txtPassword.setForeground(new java.awt.Color(0, 0, 0));
-        txtPassword.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtPassword.setBorder(null);
         add(txtPassword);
-        txtPassword.setBounds(307, 204, 147, 17);
+        txtPassword.setBounds(307, 241, 147, 17);
 
+        cmbRole.setBackground(null);
+        cmbRole.setFont(new java.awt.Font("SF Pro Display", 0, 13)); // NOI18N
+        cmbRole.setForeground(new java.awt.Color(0, 0, 0));
         cmbRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "General Farmworker", "Fruit Picker", "Waterer" }));
         cmbRole.setBorder(null);
         cmbRole.addActionListener(new java.awt.event.ActionListener() {
@@ -169,7 +187,7 @@ public class AddEmployees extends javax.swing.JPanel {
             }
         });
         add(sVGAddBtn);
-        sVGAddBtn.setBounds(432, 244, 39, 22);
+        sVGAddBtn.setBounds(432, 281, 39, 22);
 
         sVGAddEmployeesFNameTextBox.setForeground(new java.awt.Color(0, 0, 0));
         sVGAddEmployeesFNameTextBox.setText("sVGAddEmployeesFNameTextBox");
@@ -204,6 +222,9 @@ public class AddEmployees extends javax.swing.JPanel {
         sVGAddEmployeesEmailTextBox.setForeground(new java.awt.Color(0, 0, 0));
         sVGAddEmployeesEmailTextBox.setText("sVGAddEmployeesEmailTextBox");
         sVGAddEmployeesEmailTextBox.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sVGAddEmployeesEmailTextBoxMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 sVGAddEmployeesEmailTextBoxMouseEntered(evt);
             }
@@ -211,19 +232,25 @@ public class AddEmployees extends javax.swing.JPanel {
         add(sVGAddEmployeesEmailTextBox);
         sVGAddEmployeesEmailTextBox.setBounds(301, 164, 160, 23);
 
-        sVGAddEmployeesPassTextBox.setForeground(new java.awt.Color(0, 0, 0));
-        sVGAddEmployeesPassTextBox.setText("sVGAddEmployeesPassTextBox");
-        sVGAddEmployeesPassTextBox.addMouseListener(new java.awt.event.MouseAdapter() {
+        sVGAddEmployeesAddressTextBox.setForeground(new java.awt.Color(0, 0, 0));
+        sVGAddEmployeesAddressTextBox.setText("sVGAddEmployeesPassTextBox");
+        sVGAddEmployeesAddressTextBox.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sVGAddEmployeesAddressTextBoxMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                sVGAddEmployeesPassTextBoxMouseEntered(evt);
+                sVGAddEmployeesAddressTextBoxMouseEntered(evt);
             }
         });
-        add(sVGAddEmployeesPassTextBox);
-        sVGAddEmployeesPassTextBox.setBounds(301, 201, 160, 23);
+        add(sVGAddEmployeesAddressTextBox);
+        sVGAddEmployeesAddressTextBox.setBounds(301, 201, 160, 23);
 
         sVGAddEmployeesRoleComboBox.setForeground(new java.awt.Color(0, 0, 0));
         sVGAddEmployeesRoleComboBox.setText("sVGAddEmployeesRoleComboBox");
         sVGAddEmployeesRoleComboBox.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sVGAddEmployeesRoleComboBoxMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 sVGAddEmployeesRoleComboBoxMouseEntered(evt);
             }
@@ -256,15 +283,33 @@ public class AddEmployees extends javax.swing.JPanel {
         add(sVGAddEmployeesEmail);
         sVGAddEmployeesEmail.setBounds(30, 157, 431, 37);
 
-        sVGAddEmployeesPass.setForeground(new java.awt.Color(0, 0, 0));
-        sVGAddEmployeesPass.setText("sVGAddEmployeesPass");
-        add(sVGAddEmployeesPass);
-        sVGAddEmployeesPass.setBounds(30, 194, 431, 37);
+        sVGAddEmployeesAddress.setForeground(new java.awt.Color(0, 0, 0));
+        sVGAddEmployeesAddress.setText("sVGAddEmployeesAddress");
+        add(sVGAddEmployeesAddress);
+        sVGAddEmployeesAddress.setBounds(30, 194, 431, 37);
+
+        sVGAddEmployeesPasswordTextBox.setForeground(new java.awt.Color(0, 0, 0));
+        sVGAddEmployeesPasswordTextBox.setText("sVGAddEmployeesPassTextBox");
+        sVGAddEmployeesPasswordTextBox.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sVGAddEmployeesPasswordTextBoxMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                sVGAddEmployeesPasswordTextBoxMouseEntered(evt);
+            }
+        });
+        add(sVGAddEmployeesPasswordTextBox);
+        sVGAddEmployeesPasswordTextBox.setBounds(301, 238, 160, 23);
+
+        sVGAddEmployeesPassword.setForeground(new java.awt.Color(0, 0, 0));
+        sVGAddEmployeesPassword.setText("sVGAddEmployeesPassword");
+        add(sVGAddEmployeesPassword);
+        sVGAddEmployeesPassword.setBounds(30, 231, 431, 37);
 
         sVGAddEmployeesForm.setForeground(new java.awt.Color(0, 0, 0));
         sVGAddEmployeesForm.setText("sVGAddEmployeesForm");
         add(sVGAddEmployeesForm);
-        sVGAddEmployeesForm.setBounds(20, 10, 451, 221);
+        sVGAddEmployeesForm.setBounds(20, 10, 451, 258);
     }// </editor-fold>//GEN-END:initComponents
 
     private void sVGAddEmployeesFNameTextBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGAddEmployeesFNameTextBoxMouseClicked
@@ -283,22 +328,19 @@ public class AddEmployees extends javax.swing.JPanel {
     }//GEN-LAST:event_sVGAddEmployeesPhoneTextBoxMouseClicked
 
     private void sVGAddEmployeesEmailTextBoxMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGAddEmployeesEmailTextBoxMouseEntered
-        txtEmail.setVisible(true);
-        txtEmail.requestFocusInWindow();
+        
     }//GEN-LAST:event_sVGAddEmployeesEmailTextBoxMouseEntered
 
-    private void sVGAddEmployeesPassTextBoxMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGAddEmployeesPassTextBoxMouseEntered
-        txtPassword.setVisible(true);
-        txtPassword.requestFocusInWindow();
-    }//GEN-LAST:event_sVGAddEmployeesPassTextBoxMouseEntered
+    private void sVGAddEmployeesAddressTextBoxMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGAddEmployeesAddressTextBoxMouseEntered
+        
+    }//GEN-LAST:event_sVGAddEmployeesAddressTextBoxMouseEntered
 
     private void cmbRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbRoleActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbRoleActionPerformed
 
     private void sVGAddEmployeesRoleComboBoxMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGAddEmployeesRoleComboBoxMouseEntered
-        cmbRole.setVisible(true);
-        cmbRole.requestFocusInWindow();
+
     }//GEN-LAST:event_sVGAddEmployeesRoleComboBoxMouseEntered
 
     private void sVGAddBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGAddBtnMouseClicked
@@ -306,8 +348,9 @@ public class AddEmployees extends javax.swing.JPanel {
         String lname = txtLName.getText();
         int phone = Integer.parseInt(txtPhone.getText());
         String email = txtEmail.getText();
-        String pass = txtPassword.getText();
+        String address = txtAddress.getText();
         String role = (String) cmbRole.getSelectedItem();
+        String pass = txtPassword.getText();
         
         // Add to the database
         Connection conn = null;
@@ -317,13 +360,14 @@ public class AddEmployees extends javax.swing.JPanel {
             
             Statement st = conn.createStatement();
             
-            int updatedRows = st.executeUpdate("INSERT INTO Employee(FName, LName, EmpRole, Phone, Email, Pass) VALUES ('" + fname + "' ,'" + lname + "' ,'" + role + "' ,'" + phone + "' ,'" + email + "' ,'" + pass + "');");
+            int updatedRows = st.executeUpdate("INSERT INTO Employee(FName, LName, EmpRole, Phone, Email, Address, Pass) VALUES ('" + fname + "' ,'" + lname + "' ,'" + role + "' ,'" + phone + "' ,'" + email + "' ,'" + address + "' ,'" + pass + "');");
             if(updatedRows > 0) {
                 // Clear the textboxes
                 txtFName.setText("");
                 txtLName.setText("");
                 txtPhone.setText("");
                 txtEmail.setText("");
+                txtAddress.setText("");
                 txtPassword.setText("");
                 cmbRole.setSelectedIndex(0);
                 // Show message
@@ -345,10 +389,36 @@ public class AddEmployees extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_sVGAddBtnMouseClicked
 
+    private void sVGAddEmployeesPasswordTextBoxMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGAddEmployeesPasswordTextBoxMouseEntered
+        
+    }//GEN-LAST:event_sVGAddEmployeesPasswordTextBoxMouseEntered
+
+    private void sVGAddEmployeesPasswordTextBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGAddEmployeesPasswordTextBoxMouseClicked
+        txtPassword.setVisible(true);
+        txtPassword.requestFocusInWindow();
+    }//GEN-LAST:event_sVGAddEmployeesPasswordTextBoxMouseClicked
+
+    private void sVGAddEmployeesRoleComboBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGAddEmployeesRoleComboBoxMouseClicked
+        cmbRole.setVisible(true);
+        cmbRole.requestFocusInWindow();
+    }//GEN-LAST:event_sVGAddEmployeesRoleComboBoxMouseClicked
+
+    private void sVGAddEmployeesEmailTextBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGAddEmployeesEmailTextBoxMouseClicked
+        txtEmail.setVisible(true);
+        txtEmail.requestFocusInWindow();
+    }//GEN-LAST:event_sVGAddEmployeesEmailTextBoxMouseClicked
+
+    private void sVGAddEmployeesAddressTextBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGAddEmployeesAddressTextBoxMouseClicked
+        txtAddress.setVisible(true);
+        txtAddress.requestFocusInWindow();
+    }//GEN-LAST:event_sVGAddEmployeesAddressTextBoxMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cmbRole;
     private main.SVGImage sVGAddBtn;
+    private main.SVGImage sVGAddEmployeesAddress;
+    private main.SVGImage sVGAddEmployeesAddressTextBox;
     private main.SVGImage sVGAddEmployeesEmail;
     private main.SVGImage sVGAddEmployeesEmailTextBox;
     private main.SVGImage sVGAddEmployeesFName;
@@ -356,16 +426,17 @@ public class AddEmployees extends javax.swing.JPanel {
     private main.SVGImage sVGAddEmployeesForm;
     private main.SVGImage sVGAddEmployeesLName;
     private main.SVGImage sVGAddEmployeesLNameTextBox;
-    private main.SVGImage sVGAddEmployeesPass;
-    private main.SVGImage sVGAddEmployeesPassTextBox;
+    private main.SVGImage sVGAddEmployeesPassword;
+    private main.SVGImage sVGAddEmployeesPasswordTextBox;
     private main.SVGImage sVGAddEmployeesPhone;
     private main.SVGImage sVGAddEmployeesPhoneTextBox;
     private main.SVGImage sVGAddEmployeesRole;
     private main.SVGImage sVGAddEmployeesRoleComboBox;
+    private javax.swing.JTextField txtAddress;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtFName;
     private javax.swing.JTextField txtLName;
-    private javax.swing.JTextField txtPassword;
+    private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtPhone;
     // End of variables declaration//GEN-END:variables
 
