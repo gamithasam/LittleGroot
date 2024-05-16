@@ -38,7 +38,7 @@ public class Add extends javax.swing.JPanel {
         sVGAddSegCtrlEmployees.setSvgImage("./svgcomponents/AddSegCtrlEmployees.svg", 90, 20);
         
         // Set hand cursors
-        Cursor hand = new Cursor(Cursor.HAND_CURSOR); // Change to desired cursor type
+        Cursor hand = new Cursor(Cursor.HAND_CURSOR);
         sVGAddSegCtrlTasks.setCursor(hand);
         sVGAddSegCtrlInventory.setCursor(hand);
         sVGAddSegCtrlTransactions.setCursor(hand);

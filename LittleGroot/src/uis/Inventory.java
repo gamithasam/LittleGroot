@@ -46,11 +46,13 @@ public class Inventory extends javax.swing.JPanel {
                 data.add(vector);
             }
 
-            // for header
+            // Column names
             Vector<String> columnNames = new Vector<String>();
-            for (int i = 1; i <= columnCount; i++) {
-                columnNames.add(rsmd.getColumnName(i));
-            }
+            columnNames.add("Item");
+            columnNames.add("Item ID");
+            columnNames.add("Category");
+            columnNames.add("Availability");
+            columnNames.add("Unit");
 
             // Set the data to the table
             DefaultTableModel model = new DefaultTableModel(data, columnNames);
@@ -84,6 +86,8 @@ public class Inventory extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(255, 255, 255));
         setForeground(null);
+        setPreferredSize(new java.awt.Dimension(649, 478));
+        setSize(new java.awt.Dimension(649, 478));
         setLayout(null);
 
         tableInventory.setModel(new javax.swing.table.DefaultTableModel(

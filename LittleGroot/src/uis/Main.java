@@ -94,6 +94,7 @@ public class Main extends javax.swing.JFrame {
         add.setVisible(false);
         inventory.setVisible(false);
         employees.setVisible(false);
+        tasks.setVisible(false);
         
         // Set SVGs
         sVGSidebar.setSvgImage("./svgcomponents/Sidebar.svg", 200, 530);
@@ -168,6 +169,7 @@ public class Main extends javax.swing.JFrame {
         lblLogoName = new javax.swing.JLabel();
         pngToolBarLogo = new javax.swing.JLabel();
         sVGToolBar = new main.SVGImage();
+        tasks = new uis.Tasks();
         employees = new uis.Employees();
         inventory = new uis.Inventory();
         add = new uis.Add();
@@ -313,6 +315,8 @@ public class Main extends javax.swing.JFrame {
 
         contentAreaNToolBar.add(toolBar);
         toolBar.setBounds(0, 0, 649, 52);
+        contentAreaNToolBar.add(tasks);
+        tasks.setBounds(0, 52, 649, 478);
         contentAreaNToolBar.add(employees);
         employees.setBounds(0, 52, 649, 478);
         contentAreaNToolBar.add(inventory);
@@ -390,7 +394,7 @@ public class Main extends javax.swing.JFrame {
         Map<String, JComponent> contentAreaMap = new HashMap<>();
 //        contentAreaMap.put("SidebarDashboard", dashboard);
         contentAreaMap.put("SidebarAllFields", allFieldsScroll);
-//        contentAreaMap.put("SidebarTasks", tasks);
+        contentAreaMap.put("SidebarTasks", tasks);
         contentAreaMap.put("SidebarInventory", inventory);
 //        contentAreaMap.put("SidebarFinance", finance);
         contentAreaMap.put("SidebarEmployees", employees);
@@ -428,7 +432,7 @@ public class Main extends javax.swing.JFrame {
 
     private void sVGSidebarTasksMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGSidebarTasksMouseClicked
         // Select ContentArea
-        // TODO: Write your code here
+        selectContentArea("SidebarTasks");
         
         // Select Button
         selectSidebarButton("SidebarTasks");
@@ -506,6 +510,7 @@ public class Main extends javax.swing.JFrame {
     private main.SVGImage sVGToolBar;
     private uis.Settings settings;
     private javax.swing.JPanel sidebar;
+    private uis.Tasks tasks;
     private javax.swing.JPanel toolBar;
     // End of variables declaration//GEN-END:variables
 }

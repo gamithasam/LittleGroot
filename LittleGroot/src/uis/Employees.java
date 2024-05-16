@@ -27,7 +27,7 @@ public class Employees extends javax.swing.JPanel {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/LittleGroot", "root", "toor");
             Statement st = conn.createStatement();
-            String query = "SELECT EmpID, FName, LName, EmpRole, Phone, Email FROM Employee";
+            String query = "SELECT EmpID, FName, LName, EmpRole, Phone, Email, Address FROM Employee";
             
             ResultSet rs = st.executeQuery(query);
 
@@ -45,11 +45,15 @@ public class Employees extends javax.swing.JPanel {
                 data.add(vector);
             }
 
-            // for header
+            // Column names
             Vector<String> columnNames = new Vector<String>();
-            for (int i = 1; i <= columnCount; i++) {
-                columnNames.add(rsmd.getColumnName(i));
-            }
+            columnNames.add("Employee ID");
+            columnNames.add("First Name");
+            columnNames.add("Last Name");
+            columnNames.add("Role");
+            columnNames.add("Phone Number");
+            columnNames.add("Email");
+            columnNames.add("Address");
 
             // Set the data to the table
             DefaultTableModel model = new DefaultTableModel(data, columnNames);
@@ -83,6 +87,7 @@ public class Employees extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(255, 255, 255));
         setForeground(null);
+        setSize(new java.awt.Dimension(649, 478));
         setLayout(null);
 
         tableInventory.setModel(new javax.swing.table.DefaultTableModel(
