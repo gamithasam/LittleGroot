@@ -7,6 +7,8 @@ package uis;
 import javax.swing.ImageIcon;
 import java.awt.Image;
 import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Insets;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JComponent;
@@ -83,6 +85,16 @@ public class Main extends javax.swing.JFrame {
     
     public Main() {
         initComponents();
+        
+        // Set the size of the Main frame
+        /* I had to implement this because no matter how many times I set this up in the visual editor
+        it changes in the runtime for some reason */
+        pack();
+        Insets insets = getInsets();
+        setSize(new Dimension(
+                850 + insets.left + insets.right,
+                530 + insets.top + insets.bottom
+        ));
         
         // Set user related componenets
         lblUserName.setText(user.fName);
