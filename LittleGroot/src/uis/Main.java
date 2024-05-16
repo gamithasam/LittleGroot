@@ -177,7 +177,6 @@ public class Main extends javax.swing.JFrame {
         toolBar = new javax.swing.JPanel();
         lblUserRole = new javax.swing.JLabel();
         lblUserName = new javax.swing.JLabel();
-        pngProfilePic = new javax.swing.JLabel();
         lblLogoName = new javax.swing.JLabel();
         pngToolBarLogo = new javax.swing.JLabel();
         sVGToolBar = new main.SVGImage();
@@ -292,38 +291,28 @@ public class Main extends javax.swing.JFrame {
         contentAreaNToolBar.setLayout(null);
 
         toolBar.setBackground(new java.awt.Color(234, 234, 234));
-        toolBar.setLayout(null);
+        toolBar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblUserRole.setFont(new java.awt.Font("SF Pro Display", 0, 11)); // NOI18N
         lblUserRole.setForeground(new java.awt.Color(0, 0, 0));
         lblUserRole.setText("Role");
-        toolBar.add(lblUserRole);
-        lblUserRole.setBounds(580, 29, 70, 14);
+        toolBar.add(lblUserRole, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 29, 70, -1));
 
         lblUserName.setFont(new java.awt.Font("SF Pro Display", 1, 15)); // NOI18N
         lblUserName.setForeground(new java.awt.Color(0, 0, 0));
         lblUserName.setText("Name");
-        toolBar.add(lblUserName);
-        lblUserName.setBounds(580, 9, 40, 20);
-
-        pngProfilePic.setForeground(new java.awt.Color(0, 0, 0));
-        pngProfilePic.setText("Profile Pic");
-        toolBar.add(pngProfilePic);
-        pngProfilePic.setBounds(534, 9, 35, 35);
+        toolBar.add(lblUserName, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 9, -1, 20));
 
         lblLogoName.setBackground(new java.awt.Color(0, 0, 0));
         lblLogoName.setFont(new java.awt.Font("SF Pro Text", 1, 15)); // NOI18N
         lblLogoName.setForeground(new java.awt.Color(0, 0, 0));
         lblLogoName.setText("Little Groot");
-        toolBar.add(lblLogoName);
-        lblLogoName.setBounds(58, 0, 100, 52);
+        toolBar.add(lblLogoName, new org.netbeans.lib.awtextra.AbsoluteConstraints(58, 0, 100, 52));
 
         pngToolBarLogo.setForeground(new java.awt.Color(0, 0, 0));
         pngToolBarLogo.setText("Logo");
-        toolBar.add(pngToolBarLogo);
-        pngToolBarLogo.setBounds(14, 9, 35, 35);
-        toolBar.add(sVGToolBar);
-        sVGToolBar.setBounds(0, 0, 649, 52);
+        toolBar.add(pngToolBarLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 9, 35, 35));
+        toolBar.add(sVGToolBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 649, 52));
 
         contentAreaNToolBar.add(toolBar);
         toolBar.setBounds(0, 0, 649, 52);
@@ -507,7 +496,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel lblLogoName;
     private javax.swing.JLabel lblUserName;
     private javax.swing.JLabel lblUserRole;
-    private javax.swing.JLabel pngProfilePic;
     private javax.swing.JLabel pngToolBarLogo;
     private main.SVGImage sVGSeparator;
     private main.SVGImage sVGSidebar;
