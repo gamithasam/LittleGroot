@@ -301,6 +301,13 @@
             </Component>
           </SubComponents>
         </Container>
+        <Component class="uis.Finance" name="finance">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+              <AbsoluteConstraints x="0" y="52" width="649" height="478"/>
+            </Constraint>
+          </Constraints>
+        </Component>
         <Component class="uis.Tasks" name="tasks">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">

@@ -107,6 +107,7 @@ public class Main extends javax.swing.JFrame {
         inventory.setVisible(false);
         employees.setVisible(false);
         tasks.setVisible(false);
+        finance.setVisible(false);
         
         // Set SVGs
         sVGSidebar.setSvgImage("./svgcomponents/Sidebar.svg", 200, 530);
@@ -180,6 +181,7 @@ public class Main extends javax.swing.JFrame {
         lblLogoName = new javax.swing.JLabel();
         pngToolBarLogo = new javax.swing.JLabel();
         sVGToolBar = new main.SVGImage();
+        finance = new uis.Finance();
         tasks = new uis.Tasks();
         employees = new uis.Employees();
         inventory = new uis.Inventory();
@@ -316,6 +318,8 @@ public class Main extends javax.swing.JFrame {
 
         contentAreaNToolBar.add(toolBar);
         toolBar.setBounds(0, 0, 649, 52);
+        contentAreaNToolBar.add(finance);
+        finance.setBounds(0, 52, 649, 478);
         contentAreaNToolBar.add(tasks);
         tasks.setBounds(0, 52, 649, 478);
         contentAreaNToolBar.add(employees);
@@ -397,7 +401,7 @@ public class Main extends javax.swing.JFrame {
         contentAreaMap.put("SidebarAllFields", allFieldsScroll);
         contentAreaMap.put("SidebarTasks", tasks);
         contentAreaMap.put("SidebarInventory", inventory);
-//        contentAreaMap.put("SidebarFinance", finance);
+        contentAreaMap.put("SidebarFinance", finance);
         contentAreaMap.put("SidebarEmployees", employees);
         contentAreaMap.put("SidebarAdd", add);
         contentAreaMap.put("SidebarSettings", settings);
@@ -449,7 +453,7 @@ public class Main extends javax.swing.JFrame {
 
     private void sVGSidebarFinanceMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGSidebarFinanceMouseClicked
         // Select ContentArea
-        // TODO: Write your code here
+        selectContentArea("SidebarFinance");
         
         // Select Button
         selectSidebarButton("SidebarFinance");
@@ -492,6 +496,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JScrollPane allFieldsScroll;
     private javax.swing.JPanel contentAreaNToolBar;
     private uis.Employees employees;
+    private uis.Finance finance;
     private uis.Inventory inventory;
     private javax.swing.JLabel lblLogoName;
     private javax.swing.JLabel lblUserName;

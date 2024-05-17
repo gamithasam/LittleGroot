@@ -5,9 +5,6 @@
 package uis;
 
 import java.awt.Cursor;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.table.AbstractTableModel;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,7 +38,6 @@ public class Tasks extends javax.swing.JPanel {
         // Set hand cursors
         Cursor hand = new Cursor(Cursor.HAND_CURSOR);
         sVGTasksSegCtrlCompleted.setCursor(hand);
-        
         
         // Get data from database to table
         try {
