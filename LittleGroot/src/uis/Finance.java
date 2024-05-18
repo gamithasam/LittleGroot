@@ -5,11 +5,17 @@
 package uis;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import main.ModelPieChart;
 import java.sql.*;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
+import java.util.Vector;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import main.SVGImage;
 
 /**
  *
@@ -32,13 +38,23 @@ public class Finance extends javax.swing.JPanel {
         sVGSummary.setSvgImage("./svgcomponents/FinanceSummary.svg", 609, 89);
         sVGIncomeGraph.setSvgImage("./svgcomponents/FinanceIncomeGraph.svg", 295, 183);
         sVGExpensesGraph.setSvgImage("./svgcomponents/FinanceExpensesGraph.svg", 295, 183);
-
+        sVGFinanceSegCtrlExpenses.setSvgImage("./svgcomponents/FinanceSegCtrlExpenses.svg", 90, 20);
+        sVGFinanceSegCtrlIncome.setSvgImage("./svgcomponents/FinanceSegCtrlIncome.svg", 90, 20);
+        sVGFinanceSegCtrlAll.setSvgImage("./svgcomponents/FinanceSegCtrlAllSelected.svg", 90, 20);
+        sVGFinanceSegCtrlBg.setSvgImage("./svgcomponents/FinanceSegCtrlBg.svg", 268, 22);
+        
+        // Set hand cursors
+        Cursor hand = new Cursor(Cursor.HAND_CURSOR);
+        sVGFinanceSegCtrlIncome.setCursor(hand);
+        sVGFinanceSegCtrlExpenses.setCursor(hand);
+        
         // SQL Queries
         String dateCondition = "YEAR(TDate) = " + currentYear + " AND MONTH(TDate) = " + currentMonth;
         String queryExpenses = "SELECT Category, SUM(Price) FROM Finance WHERE TType = 'E' AND " + dateCondition + " GROUP BY Category";
         String queryIncome = "SELECT Category, SUM(Price) FROM Finance WHERE TType = 'I' AND " + dateCondition + " GROUP BY Category";
         String queryTotalIncome = "SELECT SUM(Price) FROM Finance WHERE TType = 'I' AND " + dateCondition;
         String queryTotalExpenses = "SELECT SUM(Price) FROM Finance WHERE TType = 'E' AND " + dateCondition;
+        String queryTable = "SELECT Transactions, Category, TDate, Price FROM Finance";
         
         // Establish connection, execute SQL queries and populate pie charts
         Connection conn = null;
@@ -79,6 +95,32 @@ public class Finance extends javax.swing.JPanel {
                 lblTotalExpenses.setText(String.format("$%.2f", totalExpenses));
             }
             
+            // Populate table
+            ResultSet rsTable = st.executeQuery(queryTable);
+            // Get metadata
+            ResultSetMetaData rsmd = rsTable.getMetaData();
+            int columnCount = rsmd.getColumnCount();
+
+            // for storing data from database in an array
+            Vector<Vector<Object>> data = new Vector<Vector<Object>>();
+            while (rsTable.next()) {
+                Vector<Object> vector = new Vector<Object>();
+                for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
+                    vector.add(rsTable.getObject(columnIndex));
+                }
+                data.add(vector);
+            }
+
+            // Column names
+            Vector<String> columnNames = new Vector<String>();
+            columnNames.add("Transaction");
+            columnNames.add("Category");
+            columnNames.add("Date");
+            columnNames.add("Price ($)");
+
+            // Set the data to the table
+            DefaultTableModel model = new DefaultTableModel(data, columnNames);
+            tableFinance.setModel(model);
 
         } catch (ClassNotFoundException | SQLException e) {
             JOptionPane.showMessageDialog(null, "Database Connection Error" + e.getMessage());
@@ -92,6 +134,39 @@ public class Finance extends javax.swing.JPanel {
             }
         }
         
+    }
+    
+    private void selectSegCtrlButton(String button) {
+        // Declare and initialize the map
+        Map<String, SVGImage> svgMap = new HashMap<>();
+        svgMap.put("FinanceSegCtrlAll", sVGFinanceSegCtrlAll);
+        svgMap.put("FinanceSegCtrlIncome", sVGFinanceSegCtrlIncome);
+        svgMap.put("FinanceSegCtrlExpenses", sVGFinanceSegCtrlExpenses);
+        
+        // Declare and initialize an array of Sidebar buttons
+        String[] segCtrlButtons = {"FinanceSegCtrlAll", "FinanceSegCtrlIncome", "FinanceSegCtrlExpenses"};
+        
+        // Intialize cursor objects
+        Cursor hand = new Cursor(Cursor.HAND_CURSOR);
+        Cursor defaultCursor = new Cursor(Cursor.DEFAULT_CURSOR);
+        
+        // Iterate thorugh the array
+        for (String idx : segCtrlButtons) {
+            SVGImage svg = svgMap.get(idx); // Create the svg name from the String of the index
+            if (idx.equals(button)) {
+                // Select button
+                svg.setSvgImage("./svgcomponents/" + idx + "Selected.svg", 90, 20);
+                svg.setCursor(defaultCursor);
+            } else {
+                // Unselect other buttons
+                svg.setSvgImage("./svgcomponents/" + idx + ".svg", 90, 20);
+                svg.setCursor(hand);
+            }
+        }
+        
+        // Repaint
+        this.revalidate(); // TODO: check if this correct
+        this.repaint();
     }
 
     /**
@@ -112,6 +187,12 @@ public class Finance extends javax.swing.JPanel {
         sVGSummary = new main.SVGImage();
         sVGIncomeGraph = new main.SVGImage();
         sVGExpensesGraph = new main.SVGImage();
+        sVGFinanceSegCtrlAll = new main.SVGImage();
+        sVGFinanceSegCtrlIncome = new main.SVGImage();
+        sVGFinanceSegCtrlExpenses = new main.SVGImage();
+        sVGFinanceSegCtrlBg = new main.SVGImage();
+        jScrollPane1 = new main.ScrollPaneWin11();
+        tableFinance = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setForeground(null);
@@ -170,6 +251,57 @@ public class Finance extends javax.swing.JPanel {
         sVGExpensesGraph.setText("sVGExpensesGraph");
         add(sVGExpensesGraph);
         sVGExpensesGraph.setBounds(334, 129, 295, 183);
+
+        sVGFinanceSegCtrlAll.setForeground(new java.awt.Color(0, 0, 0));
+        sVGFinanceSegCtrlAll.setText("sVGSegCtrlAll");
+        sVGFinanceSegCtrlAll.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sVGFinanceSegCtrlAllMouseClicked(evt);
+            }
+        });
+        add(sVGFinanceSegCtrlAll);
+        sVGFinanceSegCtrlAll.setBounds(20, 343, 90, 20);
+
+        sVGFinanceSegCtrlIncome.setForeground(new java.awt.Color(0, 0, 0));
+        sVGFinanceSegCtrlIncome.setText("sVGSegCtrlIncome");
+        sVGFinanceSegCtrlIncome.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sVGFinanceSegCtrlIncomeMouseClicked(evt);
+            }
+        });
+        add(sVGFinanceSegCtrlIncome);
+        sVGFinanceSegCtrlIncome.setBounds(109, 343, 90, 20);
+
+        sVGFinanceSegCtrlExpenses.setForeground(new java.awt.Color(0, 0, 0));
+        sVGFinanceSegCtrlExpenses.setText("sVGSegCtrlExpenses");
+        sVGFinanceSegCtrlExpenses.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sVGFinanceSegCtrlExpensesMouseClicked(evt);
+            }
+        });
+        add(sVGFinanceSegCtrlExpenses);
+        sVGFinanceSegCtrlExpenses.setBounds(198, 343, 90, 20);
+
+        sVGFinanceSegCtrlBg.setForeground(new java.awt.Color(0, 0, 0));
+        sVGFinanceSegCtrlBg.setText("sVGSegCtrlBg");
+        add(sVGFinanceSegCtrlBg);
+        sVGFinanceSegCtrlBg.setBounds(19, 342, 268, 22);
+
+        tableFinance.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tableFinance);
+
+        add(jScrollPane1);
+        jScrollPane1.setBounds(20, 370, 600, 100);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cmbIncomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbIncomeActionPerformed
@@ -268,16 +400,37 @@ public class Finance extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_cmbExpensesActionPerformed
 
+    private void sVGFinanceSegCtrlIncomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGFinanceSegCtrlIncomeMouseClicked
+        // Select Button
+        selectSegCtrlButton("FinanceSegCtrlIncome");
+    }//GEN-LAST:event_sVGFinanceSegCtrlIncomeMouseClicked
+
+    private void sVGFinanceSegCtrlAllMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGFinanceSegCtrlAllMouseClicked
+        // Select Button
+        selectSegCtrlButton("FinanceSegCtrlAll");
+    }//GEN-LAST:event_sVGFinanceSegCtrlAllMouseClicked
+
+    private void sVGFinanceSegCtrlExpensesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGFinanceSegCtrlExpensesMouseClicked
+        // Select Button
+        selectSegCtrlButton("FinanceSegCtrlExpenses");
+    }//GEN-LAST:event_sVGFinanceSegCtrlExpensesMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cmbExpenses;
     private javax.swing.JComboBox<String> cmbIncome;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblTotalExpenses;
     private javax.swing.JLabel lblTotalIncome;
     private main.PieChart pieChartExpenses;
     private main.PieChart pieChartIncome;
     private main.SVGImage sVGExpensesGraph;
+    private main.SVGImage sVGFinanceSegCtrlAll;
+    private main.SVGImage sVGFinanceSegCtrlBg;
+    private main.SVGImage sVGFinanceSegCtrlExpenses;
+    private main.SVGImage sVGFinanceSegCtrlIncome;
     private main.SVGImage sVGIncomeGraph;
     private main.SVGImage sVGSummary;
+    private javax.swing.JTable tableFinance;
     // End of variables declaration//GEN-END:variables
 }
