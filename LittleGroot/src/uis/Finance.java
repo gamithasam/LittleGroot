@@ -23,6 +23,9 @@ import main.SVGImage;
  */
 public class Finance extends javax.swing.JPanel {
 
+    Connection conn = null;
+    Statement st = null;
+    
     // Get current year and month
     Calendar cal = Calendar.getInstance();
     int currentYear = cal.get(Calendar.YEAR);
@@ -57,11 +60,10 @@ public class Finance extends javax.swing.JPanel {
         String queryTable = "SELECT Transactions, Category, TDate, Price FROM Finance";
         
         // Establish connection, execute SQL queries and populate pie charts
-        Connection conn = null;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/LittleGroot", "root", "toor");
-            Statement st = conn.createStatement();
+            st = conn.createStatement();
 
             Random rand = new Random();
                         
@@ -167,6 +169,68 @@ public class Finance extends javax.swing.JPanel {
         // Repaint
         this.revalidate(); // TODO: check if this correct
         this.repaint();
+    }
+    
+    public void filterTable(String filter) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/LittleGroot", "root", "toor");
+            st = conn.createStatement();
+
+            String query;
+            if (filter.equals("FinanceSegCtrlIncome")) {
+                query = "SELECT Transactions, Category, TDate, Price FROM Finance WHERE TType = 'I'";
+            } else if (filter.equals("FinanceSegCtrlIncome")) {
+                query = "SELECT Transactions, Category, TDate, Price FROM Finance WHERE TType = 'E'";
+            } else {
+                query = "SELECT Transactions, Category, TDate, Price FROM Finance";
+            }
+
+            ResultSet rs = st.executeQuery(query);
+
+            // Get metadata
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int columnCount = rsmd.getColumnCount();
+
+            // for storing data from database in an array
+            Vector<Vector<Object>> data = new Vector<Vector<Object>>();
+            while (rs.next()) {
+                Vector<Object> vector = new Vector<Object>();
+                for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
+                    vector.add(rs.getObject(columnIndex));
+                }
+                data.add(vector);
+            }
+
+            // Column names
+            Vector<String> columnNames = new Vector<String>();
+            columnNames.add("Transaction");
+            columnNames.add("Category");
+            columnNames.add("Date");
+            columnNames.add("Price ($)");
+
+            // Set the data to the table
+            DefaultTableModel model = new DefaultTableModel(data, columnNames);
+            tableFinance.setModel(model);
+
+        } catch (ClassNotFoundException | SQLException e) {
+            JOptionPane.showMessageDialog(null, "Database Connection Error");
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, "Failed to close connection");
+                }
+            }
+            if (st != null) {
+                try {
+                    st.close();
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, "Failed to close statement");
+                }
+            }
+        }
     }
 
     /**
@@ -365,11 +429,10 @@ public class Finance extends javax.swing.JPanel {
         String queryTotalExpenses = "SELECT SUM(Price) FROM Finance WHERE TType = 'E' AND " + dateCondition;
         
         // Establish connection, fetch data and update charts
-        Connection conn = null;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/LittleGroot", "root", "toor");
-            Statement st = conn.createStatement();
+            st = conn.createStatement();
 
             Random rand = new Random();
             
@@ -401,16 +464,25 @@ public class Finance extends javax.swing.JPanel {
     }//GEN-LAST:event_cmbExpensesActionPerformed
 
     private void sVGFinanceSegCtrlIncomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGFinanceSegCtrlIncomeMouseClicked
+        // Filter table
+        filterTable("FinanceSegCtrlIncome");
+
         // Select Button
         selectSegCtrlButton("FinanceSegCtrlIncome");
     }//GEN-LAST:event_sVGFinanceSegCtrlIncomeMouseClicked
 
     private void sVGFinanceSegCtrlAllMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGFinanceSegCtrlAllMouseClicked
+        // Filter table
+        filterTable("FinanceSegCtrlAll");
+        
         // Select Button
         selectSegCtrlButton("FinanceSegCtrlAll");
     }//GEN-LAST:event_sVGFinanceSegCtrlAllMouseClicked
 
     private void sVGFinanceSegCtrlExpensesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGFinanceSegCtrlExpensesMouseClicked
+        // Filter table
+        filterTable("FinanceSegCtrlExpenses");
+
         // Select Button
         selectSegCtrlButton("FinanceSegCtrlExpenses");
     }//GEN-LAST:event_sVGFinanceSegCtrlExpensesMouseClicked
