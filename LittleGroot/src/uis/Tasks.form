@@ -36,7 +36,7 @@
       </AuxValues>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="20" y="181" width="600" height="277"/>
+          <AbsoluteConstraints x="20" y="181" width="600" height="120"/>
         </Constraint>
       </Constraints>
 
@@ -53,6 +53,9 @@
               </Table>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="componentResized" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="tableTasksComponentResized"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

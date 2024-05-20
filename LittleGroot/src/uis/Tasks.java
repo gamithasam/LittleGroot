@@ -5,6 +5,7 @@
 package uis;
 
 import java.awt.Cursor;
+import java.awt.Dimension;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -293,10 +294,15 @@ public class Tasks extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tableTasks.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                tableTasksComponentResized(evt);
+            }
+        });
         jScrollPane1.setViewportView(tableTasks);
 
         add(jScrollPane1);
-        jScrollPane1.setBounds(20, 181, 600, 277);
+        jScrollPane1.setBounds(20, 181, 600, 120);
 
         lblPercentage.setFont(new java.awt.Font("SF Pro", 0, 26)); // NOI18N
         lblPercentage.setForeground(new java.awt.Color(0, 0, 0));
@@ -367,6 +373,15 @@ public class Tasks extends javax.swing.JPanel {
         // Select Button
         selectSegCtrlButton("TasksSegCtrlUnchecked");
     }//GEN-LAST:event_sVGTasksSegCtrlUncheckedMouseClicked
+
+    private void tableTasksComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tableTasksComponentResized
+        int height = 0;
+        for (int row = 0; row < tableTasks.getRowCount(); row++) {
+            height += tableTasks.getRowHeight(row);
+        }
+        jScrollPane1.setPreferredSize(new Dimension(jScrollPane1.getWidth(), height));
+        jScrollPane1.revalidate();
+    }//GEN-LAST:event_tableTasksComponentResized
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
