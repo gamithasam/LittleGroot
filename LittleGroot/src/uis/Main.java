@@ -329,6 +329,8 @@ public class Main extends javax.swing.JFrame {
         contentAreaNToolBar.add(add);
         add.setBounds(0, 52, 649, 478);
 
+        allFields1.setMinimumSize(new java.awt.Dimension(649, 682));
+        allFields1.setPreferredSize(new java.awt.Dimension(649, 682));
         allFieldsScroll.setViewportView(allFields1);
 
         contentAreaNToolBar.add(allFieldsScroll);

@@ -4,8 +4,22 @@
  */
 package uis;
 
+import java.awt.Color;
 import javax.swing.ImageIcon;
 import java.awt.Image;
+import main.ModelChart;
+import java.sql.*;
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,9 +32,94 @@ public class AllFields extends javax.swing.JPanel {
      */
     public AllFields() {
         initComponents();
-        sVGSalesGraph.setSvgImage("./svgcomponents/SalesGraph.svg", 292, 183);
-        sVGYieldGraph.setSvgImage("./svgcomponents/YieldGraph.svg", 292, 183);
+        
+        // Set SVGs
+        sVGSalesGraph.setSvgImage("./svgcomponents/SalesGraph.svg", 604, 294);
+//        sVGYieldGraph.setSvgImage("./svgcomponents/YieldGraph.svg", 292, 183);
+
+        // Set PNGs
         addImageToLabel();
+        
+        
+        // Set data for the graph
+        
+        salesChart.addLegend("Tomato", new Color(255, 99, 71));
+        salesChart.addLegend("Corn", new Color(255, 255, 0));
+        salesChart.addLegend("Apple", new Color(0, 255, 0));
+        salesChart.addLegend("Carrot", new Color(255, 165, 0));
+        salesChart.addLegend("Orange", new Color(255, 140, 0));
+        salesChart.addLegend("Mango", new Color(255, 130, 67));
+        
+        // Establish connection, execute SQL queries and populate pie charts
+        Connection conn = null;
+        Statement st = null;
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/LittleGroot", "root", "toor");
+            st = conn.createStatement();
+                        
+            // Get the current date and the dates for the previous two months
+            LocalDate currentDate = LocalDate.now();
+            LocalDate oneMonthAgo = currentDate.minusMonths(1);
+            LocalDate twoMonthsAgo = currentDate.minusMonths(2);
+
+            // Format the dates to match the format in your database
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            String currentDateStr = currentDate.format(formatter);
+            String oneMonthAgoStr = oneMonthAgo.format(formatter);
+            String twoMonthsAgoStr = twoMonthsAgo.format(formatter);
+
+            // Create an SQL query to select the relevant data
+            String sql = "SELECT MONTH(TDate) as Month, Category, SUM(Price) as TotalPrice FROM Finance WHERE TType = 'I' AND Category IN ('Tomato', 'Corn', 'Apple', 'Carrot', 'Orange', 'Mango') AND TDate BETWEEN '" + twoMonthsAgoStr + "' AND '" + currentDateStr + "' GROUP BY Month, Category";
+            // Execute the query and get the result
+            ResultSet rs = st.executeQuery(sql);
+
+            // Create a map to store the total price for each category for each month
+            Map<YearMonth, Map<String, Double>> totalByMonthAndCategory = new HashMap<>();
+
+            // Loop through the result and add the total price to the map
+            while (rs.next()) {
+                int month = rs.getInt("Month");
+                String category = rs.getString("Category");
+                double totalPrice = rs.getDouble("TotalPrice");
+
+                YearMonth yearMonth = YearMonth.of(currentDate.getYear(), month);
+
+                if (!totalByMonthAndCategory.containsKey(yearMonth)) {
+                    totalByMonthAndCategory.put(yearMonth, new HashMap<>());
+                }
+
+                totalByMonthAndCategory.get(yearMonth).put(category, totalPrice);
+            }
+
+            // Define the order of categories
+            List<String> categories = Arrays.asList("Tomato", "Corn", "Apple", "Carrot", "Orange", "Mango");
+
+            // Loop through the map and add the data to the chart
+            for (Map.Entry<YearMonth, Map<String, Double>> entry : totalByMonthAndCategory.entrySet()) {
+                YearMonth yearMonth = entry.getKey();
+                Map<String, Double> totalsByCategory = entry.getValue();
+
+                double[] totalsArray = categories.stream()
+                    .mapToDouble(category -> totalsByCategory.getOrDefault(category, 0.0))
+                    .toArray();
+
+                // Get the month name
+                String monthName = yearMonth.getMonth().getDisplayName(TextStyle.FULL, Locale.ENGLISH);
+
+                salesChart.addData(new ModelChart(monthName, totalsArray));
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            JOptionPane.showMessageDialog(null, "Database Connection Error" + e.getMessage());
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, "Failed to close connection");
+                }
+            }
+        }
     }
     
     private void addImageToLabel() {
@@ -136,8 +235,8 @@ public class AllFields extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        salesChart = new main.Chart();
         sVGSalesGraph = new main.SVGImage();
-        sVGYieldGraph = new main.SVGImage();
         pngTomato = new javax.swing.JLabel();
         pngCorn = new javax.swing.JLabel();
         pngApple = new javax.swing.JLabel();
@@ -162,119 +261,122 @@ public class AllFields extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(649, 478));
         setSize(new java.awt.Dimension(649, 478));
         setLayout(null);
+        add(salesChart);
+        salesChart.setBounds(32, 57, 590, 250);
 
         sVGSalesGraph.setForeground(new java.awt.Color(0, 0, 0));
         sVGSalesGraph.setText("sVGSalesGraph");
         add(sVGSalesGraph);
-        sVGSalesGraph.setBounds(25, 20, 292, 183);
-
-        sVGYieldGraph.setForeground(new java.awt.Color(0, 0, 0));
-        sVGYieldGraph.setText("sVGYieldGraph");
-        add(sVGYieldGraph);
-        sVGYieldGraph.setBounds(337, 20, 292, 183);
+        sVGSalesGraph.setBounds(25, 20, 604, 294);
 
         pngTomato.setForeground(new java.awt.Color(0, 0, 0));
         pngTomato.setText("pngTomato");
+        pngTomato.setPreferredSize(new java.awt.Dimension(188, 112));
         add(pngTomato);
-        pngTomato.setBounds(25, 223, 188, 112);
+        pngTomato.setBounds(25, 334, 188, 112);
 
         pngCorn.setForeground(new java.awt.Color(0, 0, 0));
         pngCorn.setText("pngCorn");
         pngCorn.setToolTipText("");
+        pngCorn.setPreferredSize(new java.awt.Dimension(188, 112));
         add(pngCorn);
-        pngCorn.setBounds(233, 223, 188, 112);
+        pngCorn.setBounds(233, 334, 188, 112);
 
         pngApple.setForeground(new java.awt.Color(0, 0, 0));
         pngApple.setText("pngApple");
+        pngApple.setPreferredSize(new java.awt.Dimension(188, 112));
         add(pngApple);
-        pngApple.setBounds(441, 223, 188, 112);
+        pngApple.setBounds(441, 334, 188, 112);
 
         lblTomato.setFont(new java.awt.Font("SF Pro Text", 1, 15)); // NOI18N
         lblTomato.setForeground(new java.awt.Color(0, 0, 0));
         lblTomato.setText("Tomato");
         add(lblTomato);
-        lblTomato.setBounds(25, 343, 60, 20);
+        lblTomato.setBounds(25, 454, 60, 20);
 
         lblTomatoAcre.setFont(new java.awt.Font("SF Pro Text", 0, 11)); // NOI18N
         lblTomatoAcre.setForeground(new java.awt.Color(0, 0, 0));
         lblTomatoAcre.setText("1.5 acre");
         add(lblTomatoAcre);
-        lblTomatoAcre.setBounds(25, 363, 42, 20);
+        lblTomatoAcre.setBounds(25, 474, 42, 20);
 
         lblCorn.setFont(new java.awt.Font("SF Pro Text", 1, 15)); // NOI18N
         lblCorn.setForeground(new java.awt.Color(0, 0, 0));
         lblCorn.setText("Corn");
         add(lblCorn);
-        lblCorn.setBounds(233, 343, 60, 20);
+        lblCorn.setBounds(233, 454, 60, 20);
 
         lblCornAcre.setFont(new java.awt.Font("SF Pro Text", 0, 11)); // NOI18N
         lblCornAcre.setForeground(new java.awt.Color(0, 0, 0));
         lblCornAcre.setText("2 acre");
         add(lblCornAcre);
-        lblCornAcre.setBounds(233, 363, 42, 20);
+        lblCornAcre.setBounds(233, 474, 42, 20);
 
         lblAppleAcre.setFont(new java.awt.Font("SF Pro Text", 0, 11)); // NOI18N
         lblAppleAcre.setForeground(new java.awt.Color(0, 0, 0));
         lblAppleAcre.setText("2.5 acre");
         add(lblAppleAcre);
-        lblAppleAcre.setBounds(441, 363, 42, 20);
+        lblAppleAcre.setBounds(441, 474, 42, 20);
 
         lblApple.setFont(new java.awt.Font("SF Pro Text", 1, 15)); // NOI18N
         lblApple.setForeground(new java.awt.Color(0, 0, 0));
         lblApple.setText("Apple");
         add(lblApple);
-        lblApple.setBounds(441, 343, 60, 20);
+        lblApple.setBounds(441, 454, 60, 20);
 
         lblCarrotAcre.setFont(new java.awt.Font("SF Pro Text", 0, 11)); // NOI18N
         lblCarrotAcre.setForeground(new java.awt.Color(0, 0, 0));
         lblCarrotAcre.setText("0.4 acre");
         add(lblCarrotAcre);
-        lblCarrotAcre.setBounds(25, 537, 42, 20);
+        lblCarrotAcre.setBounds(25, 648, 42, 20);
 
         lblCarrot.setFont(new java.awt.Font("SF Pro Text", 1, 15)); // NOI18N
         lblCarrot.setForeground(new java.awt.Color(0, 0, 0));
         lblCarrot.setText("Carrot");
         add(lblCarrot);
-        lblCarrot.setBounds(25, 517, 60, 20);
+        lblCarrot.setBounds(25, 628, 60, 20);
 
         lblOrange.setFont(new java.awt.Font("SF Pro Text", 1, 15)); // NOI18N
         lblOrange.setForeground(new java.awt.Color(0, 0, 0));
         lblOrange.setText("Orange");
         add(lblOrange);
-        lblOrange.setBounds(233, 517, 60, 20);
+        lblOrange.setBounds(233, 628, 60, 20);
 
         lblOrangeAcre.setFont(new java.awt.Font("SF Pro Text", 0, 11)); // NOI18N
         lblOrangeAcre.setForeground(new java.awt.Color(0, 0, 0));
         lblOrangeAcre.setText("3.2 acre");
         add(lblOrangeAcre);
-        lblOrangeAcre.setBounds(233, 537, 42, 20);
+        lblOrangeAcre.setBounds(233, 648, 42, 20);
 
         lblMango.setFont(new java.awt.Font("SF Pro Text", 1, 15)); // NOI18N
         lblMango.setForeground(new java.awt.Color(0, 0, 0));
         lblMango.setText("Mango");
         add(lblMango);
-        lblMango.setBounds(441, 517, 60, 20);
+        lblMango.setBounds(441, 628, 60, 20);
 
         lblMangoAcre.setFont(new java.awt.Font("SF Pro Text", 0, 11)); // NOI18N
         lblMangoAcre.setForeground(new java.awt.Color(0, 0, 0));
         lblMangoAcre.setText("2.3 acre");
         add(lblMangoAcre);
-        lblMangoAcre.setBounds(441, 537, 42, 20);
+        lblMangoAcre.setBounds(441, 648, 42, 20);
 
         pngCarrot.setForeground(new java.awt.Color(0, 0, 0));
         pngCarrot.setText("pngCarrot");
+        pngCarrot.setPreferredSize(new java.awt.Dimension(188, 112));
         add(pngCarrot);
-        pngCarrot.setBounds(25, 397, 188, 112);
+        pngCarrot.setBounds(25, 508, 188, 112);
 
         pngOrange.setForeground(new java.awt.Color(0, 0, 0));
         pngOrange.setText("pngOrange");
+        pngOrange.setPreferredSize(new java.awt.Dimension(188, 112));
         add(pngOrange);
-        pngOrange.setBounds(233, 397, 188, 112);
+        pngOrange.setBounds(233, 508, 188, 112);
 
         pngMango.setForeground(new java.awt.Color(0, 0, 0));
         pngMango.setText("pngMango");
+        pngMango.setPreferredSize(new java.awt.Dimension(188, 112));
         add(pngMango);
-        pngMango.setBounds(441, 397, 188, 112);
+        pngMango.setBounds(441, 508, 188, 112);
     }// </editor-fold>//GEN-END:initComponents
 
 
@@ -298,6 +400,6 @@ public class AllFields extends javax.swing.JPanel {
     private javax.swing.JLabel pngOrange;
     private javax.swing.JLabel pngTomato;
     private main.SVGImage sVGSalesGraph;
-    private main.SVGImage sVGYieldGraph;
+    private main.Chart salesChart;
     // End of variables declaration//GEN-END:variables
 }
