@@ -302,7 +302,7 @@ public class Tasks extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tableTasks);
 
         add(jScrollPane1);
-        jScrollPane1.setBounds(20, 181, 600, 120);
+        jScrollPane1.setBounds(20, 181, 600, 277);
 
         lblPercentage.setFont(new java.awt.Font("SF Pro", 0, 26)); // NOI18N
         lblPercentage.setForeground(new java.awt.Color(0, 0, 0));
