@@ -8,6 +8,7 @@ package uis;
 import java.awt.Cursor;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.sql.*;
@@ -119,7 +120,6 @@ public class AddEmployees extends javax.swing.JPanel {
         setSize(new java.awt.Dimension(649, 426));
         setLayout(null);
 
-        txtFName.setBackground(null);
         txtFName.setFont(new java.awt.Font("SF Pro Display", 0, 13)); // NOI18N
         txtFName.setForeground(new java.awt.Color(0, 0, 0));
         txtFName.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
@@ -127,7 +127,6 @@ public class AddEmployees extends javax.swing.JPanel {
         add(txtFName);
         txtFName.setBounds(307, 20, 147, 17);
 
-        txtLName.setBackground(null);
         txtLName.setFont(new java.awt.Font("SF Pro Display", 0, 13)); // NOI18N
         txtLName.setForeground(new java.awt.Color(0, 0, 0));
         txtLName.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
@@ -135,15 +134,18 @@ public class AddEmployees extends javax.swing.JPanel {
         add(txtLName);
         txtLName.setBounds(307, 57, 147, 17);
 
-        txtPhone.setBackground(null);
         txtPhone.setFont(new java.awt.Font("SF Pro Display", 0, 13)); // NOI18N
         txtPhone.setForeground(new java.awt.Color(0, 0, 0));
         txtPhone.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtPhone.setBorder(null);
+        txtPhone.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPhoneKeyTyped(evt);
+            }
+        });
         add(txtPhone);
         txtPhone.setBounds(307, 130, 147, 17);
 
-        txtEmail.setBackground(null);
         txtEmail.setFont(new java.awt.Font("SF Pro Display", 0, 13)); // NOI18N
         txtEmail.setForeground(new java.awt.Color(0, 0, 0));
         txtEmail.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
@@ -151,7 +153,6 @@ public class AddEmployees extends javax.swing.JPanel {
         add(txtEmail);
         txtEmail.setBounds(307, 167, 147, 17);
 
-        txtAddress.setBackground(null);
         txtAddress.setFont(new java.awt.Font("SF Pro Display", 0, 13)); // NOI18N
         txtAddress.setForeground(new java.awt.Color(0, 0, 0));
         txtAddress.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
@@ -159,14 +160,12 @@ public class AddEmployees extends javax.swing.JPanel {
         add(txtAddress);
         txtAddress.setBounds(307, 204, 147, 17);
 
-        txtPassword.setBackground(null);
         txtPassword.setFont(new java.awt.Font("SF Pro Display", 0, 13)); // NOI18N
         txtPassword.setForeground(new java.awt.Color(0, 0, 0));
         txtPassword.setBorder(null);
         add(txtPassword);
         txtPassword.setBounds(307, 241, 147, 17);
 
-        cmbRole.setBackground(null);
         cmbRole.setFont(new java.awt.Font("SF Pro Display", 0, 13)); // NOI18N
         cmbRole.setForeground(new java.awt.Color(0, 0, 0));
         cmbRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "General Farmworker", "Fruit Picker", "Waterer" }));
@@ -412,6 +411,19 @@ public class AddEmployees extends javax.swing.JPanel {
         txtAddress.setVisible(true);
         txtAddress.requestFocusInWindow();
     }//GEN-LAST:event_sVGAddEmployeesAddressTextBoxMouseClicked
+
+    private void txtPhoneKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPhoneKeyTyped
+        // Only accepts 10 digits
+        char c = evt.getKeyChar();
+        if (!((c >= '0') && (c <= '9') ||
+           (c == KeyEvent.VK_BACK_SPACE) ||
+           (c == KeyEvent.VK_DELETE))) {
+          evt.consume();  // ignore event
+        }
+        if (txtPhone.getText().length() >= 10 ) { // limit textfield to 10 characters
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtPhoneKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

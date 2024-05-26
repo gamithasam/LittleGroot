@@ -4,17 +4,42 @@
  */
 package uis;
 
+import java.awt.Cursor;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.KeyEvent;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import java.sql.*;
+
 /**
  *
  * @author gamitha
  */
 public class AddFieldMetrics extends javax.swing.JPanel {
 
-    /**
-     * Creates new form AddFieldMetrics
-     */
+    private void addFocusListener(JTextField textField) {
+        textField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (textField.getText().trim().isEmpty()) {
+                    textField.setVisible(false);
+                }
+            }
+        });
+    }
+    
     public AddFieldMetrics() {
         initComponents();
+        
+        // Set visibilies off
+        cmbField.setVisible(false);
+        stepperSoilPh.setVisible(false);
+        stepperSoilMoisture.setVisible(false);
+        txtLightIntensity.setVisible(false);
+        
+        // Add focus listeners to textboxes
+        addFocusListener(txtLightIntensity);
         
         // Set SVGs
         sVGAddBtn.setSvgImage("./svgcomponents/AddBtn.svg", 39, 22);
@@ -24,9 +49,15 @@ public class AddFieldMetrics extends javax.swing.JPanel {
         sVGAddFieldMetricsSoilMoisture.setSvgImage("./svgcomponents/AddFieldMetricsSoilMoisture.svg", 431, 52);
         sVGAddFieldMetricsLightIntensity.setSvgImage("./svgcomponents/AddFieldMetricsLightIntensity.svg", 431, 52);
         sVGAddFieldMetricsFieldComboBox.setSvgImage("./svgcomponents/AddFieldMetricsFieldComboBox.svg", 160, 21);
-        sVGStepper1.setSvgImage("./svgcomponents/Stepper.svg", 53, 24);
-        sVGStepperWithPercentage1.setSvgImage("./svgcomponents/StepperWithPercentage.svg", 72, 24);
+        sVGStepper1.setSvgImage("./svgcomponents/Stepper.svg", 60, 24);
+        sVGStepperWithPercentage1.setSvgImage("./svgcomponents/StepperWithPercentage.svg", 79, 24);
         sVGAddFieldMetricsLightIntensityTextBox.setSvgImage("./svgcomponents/AddFieldMetricsLightIntensityTextBox.svg", 160, 23);
+        
+        // Set Cursors
+        Cursor txtCur = new Cursor(Cursor.TEXT_CURSOR);
+        Cursor hand = new Cursor(Cursor.HAND_CURSOR);
+        sVGAddFieldMetricsLightIntensityTextBox.setCursor(txtCur);
+        sVGAddBtn.setCursor(hand);
     }
 
     /**
@@ -38,9 +69,13 @@ public class AddFieldMetrics extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        cmbField = new javax.swing.JComboBox<>();
         sVGAddFieldMetricsFieldComboBox = new main.SVGImage();
+        stepperSoilPh = new javax.swing.JSpinner();
         sVGStepper1 = new main.SVGImage();
+        stepperSoilMoisture = new javax.swing.JSpinner();
         sVGStepperWithPercentage1 = new main.SVGImage();
+        txtLightIntensity = new javax.swing.JTextField();
         sVGAddFieldMetricsLightIntensityTextBox = new main.SVGImage();
         sVGAddFieldMetricsField = new main.SVGImage();
         sVGAddFieldMetricsSoilPh = new main.SVGImage();
@@ -54,23 +89,80 @@ public class AddFieldMetrics extends javax.swing.JPanel {
         setSize(new java.awt.Dimension(649, 426));
         setLayout(null);
 
+        cmbField.setBackground(new java.awt.Color(255, 255, 255));
+        cmbField.setFont(new java.awt.Font("SF Pro Display", 0, 13)); // NOI18N
+        cmbField.setForeground(new java.awt.Color(0, 0, 0));
+        cmbField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tomato", "Corn", "Apple", "Carrot", "Orange", "Mango" }));
+        cmbField.setBorder(null);
+        cmbField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbFieldActionPerformed(evt);
+            }
+        });
+        add(cmbField);
+        cmbField.setBounds(301, 18, 160, 21);
+
         sVGAddFieldMetricsFieldComboBox.setForeground(new java.awt.Color(0, 0, 0));
         sVGAddFieldMetricsFieldComboBox.setText("sVGAddFieldMetricsFieldComboBox");
+        sVGAddFieldMetricsFieldComboBox.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sVGAddFieldMetricsFieldComboBoxMouseClicked(evt);
+            }
+        });
         add(sVGAddFieldMetricsFieldComboBox);
         sVGAddFieldMetricsFieldComboBox.setBounds(301, 18, 160, 21);
 
+        stepperSoilPh.setFont(new java.awt.Font("SF Pro", 0, 13)); // NOI18N
+        stepperSoilPh.setModel(new javax.swing.SpinnerNumberModel(0.0d, 0.0d, 14.0d, 0.5d));
+        stepperSoilPh.setBorder(null);
+        add(stepperSoilPh);
+        stepperSoilPh.setBounds(401, 52, 60, 24);
+
         sVGStepper1.setForeground(new java.awt.Color(0, 0, 0));
         sVGStepper1.setText("sVGStepper1");
+        sVGStepper1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sVGStepper1MouseClicked(evt);
+            }
+        });
         add(sVGStepper1);
-        sVGStepper1.setBounds(408, 52, 53, 24);
+        sVGStepper1.setBounds(401, 52, 60, 24);
+
+        stepperSoilMoisture.setFont(new java.awt.Font("SF Pro", 0, 13)); // NOI18N
+        stepperSoilMoisture.setModel(new javax.swing.SpinnerNumberModel(0, 0, 100, 1));
+        stepperSoilMoisture.setBorder(null);
+        add(stepperSoilMoisture);
+        stepperSoilMoisture.setBounds(382, 96, 60, 24);
 
         sVGStepperWithPercentage1.setForeground(new java.awt.Color(0, 0, 0));
         sVGStepperWithPercentage1.setText("sVGStepperWithPercentage1");
+        sVGStepperWithPercentage1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sVGStepperWithPercentage1MouseClicked(evt);
+            }
+        });
         add(sVGStepperWithPercentage1);
-        sVGStepperWithPercentage1.setBounds(389, 96, 72, 24);
+        sVGStepperWithPercentage1.setBounds(382, 96, 79, 24);
+
+        txtLightIntensity.setFont(new java.awt.Font("SF Pro Display", 0, 13)); // NOI18N
+        txtLightIntensity.setForeground(new java.awt.Color(0, 0, 0));
+        txtLightIntensity.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txtLightIntensity.setBorder(null);
+        txtLightIntensity.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtLightIntensityKeyTyped(evt);
+            }
+        });
+        add(txtLightIntensity);
+        txtLightIntensity.setBounds(307, 152, 147, 17);
 
         sVGAddFieldMetricsLightIntensityTextBox.setForeground(new java.awt.Color(0, 0, 0));
         sVGAddFieldMetricsLightIntensityTextBox.setText("sVGAddFieldMetricsLightIntensityTextBox");
+        sVGAddFieldMetricsLightIntensityTextBox.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sVGAddFieldMetricsLightIntensityTextBoxMouseClicked(evt);
+            }
+        });
         add(sVGAddFieldMetricsLightIntensityTextBox);
         sVGAddFieldMetricsLightIntensityTextBox.setBounds(301, 149, 160, 23);
 
@@ -97,6 +189,11 @@ public class AddFieldMetrics extends javax.swing.JPanel {
 
         sVGAddBtn.setForeground(new java.awt.Color(0, 0, 0));
         sVGAddBtn.setText("sVGAddBtn");
+        sVGAddBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sVGAddBtnMouseClicked(evt);
+            }
+        });
         add(sVGAddBtn);
         sVGAddBtn.setBounds(432, 201, 39, 22);
 
@@ -106,8 +203,83 @@ public class AddFieldMetrics extends javax.swing.JPanel {
         sVGAddFieldMetricsForm.setBounds(20, 10, 451, 176);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void cmbFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbFieldActionPerformed
+
+    private void sVGAddFieldMetricsFieldComboBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGAddFieldMetricsFieldComboBoxMouseClicked
+        cmbField.setVisible(true);
+        cmbField.requestFocusInWindow();
+    }//GEN-LAST:event_sVGAddFieldMetricsFieldComboBoxMouseClicked
+
+    private void sVGStepper1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGStepper1MouseClicked
+        stepperSoilPh.setVisible(true);
+        stepperSoilPh.requestFocusInWindow();
+    }//GEN-LAST:event_sVGStepper1MouseClicked
+
+    private void sVGStepperWithPercentage1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGStepperWithPercentage1MouseClicked
+        stepperSoilMoisture.setVisible(true);
+        stepperSoilMoisture.requestFocusInWindow();
+    }//GEN-LAST:event_sVGStepperWithPercentage1MouseClicked
+
+    private void sVGAddFieldMetricsLightIntensityTextBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGAddFieldMetricsLightIntensityTextBoxMouseClicked
+        txtLightIntensity.setVisible(true);
+        txtLightIntensity.requestFocusInWindow();
+    }//GEN-LAST:event_sVGAddFieldMetricsLightIntensityTextBoxMouseClicked
+
+    private void sVGAddBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGAddBtnMouseClicked
+        String field = (String) cmbField.getSelectedItem();
+        double pH = (Double) stepperSoilPh.getValue();
+        int moisture = (int) stepperSoilMoisture.getValue();
+        int lightIntensity = Integer.parseInt(txtLightIntensity.getText());
+        
+        // Add to the database
+        Connection conn = null;
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/LittleGroot", "root" , "toor");
+            
+            Statement st = conn.createStatement();
+            
+            int updatedRows = st.executeUpdate("INSERT INTO Field (field, pH, moisture, lightIntensity) VALUES ('" + field + "', " + pH + ", " + moisture + ", " + lightIntensity + ") ON DUPLICATE KEY UPDATE pH = VALUES(pH), moisture = VALUES(moisture), lightIntensity = VALUES(lightIntensity);");
+            if(updatedRows > 0) {
+                // Clear the textboxes
+                txtLightIntensity.setText("");
+                cmbField.setSelectedIndex(0);
+                stepperSoilPh.setValue(0);
+                stepperSoilMoisture.setValue(0);
+                // Show message
+                JOptionPane.showMessageDialog(null, "Field metrics added successfully!");
+            } else {
+                JOptionPane.showMessageDialog(null, "Failed to add field metrics");
+            }
+            
+        } catch (ClassNotFoundException | SQLException e) {
+            JOptionPane.showMessageDialog(null, "Database Connection Error");
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, "Failed to close connection");
+                }
+            }
+        }
+    }//GEN-LAST:event_sVGAddBtnMouseClicked
+
+    private void txtLightIntensityKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLightIntensityKeyTyped
+        // Only accepts integers
+        char c = evt.getKeyChar();
+        if (!((c >= '0') && (c <= '9') ||
+           (c == KeyEvent.VK_BACK_SPACE) ||
+           (c == KeyEvent.VK_DELETE))) {
+          evt.consume();  // ignore event
+        }
+    }//GEN-LAST:event_txtLightIntensityKeyTyped
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cmbField;
     private main.SVGImage sVGAddBtn;
     private main.SVGImage sVGAddFieldMetricsField;
     private main.SVGImage sVGAddFieldMetricsFieldComboBox;
@@ -118,5 +290,8 @@ public class AddFieldMetrics extends javax.swing.JPanel {
     private main.SVGImage sVGAddFieldMetricsSoilPh;
     private main.SVGImage sVGStepper1;
     private main.SVGImage sVGStepperWithPercentage1;
+    private javax.swing.JSpinner stepperSoilMoisture;
+    private javax.swing.JSpinner stepperSoilPh;
+    private javax.swing.JTextField txtLightIntensity;
     // End of variables declaration//GEN-END:variables
 }
