@@ -17,10 +17,10 @@ LittleGroot is a farm management system developed in Java. It is designed to str
 
 - Dashboard with an overview of the entire farm (Work in progress)
 - Get insights on field health with graphs and charts (Work in progress)
-- Track finances (Work in progress)
+- Track finances
 - Manage inventory
 - Manage tasks
-- Add measured field metrics such as Soil pH, Soil moisture, and Light intensity (Work in progress)
+- Add measured field metrics such as Soil pH, Soil moisture, and Light intensity
 - Add employees (Only for Managers)
 - Reset passwords with security questions (Work in progress)
 - Change password
