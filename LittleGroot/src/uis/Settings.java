@@ -82,7 +82,6 @@ public class Settings extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pngProfilePic = new javax.swing.JLabel();
         lblUserName = new javax.swing.JLabel();
         lblUserRole = new javax.swing.JLabel();
         lblAbout = new javax.swing.JLabel();
@@ -106,22 +105,17 @@ public class Settings extends javax.swing.JPanel {
         setSize(new java.awt.Dimension(649, 478));
         setLayout(null);
 
-        pngProfilePic.setForeground(new java.awt.Color(0, 0, 0));
-        pngProfilePic.setText("Profile Pic");
-        add(pngProfilePic);
-        pngProfilePic.setBounds(30, 55, 35, 35);
-
         lblUserName.setFont(new java.awt.Font("SF Pro Display", 0, 13)); // NOI18N
         lblUserName.setForeground(new java.awt.Color(0, 0, 0));
         lblUserName.setText("Name");
         add(lblUserName);
-        lblUserName.setBounds(73, 56, 33, 20);
+        lblUserName.setBounds(30, 56, 290, 20);
 
         lblUserRole.setFont(new java.awt.Font("SF Pro Display", 0, 11)); // NOI18N
         lblUserRole.setForeground(new java.awt.Color(0, 0, 0));
         lblUserRole.setText("Role");
         add(lblUserRole);
-        lblUserRole.setBounds(73, 74, 70, 14);
+        lblUserRole.setBounds(30, 74, 220, 14);
 
         lblAbout.setFont(new java.awt.Font("SF Pro Text", 1, 13)); // NOI18N
         lblAbout.setForeground(new java.awt.Color(0, 0, 0));
@@ -175,7 +169,6 @@ public class Settings extends javax.swing.JPanel {
         add(sVGAboutForm);
         sVGAboutForm.setBounds(20, 368, 451, 52);
 
-        txtOldPassword.setBackground(null);
         txtOldPassword.setFont(new java.awt.Font("SF Pro Display", 0, 13)); // NOI18N
         txtOldPassword.setForeground(new java.awt.Color(0, 0, 0));
         txtOldPassword.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
@@ -183,7 +176,6 @@ public class Settings extends javax.swing.JPanel {
         add(txtOldPassword);
         txtOldPassword.setBounds(308, 174, 147, 17);
 
-        txtNewPassword.setBackground(null);
         txtNewPassword.setFont(new java.awt.Font("SF Pro Display", 0, 13)); // NOI18N
         txtNewPassword.setForeground(new java.awt.Color(0, 0, 0));
         txtNewPassword.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
@@ -191,7 +183,6 @@ public class Settings extends javax.swing.JPanel {
         add(txtNewPassword);
         txtNewPassword.setBounds(308, 211, 147, 17);
 
-        txtVerifyPassword.setBackground(null);
         txtVerifyPassword.setFont(new java.awt.Font("SF Pro Display", 0, 13)); // NOI18N
         txtVerifyPassword.setForeground(new java.awt.Color(0, 0, 0));
         txtVerifyPassword.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
@@ -309,7 +300,6 @@ public class Settings extends javax.swing.JPanel {
     private javax.swing.JLabel lblAccount;
     private javax.swing.JLabel lblUserName;
     private javax.swing.JLabel lblUserRole;
-    private javax.swing.JLabel pngProfilePic;
     private main.SVGImage sVGAboutForm;
     private main.SVGImage sVGAccountForm;
     private main.SVGImage sVGChangePasswordBtn;
