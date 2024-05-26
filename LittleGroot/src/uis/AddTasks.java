@@ -4,6 +4,13 @@
  */
 package uis;
 
+import java.awt.Cursor;
+import java.sql.*;
+import java.util.Calendar;
+import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
+
 /**
  *
  * @author gamitha
@@ -13,19 +20,71 @@ public class AddTasks extends javax.swing.JPanel {
     /**
      * Creates new form AddTasks
      */
+    
+    int month = (int) Calendar.getInstance().get(Calendar.MONTH)+1;
+    int year = (int) Calendar.getInstance().get(Calendar.YEAR);
+    int day = (int) Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+        
     public AddTasks() {
         initComponents();
         
+        // Steppers setup
+        
+        
+        JSpinner.NumberEditor editor = new JSpinner.NumberEditor(stepperYear, "#");
+        stepperYear.setEditor(editor);
+        stepperYear.setValue(year);
+        stepperMonth.setValue(month);
+        stepperDay.setValue(day);
+        
+        int maxDay;
+        if (month == 4 || month == 6 || month == 9 || month == 11) {
+            maxDay = 30;
+        } else if (month == 2) {
+            if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) {
+                maxDay = 29; // Leap year
+            } else {
+                maxDay = 28; // Not a leap year
+            }
+        } else {
+            maxDay = 31;
+        }
+        SpinnerNumberModel model = (SpinnerNumberModel) stepperDay.getModel();
+        model.setMaximum(maxDay);
+        
+        // Set SVGs
         sVGAddBtn.setSvgImage("./svgcomponents/AddBtn.svg", 39, 22);
         sVGAddTasksTaskTextBox.setSvgImage("./svgcomponents/AddTasksTaskTextBox.svg", 160, 23);
         sVGAddTasksCategoryComboBox.setSvgImage("./svgcomponents/AddTasksCategoryComboBox.svg", 160, 21);
-        sVGStepper051.setSvgImage("./svgcomponents/Stepper05.svg", 42, 24);
-        sVGStepper101.setSvgImage("./svgcomponents/Stepper10.svg", 40, 24);
-        sVGStepper20241.setSvgImage("./svgcomponents/Stepper2024.svg", 58, 24);
         sVGAddTasksTask.setSvgImage("./svgcomponents/AddTasksTask.svg", 431, 37);
         sVGAddTasksCategory.setSvgImage("./svgcomponents/AddTasksCategory.svg", 431, 36);
         sVGAddTasksDate.setSvgImage("./svgcomponents/AddTasksDate.svg", 431, 36);
         sVGAddTasksForm.setSvgImage("./svgcomponents/AddTasksForm.svg", 451, 109);
+        
+        // Set Cursors
+        Cursor txtCur = new Cursor(Cursor.TEXT_CURSOR);
+        Cursor hand = new Cursor(Cursor.HAND_CURSOR);
+        sVGAddTasksTaskTextBox.setCursor(txtCur);
+        sVGAddBtn.setCursor(hand);
+    }
+    
+    private void setMaxDate() {
+        int month = (int) stepperMonth.getValue();
+        int year = (int) stepperYear.getValue();
+        int maxDay;
+        if (month == 4 || month == 6 || month == 9 || month == 11) {
+            maxDay = 30;
+        } else if (month == 2) {
+            if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) {
+                maxDay = 29; // Leap year
+            } else {
+                maxDay = 28; // Not a leap year
+            }
+        } else {
+            maxDay = 31;
+        }
+        SpinnerNumberModel model = (SpinnerNumberModel) stepperDay.getModel();
+        model.setMaximum(maxDay);
     }
 
     /**
@@ -37,12 +96,14 @@ public class AddTasks extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        txtTask = new javax.swing.JTextField();
+        cmbCategory = new javax.swing.JComboBox<>();
+        stepperDay = new javax.swing.JSpinner();
+        stepperMonth = new javax.swing.JSpinner();
+        stepperYear = new javax.swing.JSpinner();
         sVGAddBtn = new main.SVGImage();
         sVGAddTasksTaskTextBox = new main.SVGImage();
         sVGAddTasksCategoryComboBox = new main.SVGImage();
-        sVGStepper051 = new main.SVGImage();
-        sVGStepper101 = new main.SVGImage();
-        sVGStepper20241 = new main.SVGImage();
         sVGAddTasksTask = new main.SVGImage();
         sVGAddTasksCategory = new main.SVGImage();
         sVGAddTasksDate = new main.SVGImage();
@@ -53,8 +114,71 @@ public class AddTasks extends javax.swing.JPanel {
         setSize(new java.awt.Dimension(649, 426));
         setLayout(null);
 
+        txtTask.setFont(new java.awt.Font("SF Pro Display", 0, 13)); // NOI18N
+        txtTask.setForeground(new java.awt.Color(0, 0, 0));
+        txtTask.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txtTask.setBorder(null);
+        txtTask.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTaskKeyTyped(evt);
+            }
+        });
+        add(txtTask);
+        txtTask.setBounds(307, 20, 147, 17);
+
+        cmbCategory.setBackground(new java.awt.Color(255, 255, 255));
+        cmbCategory.setFont(new java.awt.Font("SF Pro Display", 0, 13)); // NOI18N
+        cmbCategory.setForeground(new java.awt.Color(0, 0, 0));
+        cmbCategory.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Generic", "Tomato", "Corn", "Apple", "Carrot", "Orange", "Mango" }));
+        cmbCategory.setBorder(null);
+        cmbCategory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbCategoryActionPerformed(evt);
+            }
+        });
+        add(cmbCategory);
+        cmbCategory.setBounds(301, 55, 160, 21);
+
+        stepperDay.setFont(new java.awt.Font("SF Pro", 0, 13)); // NOI18N
+        stepperDay.setModel(new javax.swing.SpinnerNumberModel(1, 1, 12, 1));
+        stepperDay.setBorder(null);
+        stepperDay.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                stepperDayStateChanged(evt);
+            }
+        });
+        add(stepperDay);
+        stepperDay.setBounds(336, 89, 50, 24);
+
+        stepperMonth.setFont(new java.awt.Font("SF Pro", 0, 13)); // NOI18N
+        stepperMonth.setModel(new javax.swing.SpinnerNumberModel(1, 1, 31, 1));
+        stepperMonth.setBorder(null);
+        stepperMonth.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                stepperMonthStateChanged(evt);
+            }
+        });
+        add(stepperMonth);
+        stepperMonth.setBounds(276, 89, 50, 24);
+
+        stepperYear.setFont(new java.awt.Font("SF Pro", 0, 13)); // NOI18N
+        stepperYear.setModel(new javax.swing.SpinnerNumberModel(2000, 2000, 2100, 1));
+        stepperYear.setBorder(null);
+        stepperYear.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                stepperYearStateChanged(evt);
+            }
+        });
+        add(stepperYear);
+        stepperYear.setBounds(396, 89, 65, 24);
+
         sVGAddBtn.setForeground(new java.awt.Color(0, 0, 0));
         sVGAddBtn.setText("sVGAddBtn");
+        sVGAddBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sVGAddBtnMouseClicked(evt);
+            }
+        });
         add(sVGAddBtn);
         sVGAddBtn.setBounds(432, 134, 39, 22);
 
@@ -67,21 +191,6 @@ public class AddTasks extends javax.swing.JPanel {
         sVGAddTasksCategoryComboBox.setText("sVGAddTasksCategoryComboBox");
         add(sVGAddTasksCategoryComboBox);
         sVGAddTasksCategoryComboBox.setBounds(301, 55, 160, 21);
-
-        sVGStepper051.setForeground(new java.awt.Color(0, 0, 0));
-        sVGStepper051.setText("sVGStepper05");
-        add(sVGStepper051);
-        sVGStepper051.setBounds(301, 89, 42, 24);
-
-        sVGStepper101.setForeground(new java.awt.Color(0, 0, 0));
-        sVGStepper101.setText("sVGStepper101");
-        add(sVGStepper101);
-        sVGStepper101.setBounds(353, 89, 40, 24);
-
-        sVGStepper20241.setForeground(new java.awt.Color(0, 0, 0));
-        sVGStepper20241.setText("sVGStepper20241");
-        add(sVGStepper20241);
-        sVGStepper20241.setBounds(403, 89, 58, 24);
 
         sVGAddTasksTask.setForeground(new java.awt.Color(0, 0, 0));
         sVGAddTasksTask.setText("sVGAddTasksTask");
@@ -104,8 +213,72 @@ public class AddTasks extends javax.swing.JPanel {
         sVGAddTasksForm.setBounds(20, 10, 451, 109);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void txtTaskKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTaskKeyTyped
+
+    }//GEN-LAST:event_txtTaskKeyTyped
+
+    private void cmbCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCategoryActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbCategoryActionPerformed
+
+    private void stepperDayStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_stepperDayStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_stepperDayStateChanged
+
+    private void stepperMonthStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_stepperMonthStateChanged
+        setMaxDate();
+    }//GEN-LAST:event_stepperMonthStateChanged
+
+    private void stepperYearStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_stepperYearStateChanged
+        setMaxDate();
+    }//GEN-LAST:event_stepperYearStateChanged
+
+    private void sVGAddBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGAddBtnMouseClicked
+        String task = txtTask.getText();
+        String category = (String) cmbCategory.getSelectedItem();
+        String selDay = String.format("%02d", (Integer) stepperDay.getValue());
+        String selMonth = String.format("%02d", (Integer) stepperMonth.getValue());
+        String selYear = Integer.toString((Integer) stepperYear.getValue());
+        String selDate = selYear + "-" + selMonth + "-" + selDay;
+
+        // Add to the database
+        Connection conn = null;
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/LittleGroot", "root" , "toor");
+            
+            Statement st = conn.createStatement();
+            
+            int updatedRows = st.executeUpdate("INSERT INTO Tasks VALUES (false, '" + task + "', '" + category + "', '" + selDate + "');");
+            if(updatedRows > 0) {
+                // Clear the textboxes
+                txtTask.setText("");
+                cmbCategory.setSelectedIndex(0);
+                stepperDay.setValue(day);
+                stepperMonth.setValue(month);
+                stepperYear.setValue(year);
+                // Show message
+                JOptionPane.showMessageDialog(null, "Task added successfully!");
+            } else {
+                JOptionPane.showMessageDialog(null, "Failed to add Task");
+            }
+            
+        } catch (ClassNotFoundException | SQLException e) {
+            JOptionPane.showMessageDialog(null, "Database Connection Error");
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, "Failed to close connection");
+                }
+            }
+        }
+    }//GEN-LAST:event_sVGAddBtnMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cmbCategory;
     private main.SVGImage sVGAddBtn;
     private main.SVGImage sVGAddTasksCategory;
     private main.SVGImage sVGAddTasksCategoryComboBox;
@@ -113,8 +286,9 @@ public class AddTasks extends javax.swing.JPanel {
     private main.SVGImage sVGAddTasksForm;
     private main.SVGImage sVGAddTasksTask;
     private main.SVGImage sVGAddTasksTaskTextBox;
-    private main.SVGImage sVGStepper051;
-    private main.SVGImage sVGStepper101;
-    private main.SVGImage sVGStepper20241;
+    private javax.swing.JSpinner stepperDay;
+    private javax.swing.JSpinner stepperMonth;
+    private javax.swing.JSpinner stepperYear;
+    private javax.swing.JTextField txtTask;
     // End of variables declaration//GEN-END:variables
 }
