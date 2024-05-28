@@ -4,6 +4,10 @@
  */
 package uis;
 
+import java.awt.Cursor;
+import javax.swing.JOptionPane;
+import java.sql.*;
+
 /**
  *
  * @author gamitha
@@ -13,17 +17,60 @@ public class AddInventory extends javax.swing.JPanel {
     /**
      * Creates new form AddInventory
      */
+    private void setLblUnit(String item) {
+        String unit = "";
+        
+        // Access the databse
+        Connection conn = null;
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/LittleGroot", "root" , "toor");
+            
+            // Query the Inventory table
+            PreparedStatement st = conn.prepareStatement("SELECT Unit FROM Inventory WHERE Item = ?");
+            st.setString(1, item);
+            ResultSet rs = st.executeQuery();
+
+            // Get the Unit
+            if (rs.next()) {
+                unit = rs.getString("Unit");
+                // Set the text of lblUnit
+                lblUnit.setVisible(true);
+                lblUnit.setText(unit);
+            } else {
+                lblUnit.setVisible(false);
+            }
+            
+        } catch (ClassNotFoundException | SQLException e) {
+            JOptionPane.showMessageDialog(null, "Database Connection Error");
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, "Failed to close connection");
+                }
+            }
+        }
+    }
+    
     public AddInventory() {
         initComponents();
         
-        sVGAddBtn1.setSvgImage("./svgcomponents/AddBtn.svg", 39, 22);
+        // Set visibilities off
+        cmbItem.setVisible(false);
+        
+        // Set text of lblUnit
+        setLblUnit((String)cmbItem.getSelectedItem());
+        
+        // Set SVGs
+        sVGUpdateBtn.setSvgImage("./svgcomponents/UpdateBtn.svg", 59, 22);
         sVGAddInventoryForm.setSvgImage("./svgcomponents/AddInventoryForm.svg", 451, 72);
         sVGAddInventoryItem.setSvgImage("./svgcomponents/AddInventoryItem.svg", 431, 36);
         sVGAddInventoryItemComboBox.setSvgImage("./svgcomponents/AddInventoryItemComboBox.svg", 160, 21);
         sVGAddInventoryQty.setSvgImage("./svgcomponents/AddInventoryQty.svg", 431, 36);
-        sVGStepperWithKg.setSvgImage("./svgcomponents/StepperWithKg.svg", 74, 24);
         
-        sVGAddBtn2.setSvgImage("./svgcomponents/AddBtn.svg", 39, 22);
+        sVGAddBtn.setSvgImage("./svgcomponents/AddBtn.svg", 39, 22);
         sVGAddInventoryNewForm.setSvgImage("./svgcomponents/AddInventoryNewForm.svg", 451, 111);
         sVGAddInventoryNewItem.setSvgImage("./svgcomponents/AddInventoryNewItem.svg", 431, 37);
         sVGAddInventoryNewItemTextBox.setSvgImage("./svgcomponents/AddInventoryNewItemTextBox.svg", 160, 23);
@@ -31,6 +78,15 @@ public class AddInventory extends javax.swing.JPanel {
         sVGAddInventoryNewItemIDTextBox.setSvgImage("./svgcomponents/AddInventoryNewItemIDTextBox.svg", 160, 23);
         sVGAddInventoryNewUnit.setSvgImage("./svgcomponents/AddInventoryNewUnit.svg", 431, 37);
         sVGAddInventoryNewUnitTextBox.setSvgImage("./svgcomponents/AddInventoryNewUnitTextBox.svg", 160, 23);
+        
+        // Set Cursors
+        Cursor txtCur = new Cursor(Cursor.TEXT_CURSOR);
+        Cursor hand = new Cursor(Cursor.HAND_CURSOR);
+        sVGAddInventoryNewItemTextBox.setCursor(txtCur);
+        sVGAddInventoryNewItemIDTextBox.setCursor(txtCur);
+        sVGAddInventoryNewUnitTextBox.setCursor(txtCur);
+        sVGUpdateBtn.setCursor(hand);
+        sVGAddBtn.setCursor(hand);
     }
 
     /**
@@ -42,12 +98,15 @@ public class AddInventory extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        cmbItem = new javax.swing.JComboBox<>();
         sVGAddInventoryItemComboBox = new main.SVGImage();
         sVGAddInventoryItem = new main.SVGImage();
+        panelQty = new javax.swing.JPanel();
+        stepperQty = new javax.swing.JSpinner();
+        lblUnit = new javax.swing.JLabel();
         sVGAddInventoryQty = new main.SVGImage();
-        sVGStepperWithKg = new main.SVGImage();
         sVGAddInventoryForm = new main.SVGImage();
-        sVGAddBtn1 = new main.SVGImage();
+        sVGUpdateBtn = new main.SVGImage();
         lblNewItem = new javax.swing.JLabel();
         sVGAddInventoryNewItemTextBox = new main.SVGImage();
         sVGAddInventoryNewItemIDTextBox = new main.SVGImage();
@@ -56,12 +115,25 @@ public class AddInventory extends javax.swing.JPanel {
         sVGAddInventoryNewItemID = new main.SVGImage();
         sVGAddInventoryNewUnit = new main.SVGImage();
         sVGAddInventoryNewForm = new main.SVGImage();
-        sVGAddBtn2 = new main.SVGImage();
+        sVGAddBtn = new main.SVGImage();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setForeground(null);
         setSize(new java.awt.Dimension(649, 426));
         setLayout(null);
+
+        cmbItem.setBackground(new java.awt.Color(255, 255, 255));
+        cmbItem.setFont(new java.awt.Font("SF Pro Display", 0, 13)); // NOI18N
+        cmbItem.setForeground(new java.awt.Color(0, 0, 0));
+        cmbItem.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tomato Seeds", "Drip Irrigation Systems", "Hoses", "Sprinklers", "Fruit Tree Pesticide", "Organic Compost", "Trucks" }));
+        cmbItem.setBorder(null);
+        cmbItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbItemActionPerformed(evt);
+            }
+        });
+        add(cmbItem);
+        cmbItem.setBounds(301, 18, 160, 21);
 
         sVGAddInventoryItemComboBox.setForeground(new java.awt.Color(0, 0, 0));
         sVGAddInventoryItemComboBox.setText("sVGAddInventoryItemComboBox");
@@ -70,28 +142,58 @@ public class AddInventory extends javax.swing.JPanel {
 
         sVGAddInventoryItem.setForeground(new java.awt.Color(0, 0, 0));
         sVGAddInventoryItem.setText("sVGAddInventoryItem");
+        sVGAddInventoryItem.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sVGAddInventoryItemMouseClicked(evt);
+            }
+        });
         add(sVGAddInventoryItem);
         sVGAddInventoryItem.setBounds(30, 10, 431, 36);
+
+        panelQty.setBackground(null);
+        panelQty.setForeground(null);
+        panelQty.setOpaque(false);
+        panelQty.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.TRAILING, 6, 5));
+
+        stepperQty.setFont(new java.awt.Font("SF Pro", 0, 13)); // NOI18N
+        stepperQty.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+        stepperQty.setBorder(null);
+        stepperQty.setPreferredSize(new java.awt.Dimension(70, 24));
+        stepperQty.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                stepperQtyStateChanged(evt);
+            }
+        });
+        panelQty.add(stepperQty);
+
+        lblUnit.setFont(new java.awt.Font("SF Pro Display", 0, 13)); // NOI18N
+        lblUnit.setForeground(new java.awt.Color(0, 0, 0));
+        lblUnit.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblUnit.setText("lblUnit");
+        panelQty.add(lblUnit);
+
+        add(panelQty);
+        panelQty.setBounds(210, 46, 250, 36);
 
         sVGAddInventoryQty.setForeground(new java.awt.Color(0, 0, 0));
         sVGAddInventoryQty.setText("sVGAddInventoryQty");
         add(sVGAddInventoryQty);
         sVGAddInventoryQty.setBounds(30, 46, 431, 36);
 
-        sVGStepperWithKg.setForeground(new java.awt.Color(0, 0, 0));
-        sVGStepperWithKg.setText("sVGStepperWithKg");
-        add(sVGStepperWithKg);
-        sVGStepperWithKg.setBounds(387, 52, 74, 24);
-
         sVGAddInventoryForm.setForeground(new java.awt.Color(0, 0, 0));
         sVGAddInventoryForm.setText("sVGAddInventoryForm");
         add(sVGAddInventoryForm);
         sVGAddInventoryForm.setBounds(20, 10, 451, 72);
 
-        sVGAddBtn1.setForeground(new java.awt.Color(0, 0, 0));
-        sVGAddBtn1.setText("sVGAddBtn1");
-        add(sVGAddBtn1);
-        sVGAddBtn1.setBounds(432, 97, 39, 22);
+        sVGUpdateBtn.setForeground(new java.awt.Color(0, 0, 0));
+        sVGUpdateBtn.setText("sVGUpdateBtn");
+        sVGUpdateBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sVGUpdateBtnMouseClicked(evt);
+            }
+        });
+        add(sVGUpdateBtn);
+        sVGUpdateBtn.setBounds(412, 97, 59, 22);
 
         lblNewItem.setFont(new java.awt.Font("SF Pro Text", 1, 13)); // NOI18N
         lblNewItem.setForeground(new java.awt.Color(0, 0, 0));
@@ -134,17 +236,69 @@ public class AddInventory extends javax.swing.JPanel {
         add(sVGAddInventoryNewForm);
         sVGAddInventoryNewForm.setBounds(20, 175, 451, 111);
 
-        sVGAddBtn2.setForeground(new java.awt.Color(0, 0, 0));
-        sVGAddBtn2.setText("sVGAddBtn2");
-        add(sVGAddBtn2);
-        sVGAddBtn2.setBounds(432, 301, 39, 22);
+        sVGAddBtn.setForeground(new java.awt.Color(0, 0, 0));
+        sVGAddBtn.setText("sVGAddBtn");
+        add(sVGAddBtn);
+        sVGAddBtn.setBounds(432, 301, 39, 22);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void cmbItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbItemActionPerformed
+        setLblUnit((String) cmbItem.getSelectedItem());
+    }//GEN-LAST:event_cmbItemActionPerformed
+
+    private void stepperQtyStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_stepperQtyStateChanged
+        
+    }//GEN-LAST:event_stepperQtyStateChanged
+
+    private void sVGUpdateBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGUpdateBtnMouseClicked
+        String item = (String) cmbItem.getSelectedItem();
+        int qty = (int) stepperQty.getValue();
+        
+        // Update on the database
+        Connection conn = null;
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/LittleGroot", "root" , "toor");
+            
+            Statement st = conn.createStatement();
+            
+            int updatedRows = st.executeUpdate("UPDATE Inventory SET Availability = " + qty + " WHERE Item = '" + item + "';");
+            
+            if(updatedRows > 0) {
+                // Clear the inputs
+                cmbItem.setSelectedIndex(0);
+                stepperQty.setValue(0);
+                // Show message
+                JOptionPane.showMessageDialog(null, "Inventory updated successfully!");
+            } else {
+                JOptionPane.showMessageDialog(null, "Failed to update inventory");
+            }
+            
+        } catch (ClassNotFoundException | SQLException e) {
+            JOptionPane.showMessageDialog(null, "Database Connection Error");
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, "Failed to close connection");
+                }
+            }
+        }
+    }//GEN-LAST:event_sVGUpdateBtnMouseClicked
+
+    private void sVGAddInventoryItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGAddInventoryItemMouseClicked
+        cmbItem.setVisible(true);
+        cmbItem.requestFocusInWindow();
+    }//GEN-LAST:event_sVGAddInventoryItemMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cmbItem;
     private javax.swing.JLabel lblNewItem;
-    private main.SVGImage sVGAddBtn1;
-    private main.SVGImage sVGAddBtn2;
+    private javax.swing.JLabel lblUnit;
+    private javax.swing.JPanel panelQty;
+    private main.SVGImage sVGAddBtn;
     private main.SVGImage sVGAddInventoryForm;
     private main.SVGImage sVGAddInventoryItem;
     private main.SVGImage sVGAddInventoryItemComboBox;
@@ -156,6 +310,7 @@ public class AddInventory extends javax.swing.JPanel {
     private main.SVGImage sVGAddInventoryNewUnit;
     private main.SVGImage sVGAddInventoryNewUnitTextBox;
     private main.SVGImage sVGAddInventoryQty;
-    private main.SVGImage sVGStepperWithKg;
+    private main.SVGImage sVGUpdateBtn;
+    private javax.swing.JSpinner stepperQty;
     // End of variables declaration//GEN-END:variables
 }
