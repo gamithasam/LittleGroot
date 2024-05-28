@@ -5,10 +5,13 @@
 package uis;
 
 import java.awt.Cursor;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.sql.*;
 import java.util.Calendar;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
+import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 /**
@@ -25,12 +28,27 @@ public class AddTasks extends javax.swing.JPanel {
     int year = (int) Calendar.getInstance().get(Calendar.YEAR);
     int day = (int) Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
         
+    private void addFocusListener(JTextField textField) {
+        textField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (textField.getText().trim().isEmpty()) {
+                    textField.setVisible(false);
+                }
+            }
+        });
+    }
+    
     public AddTasks() {
         initComponents();
         
+        // Set visibility off
+        txtTask.setVisible(false);
+        
+        // Add focus listeners to textboxes
+        addFocusListener(txtTask);
+        
         // Steppers setup
-        
-        
         JSpinner.NumberEditor editor = new JSpinner.NumberEditor(stepperYear, "#");
         stepperYear.setEditor(editor);
         stepperYear.setValue(year);
@@ -184,6 +202,11 @@ public class AddTasks extends javax.swing.JPanel {
 
         sVGAddTasksTaskTextBox.setForeground(new java.awt.Color(0, 0, 0));
         sVGAddTasksTaskTextBox.setText("sVGAddTasksTaskTextBox");
+        sVGAddTasksTaskTextBox.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sVGAddTasksTaskTextBoxMouseClicked(evt);
+            }
+        });
         add(sVGAddTasksTaskTextBox);
         sVGAddTasksTaskTextBox.setBounds(301, 17, 160, 23);
 
@@ -275,6 +298,11 @@ public class AddTasks extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_sVGAddBtnMouseClicked
+
+    private void sVGAddTasksTaskTextBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGAddTasksTaskTextBoxMouseClicked
+        txtTask.setVisible(true);
+        txtTask.requestFocusInWindow();
+    }//GEN-LAST:event_sVGAddTasksTaskTextBoxMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
