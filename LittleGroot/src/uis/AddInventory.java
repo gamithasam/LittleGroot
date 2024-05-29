@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 
 /**
@@ -60,8 +61,6 @@ public class AddInventory extends javax.swing.JPanel {
         initComponents();
         
         // Set visibilities off
-        cmbItem.setVisible(false);
-        cmbNewCategory.setVisible(false);
         txtNewItem.setVisible(false);
         txtNewItemID.setVisible(false);
         txtNewUnit.setVisible(false);
@@ -75,7 +74,6 @@ public class AddInventory extends javax.swing.JPanel {
         sVGUpdateBtn.setSvgImage("./svgcomponents/UpdateBtn.svg", 59, 22);
         sVGAddInventoryForm.setSvgImage("./svgcomponents/AddInventoryForm.svg", 451, 72);
         sVGAddInventoryItem.setSvgImage("./svgcomponents/AddInventoryItem.svg", 431, 36);
-        sVGAddInventoryItemComboBox.setSvgImage("./svgcomponents/AddInventoryItemComboBox.svg", 160, 21);
         sVGAddInventoryQty.setSvgImage("./svgcomponents/AddInventoryQty.svg", 431, 36);
         
         sVGAddBtn.setSvgImage("./svgcomponents/AddBtn.svg", 39, 22);
@@ -87,7 +85,6 @@ public class AddInventory extends javax.swing.JPanel {
         sVGAddInventoryNewUnit.setSvgImage("./svgcomponents/AddInventoryNewUnit.svg", 431, 37);
         sVGAddInventoryNewUnitTextBox.setSvgImage("./svgcomponents/AddInventoryNewUnitTextBox.svg", 160, 23);
         sVGAddInventoryNewCategory.setSvgImage("./svgcomponents/AddInventoryNewCategory.svg", 431, 37);
-        sVGAddInventoryNewCategoryComboBox.setSvgImage("./svgcomponents/AddInventoryNewCategoryComboBox.svg", 160, 21);
         
         // Set Cursors
         Cursor txtCur = new Cursor(Cursor.TEXT_CURSOR);
@@ -146,6 +143,21 @@ public class AddInventory extends javax.swing.JPanel {
             }
         }
         
+        // Populate ComboBoxes
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+        for (String itemName : inventoryMap.keySet()) {
+            model.addElement(itemName);
+        }
+        cmbItem.setModel(model);
+        
+        DefaultComboBoxModel<String> categoryModel = new DefaultComboBoxModel<>();
+        for (InventoryDB inventoryItem : inventoryMap.values()) {
+            if (categoryModel.getIndexOf(inventoryItem.cat) == -1) {
+                categoryModel.addElement(inventoryItem.cat);
+            }
+        }
+        cmbNewCategory.setModel(categoryModel);
+        
         // Set text of lblUnit
         setLblUnit((String)cmbItem.getSelectedItem());
     }
@@ -161,7 +173,6 @@ public class AddInventory extends javax.swing.JPanel {
 
         cmbItem = new javax.swing.JComboBox<>();
         cmbNewCategory = new javax.swing.JComboBox<>();
-        sVGAddInventoryItemComboBox = new main.SVGImage();
         sVGAddInventoryItem = new main.SVGImage();
         panelQty = new javax.swing.JPanel();
         stepperQty = new javax.swing.JSpinner();
@@ -179,7 +190,6 @@ public class AddInventory extends javax.swing.JPanel {
         sVGAddInventoryNewItem = new main.SVGImage();
         sVGAddInventoryNewItemID = new main.SVGImage();
         sVGAddInventoryNewUnit = new main.SVGImage();
-        sVGAddInventoryNewCategoryComboBox = new main.SVGImage();
         sVGAddInventoryNewCategory = new main.SVGImage();
         sVGAddInventoryNewForm = new main.SVGImage();
         sVGAddBtn = new main.SVGImage();
@@ -192,7 +202,7 @@ public class AddInventory extends javax.swing.JPanel {
         cmbItem.setBackground(new java.awt.Color(255, 255, 255));
         cmbItem.setFont(new java.awt.Font("SF Pro Display", 0, 13)); // NOI18N
         cmbItem.setForeground(new java.awt.Color(0, 0, 0));
-        cmbItem.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tomato Seeds", "Drip Irrigation Systems", "Hoses", "Sprinklers", "Fruit Tree Pesticide", "Organic Compost", "Trucks" }));
+        cmbItem.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tomato Seeds" }));
         cmbItem.setBorder(null);
         cmbItem.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -219,16 +229,6 @@ public class AddInventory extends javax.swing.JPanel {
         });
         add(cmbNewCategory);
         cmbNewCategory.setBounds(301, 256, 160, 21);
-
-        sVGAddInventoryItemComboBox.setForeground(new java.awt.Color(0, 0, 0));
-        sVGAddInventoryItemComboBox.setText("sVGAddInventoryItemComboBox");
-        sVGAddInventoryItemComboBox.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                sVGAddInventoryItemComboBoxMouseClicked(evt);
-            }
-        });
-        add(sVGAddInventoryItemComboBox);
-        sVGAddInventoryItemComboBox.setBounds(301, 18, 160, 21);
 
         sVGAddInventoryItem.setForeground(new java.awt.Color(0, 0, 0));
         sVGAddInventoryItem.setText("sVGAddInventoryItem");
@@ -371,16 +371,6 @@ public class AddInventory extends javax.swing.JPanel {
         add(sVGAddInventoryNewUnit);
         sVGAddInventoryNewUnit.setBounds(30, 285, 431, 37);
 
-        sVGAddInventoryNewCategoryComboBox.setForeground(new java.awt.Color(0, 0, 0));
-        sVGAddInventoryNewCategoryComboBox.setText("sVGAddInventoryNewCategoryComboBox");
-        sVGAddInventoryNewCategoryComboBox.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                sVGAddInventoryNewCategoryComboBoxMouseClicked(evt);
-            }
-        });
-        add(sVGAddInventoryNewCategoryComboBox);
-        sVGAddInventoryNewCategoryComboBox.setBounds(301, 256, 160, 21);
-
         sVGAddInventoryNewCategory.setForeground(new java.awt.Color(0, 0, 0));
         sVGAddInventoryNewCategory.setText("sVGAddInventoryNewCategory");
         add(sVGAddInventoryNewCategory);
@@ -500,6 +490,11 @@ public class AddInventory extends javax.swing.JPanel {
                 txtNewItemID.setText("");
                 txtNewUnit.setText("");
                 cmbNewCategory.setSelectedIndex(0);
+                
+                // Create an object
+                InventoryDB inventoryAdd = new InventoryDB(item, itemID, cat, unit);
+                inventoryMap.put(item, inventoryAdd);
+                
                 // Show message
                 JOptionPane.showMessageDialog(null, "New inventory item added successfully!");
             } else {
@@ -519,11 +514,6 @@ public class AddInventory extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_sVGAddBtnMouseClicked
 
-    private void sVGAddInventoryNewCategoryComboBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGAddInventoryNewCategoryComboBoxMouseClicked
-        cmbNewCategory.setVisible(true);
-        cmbNewCategory.requestFocusInWindow();
-    }//GEN-LAST:event_sVGAddInventoryNewCategoryComboBoxMouseClicked
-
     private void cmbNewCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbNewCategoryActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbNewCategoryActionPerformed
@@ -531,11 +521,6 @@ public class AddInventory extends javax.swing.JPanel {
     private void cmbItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbItemMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbItemMouseClicked
-
-    private void sVGAddInventoryItemComboBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGAddInventoryItemComboBoxMouseClicked
-        cmbItem.setVisible(true);
-        cmbItem.requestFocusInWindow();
-    }//GEN-LAST:event_sVGAddInventoryItemComboBoxMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -547,9 +532,7 @@ public class AddInventory extends javax.swing.JPanel {
     private main.SVGImage sVGAddBtn;
     private main.SVGImage sVGAddInventoryForm;
     private main.SVGImage sVGAddInventoryItem;
-    private main.SVGImage sVGAddInventoryItemComboBox;
     private main.SVGImage sVGAddInventoryNewCategory;
-    private main.SVGImage sVGAddInventoryNewCategoryComboBox;
     private main.SVGImage sVGAddInventoryNewForm;
     private main.SVGImage sVGAddInventoryNewItem;
     private main.SVGImage sVGAddInventoryNewItemID;

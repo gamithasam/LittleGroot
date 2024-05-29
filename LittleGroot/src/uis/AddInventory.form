@@ -41,14 +41,8 @@
           <Color blue="0" green="0" red="0" type="rgb"/>
         </Property>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="7">
+          <StringArray count="1">
             <StringItem index="0" value="Tomato Seeds"/>
-            <StringItem index="1" value="Drip Irrigation Systems"/>
-            <StringItem index="2" value="Hoses"/>
-            <StringItem index="3" value="Sprinklers"/>
-            <StringItem index="4" value="Fruit Tree Pesticide"/>
-            <StringItem index="5" value="Organic Compost"/>
-            <StringItem index="6" value="Trucks"/>
           </StringArray>
         </Property>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -97,22 +91,6 @@
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
           <AbsoluteConstraints x="301" y="256" width="160" height="21"/>
-        </Constraint>
-      </Constraints>
-    </Component>
-    <Component class="main.SVGImage" name="sVGAddInventoryItemComboBox">
-      <Properties>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="0" red="0" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="sVGAddInventoryItemComboBox"/>
-      </Properties>
-      <Events>
-        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="sVGAddInventoryItemComboBoxMouseClicked"/>
-      </Events>
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="301" y="18" width="160" height="21"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -391,22 +369,6 @@
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
           <AbsoluteConstraints x="30" y="285" width="431" height="37"/>
-        </Constraint>
-      </Constraints>
-    </Component>
-    <Component class="main.SVGImage" name="sVGAddInventoryNewCategoryComboBox">
-      <Properties>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="0" red="0" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="sVGAddInventoryNewCategoryComboBox"/>
-      </Properties>
-      <Events>
-        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="sVGAddInventoryNewCategoryComboBoxMouseClicked"/>
-      </Events>
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="301" y="256" width="160" height="21"/>
         </Constraint>
       </Constraints>
     </Component>
