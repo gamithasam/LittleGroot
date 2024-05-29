@@ -9,14 +9,31 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import javax.swing.JOptionPane;
 import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JTextField;
 
 /**
  *
  * @author gamitha
  */
-public class AddInventory extends javax.swing.JPanel {
 
+class InventoryDB {
+    public String item;
+    public String itemID;
+    public String cat;
+    public String unit;
+
+    public InventoryDB(String item, String itemID, String cat, String unit) {
+        this.item = item;
+        this.itemID = itemID;
+        this.cat = cat;
+        this.unit = unit;
+    }
+}
+
+public class AddInventory extends javax.swing.JPanel {
+    Map<String, InventoryDB> inventoryMap = new HashMap<>();
     /**
      * Creates new form AddInventory
      */
@@ -32,39 +49,10 @@ public class AddInventory extends javax.swing.JPanel {
     }
     
     private void setLblUnit(String item) {
-        String unit = "";
-        
-        // Access the databse
-        Connection conn = null;
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/LittleGroot", "root" , "toor");
-            
-            // Query the Inventory table
-            PreparedStatement st = conn.prepareStatement("SELECT Unit FROM Inventory WHERE Item = ?");
-            st.setString(1, item);
-            ResultSet rs = st.executeQuery();
-
-            // Get the Unit
-            if (rs.next()) {
-                unit = rs.getString("Unit");
-                // Set the text of lblUnit
-                lblUnit.setVisible(true);
-                lblUnit.setText(unit);
-            } else {
-                lblUnit.setVisible(false);
-            }
-            
-        } catch (ClassNotFoundException | SQLException e) {
-            JOptionPane.showMessageDialog(null, "Database Connection Error");
-        } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException e) {
-                    JOptionPane.showMessageDialog(null, "Failed to close connection");
-                }
-            }
+        InventoryDB itemIns = inventoryMap.get(item);
+        if (itemIns != null) {
+            lblUnit.setVisible(true);
+            lblUnit.setText(itemIns.unit);
         }
     }
     
@@ -82,9 +70,6 @@ public class AddInventory extends javax.swing.JPanel {
         addFocusListener(txtNewItem);
         addFocusListener(txtNewItemID);
         addFocusListener(txtNewUnit);
-        
-        // Set text of lblUnit
-        setLblUnit((String)cmbItem.getSelectedItem());
         
         // Set SVGs
         sVGUpdateBtn.setSvgImage("./svgcomponents/UpdateBtn.svg", 59, 22);
@@ -112,6 +97,57 @@ public class AddInventory extends javax.swing.JPanel {
         sVGAddInventoryNewUnitTextBox.setCursor(txtCur);
         sVGUpdateBtn.setCursor(hand);
         sVGAddBtn.setCursor(hand);
+        
+        // Create objects
+        Connection conn = null;
+        Statement st = null;
+        ResultSet rs = null;
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/LittleGroot", "root" , "toor");
+            
+            st = conn.createStatement();
+            
+            rs = st.executeQuery("SELECT Item, Item_id, Category, Unit FROM Inventory");
+
+            while (rs.next()) {
+                String item = rs.getString("Item");
+                String itemID = rs.getString("Item_id");
+                String cat = rs.getString("Category");
+                String unit = rs.getString("Unit");
+
+                InventoryDB inventory = new InventoryDB(item, itemID, cat, unit);
+                inventoryMap.put(item, inventory);
+            }
+            
+        } catch (ClassNotFoundException | SQLException e) {
+            JOptionPane.showMessageDialog(null, "Database Connection Error" + e);
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, "Failed to close connection");
+                }
+            }
+            if (st != null) {
+                try {
+                    st.close();
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, "Failed to close connection");
+                }
+            }
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, "Failed to close connection");
+                }
+            }
+        }
+        
+        // Set text of lblUnit
+        setLblUnit((String)cmbItem.getSelectedItem());
     }
 
     /**
