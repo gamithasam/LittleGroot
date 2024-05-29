@@ -21,7 +21,6 @@ public class Inventory extends javax.swing.JPanel {
     public Inventory() {
         initComponents();
         
-        
         //Get data from database to table
         Connection conn = null;
         try {

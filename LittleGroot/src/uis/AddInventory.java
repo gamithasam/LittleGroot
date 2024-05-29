@@ -73,6 +73,7 @@ public class AddInventory extends javax.swing.JPanel {
         
         // Set visibilities off
         cmbItem.setVisible(false);
+        cmbNewCategory.setVisible(false);
         txtNewItem.setVisible(false);
         txtNewItemID.setVisible(false);
         txtNewUnit.setVisible(false);
@@ -93,13 +94,15 @@ public class AddInventory extends javax.swing.JPanel {
         sVGAddInventoryQty.setSvgImage("./svgcomponents/AddInventoryQty.svg", 431, 36);
         
         sVGAddBtn.setSvgImage("./svgcomponents/AddBtn.svg", 39, 22);
-        sVGAddInventoryNewForm.setSvgImage("./svgcomponents/AddInventoryNewForm.svg", 451, 111);
+        sVGAddInventoryNewForm.setSvgImage("./svgcomponents/AddInventoryNewForm.svg", 451, 147);
         sVGAddInventoryNewItem.setSvgImage("./svgcomponents/AddInventoryNewItem.svg", 431, 37);
         sVGAddInventoryNewItemTextBox.setSvgImage("./svgcomponents/AddInventoryNewItemTextBox.svg", 160, 23);
         sVGAddInventoryNewItemID.setSvgImage("./svgcomponents/AddInventoryNewItemID.svg", 431, 37);
         sVGAddInventoryNewItemIDTextBox.setSvgImage("./svgcomponents/AddInventoryNewItemIDTextBox.svg", 160, 23);
         sVGAddInventoryNewUnit.setSvgImage("./svgcomponents/AddInventoryNewUnit.svg", 431, 37);
         sVGAddInventoryNewUnitTextBox.setSvgImage("./svgcomponents/AddInventoryNewUnitTextBox.svg", 160, 23);
+        sVGAddInventoryNewCategory.setSvgImage("./svgcomponents/AddInventoryNewCategory.svg", 431, 37);
+        sVGAddInventoryNewCategoryComboBox.setSvgImage("./svgcomponents/AddInventoryNewCategoryComboBox.svg", 160, 21);
         
         // Set Cursors
         Cursor txtCur = new Cursor(Cursor.TEXT_CURSOR);
@@ -121,6 +124,7 @@ public class AddInventory extends javax.swing.JPanel {
     private void initComponents() {
 
         cmbItem = new javax.swing.JComboBox<>();
+        cmbNewCategory = new javax.swing.JComboBox<>();
         sVGAddInventoryItemComboBox = new main.SVGImage();
         sVGAddInventoryItem = new main.SVGImage();
         panelQty = new javax.swing.JPanel();
@@ -139,6 +143,8 @@ public class AddInventory extends javax.swing.JPanel {
         sVGAddInventoryNewItem = new main.SVGImage();
         sVGAddInventoryNewItemID = new main.SVGImage();
         sVGAddInventoryNewUnit = new main.SVGImage();
+        sVGAddInventoryNewCategoryComboBox = new main.SVGImage();
+        sVGAddInventoryNewCategory = new main.SVGImage();
         sVGAddInventoryNewForm = new main.SVGImage();
         sVGAddBtn = new main.SVGImage();
 
@@ -152,6 +158,11 @@ public class AddInventory extends javax.swing.JPanel {
         cmbItem.setForeground(new java.awt.Color(0, 0, 0));
         cmbItem.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tomato Seeds", "Drip Irrigation Systems", "Hoses", "Sprinklers", "Fruit Tree Pesticide", "Organic Compost", "Trucks" }));
         cmbItem.setBorder(null);
+        cmbItem.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cmbItemMouseClicked(evt);
+            }
+        });
         cmbItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbItemActionPerformed(evt);
@@ -160,8 +171,26 @@ public class AddInventory extends javax.swing.JPanel {
         add(cmbItem);
         cmbItem.setBounds(301, 18, 160, 21);
 
+        cmbNewCategory.setBackground(new java.awt.Color(255, 255, 255));
+        cmbNewCategory.setFont(new java.awt.Font("SF Pro Display", 0, 13)); // NOI18N
+        cmbNewCategory.setForeground(new java.awt.Color(0, 0, 0));
+        cmbNewCategory.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seeds" }));
+        cmbNewCategory.setBorder(null);
+        cmbNewCategory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbNewCategoryActionPerformed(evt);
+            }
+        });
+        add(cmbNewCategory);
+        cmbNewCategory.setBounds(301, 256, 160, 21);
+
         sVGAddInventoryItemComboBox.setForeground(new java.awt.Color(0, 0, 0));
         sVGAddInventoryItemComboBox.setText("sVGAddInventoryItemComboBox");
+        sVGAddInventoryItemComboBox.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sVGAddInventoryItemComboBoxMouseClicked(evt);
+            }
+        });
         add(sVGAddInventoryItemComboBox);
         sVGAddInventoryItemComboBox.setBounds(301, 18, 160, 21);
 
@@ -175,7 +204,6 @@ public class AddInventory extends javax.swing.JPanel {
         add(sVGAddInventoryItem);
         sVGAddInventoryItem.setBounds(30, 10, 431, 36);
 
-        panelQty.setBackground(null);
         panelQty.setForeground(null);
         panelQty.setOpaque(false);
         panelQty.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.TRAILING, 6, 5));
@@ -236,7 +264,7 @@ public class AddInventory extends javax.swing.JPanel {
             }
         });
         add(txtNewUnit);
-        txtNewUnit.setBounds(307, 259, 147, 17);
+        txtNewUnit.setBounds(307, 295, 147, 17);
 
         txtNewItemID.setFont(new java.awt.Font("SF Pro Display", 0, 13)); // NOI18N
         txtNewItemID.setForeground(new java.awt.Color(0, 0, 0));
@@ -290,7 +318,7 @@ public class AddInventory extends javax.swing.JPanel {
             }
         });
         add(sVGAddInventoryNewUnitTextBox);
-        sVGAddInventoryNewUnitTextBox.setBounds(301, 256, 160, 23);
+        sVGAddInventoryNewUnitTextBox.setBounds(301, 292, 160, 23);
 
         sVGAddInventoryNewItem.setForeground(new java.awt.Color(0, 0, 0));
         sVGAddInventoryNewItem.setText("sVGAddInventoryNewItem");
@@ -305,12 +333,27 @@ public class AddInventory extends javax.swing.JPanel {
         sVGAddInventoryNewUnit.setForeground(new java.awt.Color(0, 0, 0));
         sVGAddInventoryNewUnit.setText("sVGAddInventoryNewUnit");
         add(sVGAddInventoryNewUnit);
-        sVGAddInventoryNewUnit.setBounds(30, 249, 431, 37);
+        sVGAddInventoryNewUnit.setBounds(30, 285, 431, 37);
+
+        sVGAddInventoryNewCategoryComboBox.setForeground(new java.awt.Color(0, 0, 0));
+        sVGAddInventoryNewCategoryComboBox.setText("sVGAddInventoryNewCategoryComboBox");
+        sVGAddInventoryNewCategoryComboBox.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sVGAddInventoryNewCategoryComboBoxMouseClicked(evt);
+            }
+        });
+        add(sVGAddInventoryNewCategoryComboBox);
+        sVGAddInventoryNewCategoryComboBox.setBounds(301, 256, 160, 21);
+
+        sVGAddInventoryNewCategory.setForeground(new java.awt.Color(0, 0, 0));
+        sVGAddInventoryNewCategory.setText("sVGAddInventoryNewCategory");
+        add(sVGAddInventoryNewCategory);
+        sVGAddInventoryNewCategory.setBounds(30, 249, 431, 37);
 
         sVGAddInventoryNewForm.setForeground(new java.awt.Color(0, 0, 0));
         sVGAddInventoryNewForm.setText("sVGAddInventoryNewForm");
         add(sVGAddInventoryNewForm);
-        sVGAddInventoryNewForm.setBounds(20, 175, 451, 111);
+        sVGAddInventoryNewForm.setBounds(20, 175, 451, 147);
 
         sVGAddBtn.setForeground(new java.awt.Color(0, 0, 0));
         sVGAddBtn.setText("sVGAddBtn");
@@ -320,7 +363,7 @@ public class AddInventory extends javax.swing.JPanel {
             }
         });
         add(sVGAddBtn);
-        sVGAddBtn.setBounds(432, 301, 39, 22);
+        sVGAddBtn.setBounds(432, 337, 39, 22);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cmbItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbItemActionPerformed
@@ -343,7 +386,7 @@ public class AddInventory extends javax.swing.JPanel {
             
             Statement st = conn.createStatement();
             
-            int updatedRows = st.executeUpdate("UPDATE Inventory SET Availability = " + qty + " WHERE Item = '" + item + "';");
+            int updatedRows = st.executeUpdate("UPDATE Inventory SET Availability = '" + qty + "' WHERE Item = '" + item + "';");
             
             if(updatedRows > 0) {
                 // Clear the inputs
@@ -369,8 +412,7 @@ public class AddInventory extends javax.swing.JPanel {
     }//GEN-LAST:event_sVGUpdateBtnMouseClicked
 
     private void sVGAddInventoryItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGAddInventoryItemMouseClicked
-        cmbItem.setVisible(true);
-        cmbItem.requestFocusInWindow();
+        
     }//GEN-LAST:event_sVGAddInventoryItemMouseClicked
 
     private void txtNewItemKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNewItemKeyTyped
@@ -404,9 +446,9 @@ public class AddInventory extends javax.swing.JPanel {
         String item = txtNewItem.getText();
         String itemID = txtNewItemID.getText();
         String unit = txtNewUnit.getText();
-//        String cat = (String) cmbCategory.getSelectedItem();
+        String cat = (String) cmbNewCategory.getSelectedItem();
         
-        // Update on the database
+        // Add to the database
         Connection conn = null;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -414,19 +456,18 @@ public class AddInventory extends javax.swing.JPanel {
             
             Statement st = conn.createStatement();
             
-            int updatedRows = st.executeUpdate("INSERT INTO Inventory (Item, Item_id, Availablity, Unit) VALUES ('"+ item + "', '" + itemID + "', 0, '" + unit + "');");
-//            int updatedRows = st.executeUpdate("INSERT INTO Inventory VALUES ('"+ item + "', '" + itemID + "', '" + cat + "', 0, '" + unit + "');");
+            int updatedRows = st.executeUpdate("INSERT INTO Inventory VALUES ('"+ item + "', '" + itemID + "', '" + cat + "', 0, '" + unit + "');");
 
             if(updatedRows > 0) {
                 // Clear the textboxes
                 txtNewItem.setText("");
                 txtNewItemID.setText("");
                 txtNewUnit.setText("");
-//                cmbCategory.setSelectedIndex(0);
+                cmbNewCategory.setSelectedIndex(0);
                 // Show message
-                JOptionPane.showMessageDialog(null, "Inventory updated successfully!");
+                JOptionPane.showMessageDialog(null, "New inventory item added successfully!");
             } else {
-                JOptionPane.showMessageDialog(null, "Failed to update inventory");
+                JOptionPane.showMessageDialog(null, "Failed to add new inventory item");
             }
             
         } catch (ClassNotFoundException | SQLException e) {
@@ -442,9 +483,28 @@ public class AddInventory extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_sVGAddBtnMouseClicked
 
+    private void sVGAddInventoryNewCategoryComboBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGAddInventoryNewCategoryComboBoxMouseClicked
+        cmbNewCategory.setVisible(true);
+        cmbNewCategory.requestFocusInWindow();
+    }//GEN-LAST:event_sVGAddInventoryNewCategoryComboBoxMouseClicked
+
+    private void cmbNewCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbNewCategoryActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbNewCategoryActionPerformed
+
+    private void cmbItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbItemMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbItemMouseClicked
+
+    private void sVGAddInventoryItemComboBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGAddInventoryItemComboBoxMouseClicked
+        cmbItem.setVisible(true);
+        cmbItem.requestFocusInWindow();
+    }//GEN-LAST:event_sVGAddInventoryItemComboBoxMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cmbItem;
+    private javax.swing.JComboBox<String> cmbNewCategory;
     private javax.swing.JLabel lblNewItem;
     private javax.swing.JLabel lblUnit;
     private javax.swing.JPanel panelQty;
@@ -452,6 +512,8 @@ public class AddInventory extends javax.swing.JPanel {
     private main.SVGImage sVGAddInventoryForm;
     private main.SVGImage sVGAddInventoryItem;
     private main.SVGImage sVGAddInventoryItemComboBox;
+    private main.SVGImage sVGAddInventoryNewCategory;
+    private main.SVGImage sVGAddInventoryNewCategoryComboBox;
     private main.SVGImage sVGAddInventoryNewForm;
     private main.SVGImage sVGAddInventoryNewItem;
     private main.SVGImage sVGAddInventoryNewItemID;
