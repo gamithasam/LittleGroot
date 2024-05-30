@@ -42,7 +42,7 @@ public class AddFieldMetrics extends javax.swing.JPanel {
         addFocusListener(txtLightIntensity);
         
         // Set SVGs
-        sVGUpdateBtn.setSvgImage("./svgcomponents/UpdateBtn.svg", 59, 22);
+        sVGAddBtn.setSvgImage("./svgcomponents/AddBtn.svg", 39, 22);
         sVGAddFieldMetricsForm.setSvgImage("./svgcomponents/AddFieldMetricsForm.svg", 451, 176);
         sVGAddFieldMetricsField.setSvgImage("./svgcomponents/AddFieldMetricsField.svg", 431, 36);
         sVGAddFieldMetricsSoilPh.setSvgImage("./svgcomponents/AddFieldMetricsSoilPh.svg", 431, 36);
@@ -57,7 +57,7 @@ public class AddFieldMetrics extends javax.swing.JPanel {
         Cursor txtCur = new Cursor(Cursor.TEXT_CURSOR);
         Cursor hand = new Cursor(Cursor.HAND_CURSOR);
         sVGAddFieldMetricsLightIntensityTextBox.setCursor(txtCur);
-        sVGUpdateBtn.setCursor(hand);
+        sVGAddBtn.setCursor(hand);
     }
 
     /**
@@ -81,7 +81,7 @@ public class AddFieldMetrics extends javax.swing.JPanel {
         sVGAddFieldMetricsSoilPh = new main.SVGImage();
         sVGAddFieldMetricsSoilMoisture = new main.SVGImage();
         sVGAddFieldMetricsLightIntensity = new main.SVGImage();
-        sVGUpdateBtn = new main.SVGImage();
+        sVGAddBtn = new main.SVGImage();
         sVGAddFieldMetricsForm = new main.SVGImage();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -187,15 +187,15 @@ public class AddFieldMetrics extends javax.swing.JPanel {
         add(sVGAddFieldMetricsLightIntensity);
         sVGAddFieldMetricsLightIntensity.setBounds(30, 134, 431, 52);
 
-        sVGUpdateBtn.setForeground(new java.awt.Color(0, 0, 0));
-        sVGUpdateBtn.setText("sVGUpdateBtn");
-        sVGUpdateBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+        sVGAddBtn.setForeground(new java.awt.Color(0, 0, 0));
+        sVGAddBtn.setText("sVGAddBtn");
+        sVGAddBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                sVGUpdateBtnMouseClicked(evt);
+                sVGAddBtnMouseClicked(evt);
             }
         });
-        add(sVGUpdateBtn);
-        sVGUpdateBtn.setBounds(412, 201, 59, 22);
+        add(sVGAddBtn);
+        sVGAddBtn.setBounds(432, 201, 39, 22);
 
         sVGAddFieldMetricsForm.setForeground(new java.awt.Color(0, 0, 0));
         sVGAddFieldMetricsForm.setText("sVGAddFieldMetricsForm");
@@ -227,7 +227,7 @@ public class AddFieldMetrics extends javax.swing.JPanel {
         txtLightIntensity.requestFocusInWindow();
     }//GEN-LAST:event_sVGAddFieldMetricsLightIntensityTextBoxMouseClicked
 
-    private void sVGUpdateBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGUpdateBtnMouseClicked
+    private void sVGAddBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGAddBtnMouseClicked
         String field = (String) cmbField.getSelectedItem();
         double pH = (Double) stepperSoilPh.getValue();
         int moisture = (int) stepperSoilMoisture.getValue();
@@ -249,9 +249,9 @@ public class AddFieldMetrics extends javax.swing.JPanel {
                 stepperSoilPh.setValue(0);
                 stepperSoilMoisture.setValue(0);
                 // Show message
-                JOptionPane.showMessageDialog(null, "Field metrics updated successfully!");
+                JOptionPane.showMessageDialog(null, "Field metrics added successfully!");
             } else {
-                JOptionPane.showMessageDialog(null, "Failed to update field metrics");
+                JOptionPane.showMessageDialog(null, "Failed to add field metrics");
             }
             
         } catch (ClassNotFoundException | SQLException e) {
@@ -265,7 +265,7 @@ public class AddFieldMetrics extends javax.swing.JPanel {
                 }
             }
         }
-    }//GEN-LAST:event_sVGUpdateBtnMouseClicked
+    }//GEN-LAST:event_sVGAddBtnMouseClicked
 
     private void txtLightIntensityKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLightIntensityKeyTyped
         // Only accepts integers
@@ -280,6 +280,7 @@ public class AddFieldMetrics extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cmbField;
+    private main.SVGImage sVGAddBtn;
     private main.SVGImage sVGAddFieldMetricsField;
     private main.SVGImage sVGAddFieldMetricsFieldComboBox;
     private main.SVGImage sVGAddFieldMetricsForm;
@@ -289,7 +290,6 @@ public class AddFieldMetrics extends javax.swing.JPanel {
     private main.SVGImage sVGAddFieldMetricsSoilPh;
     private main.SVGImage sVGStepper1;
     private main.SVGImage sVGStepperWithPercentage1;
-    private main.SVGImage sVGUpdateBtn;
     private javax.swing.JSpinner stepperSoilMoisture;
     private javax.swing.JSpinner stepperSoilPh;
     private javax.swing.JTextField txtLightIntensity;
