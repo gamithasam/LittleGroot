@@ -11,6 +11,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.sql.*;
+import java.util.Calendar;
 
 /**
  *
@@ -241,7 +242,7 @@ public class AddFieldMetrics extends javax.swing.JPanel {
             
             Statement st = conn.createStatement();
             
-            int updatedRows = st.executeUpdate("INSERT INTO Field (field, pH, moisture, lightIntensity) VALUES ('" + field + "', " + pH + ", " + moisture + ", " + lightIntensity + ") ON DUPLICATE KEY UPDATE pH = VALUES(pH), moisture = VALUES(moisture), lightIntensity = VALUES(lightIntensity);");
+            int updatedRows = st.executeUpdate("INSERT INTO Field VALUES ('" + field + "', " + pH + ", " + moisture + ", " + lightIntensity + ", CURRENT_DATE) ON DUPLICATE KEY UPDATE pH = " + pH + ", moisture = " + moisture + ", lightIntensity = " + lightIntensity + ", fmDate = CURRENT_DATE;");
             if(updatedRows > 0) {
                 // Clear the textboxes
                 txtLightIntensity.setText("");
