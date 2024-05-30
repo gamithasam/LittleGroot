@@ -70,9 +70,11 @@ public class AddTransactions extends javax.swing.JPanel {
         
         // Set visibilities off
         txtAmount.setVisible(false);
+        txtTransaction.setVisible(false);
         
         // Add focus listeners to textboxes
         addFocusListener(txtAmount);
+        addFocusListener(txtTransaction);
         
         // Steppers setup
         JSpinner.NumberEditor editor = new JSpinner.NumberEditor(stepperYear, "#");
@@ -97,7 +99,7 @@ public class AddTransactions extends javax.swing.JPanel {
         model.setMaximum(maxDay);
         
         // Set SVGs
-        sVGAddTransactionsForm.setSvgImage("./svgcomponents/AddTransactionsForm.svg", 451, 145);
+        sVGAddTransactionsForm.setSvgImage("./svgcomponents/AddTransactionsForm.svg", 451, 182);
         sVGAddTransactionsType.setSvgImage("./svgcomponents/AddTransactionsType.svg", 431, 36);
         sVGAddTransactionsCategory.setSvgImage("./svgcomponents/AddTransactionsCategory.svg", 431, 36);
         sVGAddTransactionsDate.setSvgImage("./svgcomponents/AddTransactionsDate.svg", 431, 36);
@@ -106,11 +108,14 @@ public class AddTransactions extends javax.swing.JPanel {
         sVGAddTransactionsAmountTextBox.setSvgImage("./svgcomponents/AddTransactionsAmountTextBox.svg", 160, 23);
         sVGAddTransactionTypeIncomeRadioBtn.setSvgImage("./svgcomponents/RadioBtnSelected.svg", 14, 14);
         sVGAddTransactionTypeExpenseRadioBtn.setSvgImage("./svgcomponents/RadioBtn.svg", 14, 14);
+        sVGAddTransactionsTransaction.setSvgImage("./svgcomponents/AddTransactionsTransaction.svg", 431, 36);
+        sVGAddTransactionsTransactionTextBox.setSvgImage("./svgcomponents/AddTransactionsTransactionTextBox.svg", 160, 23);
         
         // Set Cursors
         Cursor txtCur = new Cursor(Cursor.TEXT_CURSOR);
         Cursor hand = new Cursor(Cursor.HAND_CURSOR);
         sVGAddTransactionsAmountTextBox.setCursor(txtCur);
+        sVGAddTransactionsTransactionTextBox.setCursor(txtCur);
         sVGAddTransactionTypeIncomeRadioBtn.setCursor(hand);
         sVGAddTransactionTypeExpenseRadioBtn.setCursor(hand);
         lblIncome.setCursor(hand);
@@ -151,6 +156,7 @@ public class AddTransactions extends javax.swing.JPanel {
         stepperDay = new javax.swing.JSpinner();
         stepperYear = new javax.swing.JSpinner();
         txtAmount = new javax.swing.JTextField();
+        txtTransaction = new javax.swing.JTextField();
         sVGAddBtn = new main.SVGImage();
         sVGAddTransactionsAmountTextBox = new main.SVGImage();
         sVGAddTransactionTypeIncomeRadioBtn = new main.SVGImage();
@@ -161,6 +167,8 @@ public class AddTransactions extends javax.swing.JPanel {
         sVGAddTransactionsCategory = new main.SVGImage();
         sVGAddTransactionsDate = new main.SVGImage();
         sVGAddTransactionsAmount = new main.SVGImage();
+        sVGAddTransactionsTransactionTextBox = new main.SVGImage();
+        sVGAddTransactionsTransaction = new main.SVGImage();
         sVGAddTransactionsForm = new main.SVGImage();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -179,7 +187,7 @@ public class AddTransactions extends javax.swing.JPanel {
             }
         });
         add(cmbCategory);
-        cmbCategory.setBounds(301, 54, 160, 21);
+        cmbCategory.setBounds(301, 91, 160, 21);
 
         stepperMonth.setFont(new java.awt.Font("SF Pro", 0, 13)); // NOI18N
         stepperMonth.setModel(new javax.swing.SpinnerNumberModel(1, 1, 31, 1));
@@ -190,7 +198,7 @@ public class AddTransactions extends javax.swing.JPanel {
             }
         });
         add(stepperMonth);
-        stepperMonth.setBounds(276, 88, 50, 24);
+        stepperMonth.setBounds(276, 125, 50, 24);
 
         stepperDay.setFont(new java.awt.Font("SF Pro", 0, 13)); // NOI18N
         stepperDay.setModel(new javax.swing.SpinnerNumberModel(1, 1, 12, 1));
@@ -201,7 +209,7 @@ public class AddTransactions extends javax.swing.JPanel {
             }
         });
         add(stepperDay);
-        stepperDay.setBounds(336, 88, 50, 24);
+        stepperDay.setBounds(336, 125, 50, 24);
 
         stepperYear.setFont(new java.awt.Font("SF Pro", 0, 13)); // NOI18N
         stepperYear.setModel(new javax.swing.SpinnerNumberModel(2000, 2000, 2100, 1));
@@ -212,7 +220,7 @@ public class AddTransactions extends javax.swing.JPanel {
             }
         });
         add(stepperYear);
-        stepperYear.setBounds(396, 88, 65, 24);
+        stepperYear.setBounds(396, 125, 65, 24);
 
         txtAmount.setFont(new java.awt.Font("SF Pro Display", 0, 13)); // NOI18N
         txtAmount.setForeground(new java.awt.Color(0, 0, 0));
@@ -224,7 +232,19 @@ public class AddTransactions extends javax.swing.JPanel {
             }
         });
         add(txtAmount);
-        txtAmount.setBounds(307, 128, 147, 17);
+        txtAmount.setBounds(307, 165, 147, 17);
+
+        txtTransaction.setFont(new java.awt.Font("SF Pro Display", 0, 13)); // NOI18N
+        txtTransaction.setForeground(new java.awt.Color(0, 0, 0));
+        txtTransaction.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txtTransaction.setBorder(null);
+        txtTransaction.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTransactionKeyTyped(evt);
+            }
+        });
+        add(txtTransaction);
+        txtTransaction.setBounds(307, 56, 147, 17);
 
         sVGAddBtn.setForeground(new java.awt.Color(0, 0, 0));
         sVGAddBtn.setText("sVGAddBtn");
@@ -234,7 +254,7 @@ public class AddTransactions extends javax.swing.JPanel {
             }
         });
         add(sVGAddBtn);
-        sVGAddBtn.setBounds(432, 170, 39, 22);
+        sVGAddBtn.setBounds(432, 216, 39, 22);
 
         sVGAddTransactionsAmountTextBox.setForeground(new java.awt.Color(0, 0, 0));
         sVGAddTransactionsAmountTextBox.setText("sVGAddTransactionsAmountTextBox");
@@ -244,7 +264,7 @@ public class AddTransactions extends javax.swing.JPanel {
             }
         });
         add(sVGAddTransactionsAmountTextBox);
-        sVGAddTransactionsAmountTextBox.setBounds(301, 125, 160, 23);
+        sVGAddTransactionsAmountTextBox.setBounds(301, 162, 160, 23);
 
         sVGAddTransactionTypeIncomeRadioBtn.setForeground(new java.awt.Color(0, 0, 0));
         sVGAddTransactionTypeIncomeRadioBtn.setText("sVGAddTransactionTypeIncomeRadioBtn");
@@ -296,22 +316,37 @@ public class AddTransactions extends javax.swing.JPanel {
         sVGAddTransactionsCategory.setForeground(new java.awt.Color(0, 0, 0));
         sVGAddTransactionsCategory.setText("sVGAddTransactionsCategory");
         add(sVGAddTransactionsCategory);
-        sVGAddTransactionsCategory.setBounds(30, 46, 431, 36);
+        sVGAddTransactionsCategory.setBounds(30, 83, 431, 36);
 
         sVGAddTransactionsDate.setForeground(new java.awt.Color(0, 0, 0));
         sVGAddTransactionsDate.setText("sVGAddTransactionsDate");
         add(sVGAddTransactionsDate);
-        sVGAddTransactionsDate.setBounds(30, 82, 431, 36);
+        sVGAddTransactionsDate.setBounds(30, 119, 431, 36);
 
         sVGAddTransactionsAmount.setForeground(new java.awt.Color(0, 0, 0));
         sVGAddTransactionsAmount.setText("sVGAddTransactionsAmount");
         add(sVGAddTransactionsAmount);
-        sVGAddTransactionsAmount.setBounds(30, 118, 431, 36);
+        sVGAddTransactionsAmount.setBounds(30, 155, 431, 36);
+
+        sVGAddTransactionsTransactionTextBox.setForeground(new java.awt.Color(0, 0, 0));
+        sVGAddTransactionsTransactionTextBox.setText("sVGAddTransactionsTransactionTextBox");
+        sVGAddTransactionsTransactionTextBox.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sVGAddTransactionsTransactionTextBoxMouseClicked(evt);
+            }
+        });
+        add(sVGAddTransactionsTransactionTextBox);
+        sVGAddTransactionsTransactionTextBox.setBounds(301, 53, 160, 23);
+
+        sVGAddTransactionsTransaction.setForeground(new java.awt.Color(0, 0, 0));
+        sVGAddTransactionsTransaction.setText("sVGAddTransactionsTransaction");
+        add(sVGAddTransactionsTransaction);
+        sVGAddTransactionsTransaction.setBounds(30, 46, 431, 36);
 
         sVGAddTransactionsForm.setForeground(new java.awt.Color(0, 0, 0));
         sVGAddTransactionsForm.setText("sVGAddTransactionsForm");
         add(sVGAddTransactionsForm);
-        sVGAddTransactionsForm.setBounds(20, 10, 451, 145);
+        sVGAddTransactionsForm.setBounds(20, 10, 451, 182);
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblExpenseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExpenseMouseClicked
@@ -413,6 +448,15 @@ public class AddTransactions extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_sVGAddBtnMouseClicked
 
+    private void sVGAddTransactionsTransactionTextBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGAddTransactionsTransactionTextBoxMouseClicked
+        txtTransaction.setVisible(true);
+        txtTransaction.requestFocusInWindow();
+    }//GEN-LAST:event_sVGAddTransactionsTransactionTextBoxMouseClicked
+
+    private void txtTransactionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTransactionKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTransactionKeyTyped
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cmbCategory;
@@ -426,10 +470,13 @@ public class AddTransactions extends javax.swing.JPanel {
     private main.SVGImage sVGAddTransactionsCategory;
     private main.SVGImage sVGAddTransactionsDate;
     private main.SVGImage sVGAddTransactionsForm;
+    private main.SVGImage sVGAddTransactionsTransaction;
+    private main.SVGImage sVGAddTransactionsTransactionTextBox;
     private main.SVGImage sVGAddTransactionsType;
     private javax.swing.JSpinner stepperDay;
     private javax.swing.JSpinner stepperMonth;
     private javax.swing.JSpinner stepperYear;
     private javax.swing.JTextField txtAmount;
+    private javax.swing.JTextField txtTransaction;
     // End of variables declaration//GEN-END:variables
 }
