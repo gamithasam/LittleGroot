@@ -21,7 +21,6 @@ import javax.swing.JOptionPane;
  *
  * @author gamitha
  */
-
 class User {
     protected final int eid;
     public final String fName;
@@ -60,6 +59,7 @@ public class Main extends javax.swing.JFrame {
     /**
      * Creates new form Main
      */
+    // Create objects
     private static User user;
     
     // Function to create a user object
