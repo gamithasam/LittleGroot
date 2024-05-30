@@ -10,9 +10,11 @@ import java.awt.event.FocusEvent;
 import java.awt.event.KeyEvent;
 import java.util.Calendar;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
+import java.sql.*;
 
 /**
  *
@@ -226,6 +228,11 @@ public class AddTransactions extends javax.swing.JPanel {
 
         sVGAddBtn.setForeground(new java.awt.Color(0, 0, 0));
         sVGAddBtn.setText("sVGAddBtn");
+        sVGAddBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sVGAddBtnMouseClicked(evt);
+            }
+        });
         add(sVGAddBtn);
         sVGAddBtn.setBounds(432, 170, 39, 22);
 
@@ -353,6 +360,58 @@ public class AddTransactions extends javax.swing.JPanel {
         txtAmount.setVisible(true);
         txtAmount.requestFocusInWindow();
     }//GEN-LAST:event_sVGAddTransactionsAmountTextBoxMouseClicked
+
+    private void sVGAddBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGAddBtnMouseClicked
+        char ttype = 'I';
+        if (radioIncome) {
+            ttype = 'I';
+        } else {
+            ttype = 'E';
+        }
+        String transaction = txtTransaction.getText();
+        String category = (String) cmbCategory.getSelectedItem();
+        String selDay = String.format("%02d", (Integer) stepperDay.getValue());
+        String selMonth = String.format("%02d", (Integer) stepperMonth.getValue());
+        String selYear = Integer.toString((Integer) stepperYear.getValue());
+        String selDate = selYear + "-" + selMonth + "-" + selDay;
+        double amount = Double.parseDouble(txtAmount.getText());
+
+        // Add to the database
+        Connection conn = null;
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/LittleGroot", "root" , "toor");
+            
+            Statement st = conn.createStatement();
+            
+            int updatedRows = st.executeUpdate("INSERT INTO Finance VALUES ('" + ttype + "', '" + transaction + "', '" + category + "', '" + selDate + "', '" + amount + "');");
+            if(updatedRows > 0) {
+                // Clear the textboxes
+                txtAmount.setText("");
+                txtTransaction.setText("");
+                radioSelect('I');
+                cmbCategory.setSelectedIndex(0);
+                stepperDay.setValue(day);
+                stepperMonth.setValue(month);
+                stepperYear.setValue(year);
+                // Show message
+                JOptionPane.showMessageDialog(null, "Transaction added successfully!");
+            } else {
+                JOptionPane.showMessageDialog(null, "Failed to add transaction");
+            }
+            
+        } catch (ClassNotFoundException | SQLException e) {
+            JOptionPane.showMessageDialog(null, "Database Connection Error");
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, "Failed to close connection");
+                }
+            }
+        }
+    }//GEN-LAST:event_sVGAddBtnMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
