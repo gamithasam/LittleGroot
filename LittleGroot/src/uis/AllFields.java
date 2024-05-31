@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -30,7 +31,7 @@ import javax.swing.JPanel;
  * @author gamitha
  */
 public class AllFields extends javax.swing.JPanel {
-
+    Cursor hand = new Cursor(Cursor.HAND_CURSOR);
     /**
      * Creates new form AllFields
      */  
@@ -44,7 +45,6 @@ public class AllFields extends javax.swing.JPanel {
         addImageToLabel();
         
         // Set hand cursors
-        Cursor hand = new Cursor(Cursor.HAND_CURSOR);
         pngTomato.setCursor(hand);
         pngCorn.setCursor(hand);
         pngApple.setCursor(hand);
@@ -237,12 +237,36 @@ public class AllFields extends javax.swing.JPanel {
         }
     }
     
+    
+                
+    private void lblBackBtnMouseClicked(java.awt.event.MouseEvent evt, JPanel insideField, JLabel lblBackBtn) {                                      
+        insideField.setVisible(false);
+        this.setPreferredSize(new Dimension(649, 682));
+        remove(lblBackBtn);
+    }   
+    
     private void selectField(String field) {
         InsideField.clickField = field;
+        
         JPanel insideField = new uis.InsideField();
         add(insideField);
         setComponentZOrder(insideField, 0);
         insideField.setBounds(0, 0, 649, 478);
+        
+        JLabel lblBackBtn = new javax.swing.JLabel();
+        lblBackBtn.setFont(new java.awt.Font("SF Pro Text", 0, 15)); // NOI18N
+        lblBackBtn.setForeground(new java.awt.Color(0, 0, 0));
+        lblBackBtn.setText("􀯶");
+        lblBackBtn.setCursor(hand);
+        lblBackBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblBackBtnMouseClicked(evt, insideField, lblBackBtn);
+            }
+        });
+        add(lblBackBtn);
+        setComponentZOrder(lblBackBtn, 0);
+        lblBackBtn.setBounds(25, 20, 11, 20);
+        
         this.setPreferredSize(new Dimension(649, 478));
         this.revalidate();
         this.repaint();

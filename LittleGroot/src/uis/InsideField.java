@@ -291,7 +291,7 @@ public class InsideField extends javax.swing.JPanel {
             }
         });
         add(lblField);
-        lblField.setBounds(25, 20, 60, 20);
+        lblField.setBounds(46, 20, 60, 20);
 
         lblEstHarvestOn.setFont(new java.awt.Font("SF Pro", 0, 26)); // NOI18N
         lblEstHarvestOn.setForeground(new java.awt.Color(0, 0, 0));
