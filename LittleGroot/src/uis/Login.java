@@ -12,6 +12,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.sql.*;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -156,7 +157,6 @@ public class Login extends javax.swing.JPanel {
         add(sVGEmpIDClear);
         sVGEmpIDClear.setBounds(507, 314, 16, 16);
 
-        txtEmpID.setBackground(null);
         txtEmpID.setFont(new java.awt.Font("SF Pro Text", 0, 13)); // NOI18N
         txtEmpID.setForeground(new java.awt.Color(0, 0, 0));
         txtEmpID.setBorder(null);
@@ -168,7 +168,6 @@ public class Login extends javax.swing.JPanel {
         add(txtEmpID);
         txtEmpID.setBounds(329, 314, 192, 16);
 
-        txtPassword.setBackground(null);
         txtPassword.setFont(new java.awt.Font("SF Pro Display", 0, 13)); // NOI18N
         txtPassword.setForeground(new java.awt.Color(0, 0, 0));
         txtPassword.setBorder(null);
@@ -300,13 +299,13 @@ public class Login extends javax.swing.JPanel {
                 
                 // Displays Message and continue
                 JOptionPane.showMessageDialog(null, "Successfully logged in!");
-                this.setVisible(false);
                 
                 // Open Main
                 Main mainFrame = new Main();
                 mainFrame.setVisible(true);
                 
                 // Close self
+                this.setVisible(false);
              //   setDefaultCloseOperation(JFrameEXIT_ON_CLOSE);
                 
             } else {

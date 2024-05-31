@@ -5,8 +5,11 @@
 package uis;
 
 import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
 import javax.swing.ImageIcon;
 import java.awt.Image;
+import java.awt.Insets;
 import main.ModelChart;
 import java.sql.*;
 import java.time.LocalDate;
@@ -20,6 +23,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  *
@@ -29,17 +33,24 @@ public class AllFields extends javax.swing.JPanel {
 
     /**
      * Creates new form AllFields
-     */
+     */  
     public AllFields() {
         initComponents();
         
         // Set SVGs
         sVGSalesGraph.setSvgImage("./svgcomponents/SalesGraph.svg", 604, 294);
-//        sVGYieldGraph.setSvgImage("./svgcomponents/YieldGraph.svg", 292, 183);
 
         // Set PNGs
         addImageToLabel();
         
+        // Set hand cursors
+        Cursor hand = new Cursor(Cursor.HAND_CURSOR);
+        pngTomato.setCursor(hand);
+        pngCorn.setCursor(hand);
+        pngApple.setCursor(hand);
+        pngCarrot.setCursor(hand);
+        pngOrange.setCursor(hand);
+        pngMango.setCursor(hand);
         
         // Set data for the graph
         
@@ -225,6 +236,17 @@ public class AllFields extends javax.swing.JPanel {
             ex.printStackTrace();
         }
     }
+    
+    private void selectField(String field) {
+        InsideField.clickField = field;
+        JPanel insideField = new uis.InsideField();
+        add(insideField);
+        setComponentZOrder(insideField, 0);
+        insideField.setBounds(0, 0, 649, 478);
+        this.setPreferredSize(new Dimension(649, 478));
+        this.revalidate();
+        this.repaint();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -272,6 +294,11 @@ public class AllFields extends javax.swing.JPanel {
         pngTomato.setForeground(new java.awt.Color(0, 0, 0));
         pngTomato.setText("pngTomato");
         pngTomato.setPreferredSize(new java.awt.Dimension(188, 112));
+        pngTomato.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pngTomatoMouseClicked(evt);
+            }
+        });
         add(pngTomato);
         pngTomato.setBounds(25, 334, 188, 112);
 
@@ -279,12 +306,22 @@ public class AllFields extends javax.swing.JPanel {
         pngCorn.setText("pngCorn");
         pngCorn.setToolTipText("");
         pngCorn.setPreferredSize(new java.awt.Dimension(188, 112));
+        pngCorn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pngCornMouseClicked(evt);
+            }
+        });
         add(pngCorn);
         pngCorn.setBounds(233, 334, 188, 112);
 
         pngApple.setForeground(new java.awt.Color(0, 0, 0));
         pngApple.setText("pngApple");
         pngApple.setPreferredSize(new java.awt.Dimension(188, 112));
+        pngApple.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pngAppleMouseClicked(evt);
+            }
+        });
         add(pngApple);
         pngApple.setBounds(441, 334, 188, 112);
 
@@ -363,21 +400,60 @@ public class AllFields extends javax.swing.JPanel {
         pngCarrot.setForeground(new java.awt.Color(0, 0, 0));
         pngCarrot.setText("pngCarrot");
         pngCarrot.setPreferredSize(new java.awt.Dimension(188, 112));
+        pngCarrot.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pngCarrotMouseClicked(evt);
+            }
+        });
         add(pngCarrot);
         pngCarrot.setBounds(25, 508, 188, 112);
 
         pngOrange.setForeground(new java.awt.Color(0, 0, 0));
         pngOrange.setText("pngOrange");
         pngOrange.setPreferredSize(new java.awt.Dimension(188, 112));
+        pngOrange.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pngOrangeMouseClicked(evt);
+            }
+        });
         add(pngOrange);
         pngOrange.setBounds(233, 508, 188, 112);
 
         pngMango.setForeground(new java.awt.Color(0, 0, 0));
         pngMango.setText("pngMango");
         pngMango.setPreferredSize(new java.awt.Dimension(188, 112));
+        pngMango.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pngMangoMouseClicked(evt);
+            }
+        });
         add(pngMango);
         pngMango.setBounds(441, 508, 188, 112);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void pngTomatoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pngTomatoMouseClicked
+        selectField("Tomato");
+    }//GEN-LAST:event_pngTomatoMouseClicked
+
+    private void pngCornMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pngCornMouseClicked
+        selectField("Corn");
+    }//GEN-LAST:event_pngCornMouseClicked
+
+    private void pngAppleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pngAppleMouseClicked
+        selectField("Apple");
+    }//GEN-LAST:event_pngAppleMouseClicked
+
+    private void pngCarrotMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pngCarrotMouseClicked
+        selectField("Carrot");
+    }//GEN-LAST:event_pngCarrotMouseClicked
+
+    private void pngOrangeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pngOrangeMouseClicked
+        selectField("Orange");
+    }//GEN-LAST:event_pngOrangeMouseClicked
+
+    private void pngMangoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pngMangoMouseClicked
+        selectField("Mango");
+    }//GEN-LAST:event_pngMangoMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

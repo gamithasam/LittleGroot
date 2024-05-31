@@ -13,9 +13,6 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JComponent;
 import main.SVGImage;
-import java.sql.*;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
 /**
  *
