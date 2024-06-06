@@ -235,8 +235,8 @@ public class InsideField extends javax.swing.JPanel {
         sVGOverview.setSvgImage("./svgcomponents/InsideFieldOverview.svg", 188, 89);
         sVGPlantedOn.setSvgImage("./svgcomponents/InsideFieldPlantedOn.svg", 188, 89);
         sVGEstHarvestOn.setSvgImage("./svgcomponents/InsideFieldEstHarvestOn.svg", 188, 89);
-        sVGSalesGraph.setSvgImage("./svgcomponents/SalesGraph.svg", 292, 183);
-        sVGMetricsGraph.setSvgImage("./svgcomponents/SalesGraph.svg", 292, 183);
+        sVGSalesGraph.setSvgImage("./svgcomponents/InsideFieldSalesGraph.svg", 292, 224);
+        sVGMetricsGraph.setSvgImage("./svgcomponents/MetricsGraph.svg", 292, 224);
         
         // Set lblField, lblOverview
         if(clickField != null) {
@@ -319,7 +319,7 @@ public class InsideField extends javax.swing.JPanel {
     }
 
     private void createLineChartAndPanel(DefaultCategoryDataset dataset, Color color) {
-        JFreeChart linechart = ChartFactory.createLineChart("contribution", "monthly", "amount",
+        JFreeChart linechart = ChartFactory.createLineChart("", "Date", "Amount",
                 dataset, PlotOrientation.VERTICAL, true, true, false);
         CategoryPlot lineCategoryPlot = linechart.getCategoryPlot();
         lineCategoryPlot.setBackgroundPaint(Color.white);
@@ -334,9 +334,9 @@ public class InsideField extends javax.swing.JPanel {
         }
 
         ChartPanel lineChartPanel = new ChartPanel(linechart);
-        panelLineChart.removeAll();
-        panelLineChart.add(lineChartPanel, BorderLayout.CENTER);
-        panelLineChart.validate();
+        panelMetricsGraph.removeAll();
+        panelMetricsGraph.add(lineChartPanel, BorderLayout.CENTER);
+        panelMetricsGraph.validate();
     }
 
     /**
@@ -349,7 +349,8 @@ public class InsideField extends javax.swing.JPanel {
     private void initComponents() {
 
         cmbMetricsChart = new javax.swing.JComboBox<>();
-        panelLineChart = new javax.swing.JPanel();
+        panelSalesGraph = new javax.swing.JPanel();
+        panelMetricsGraph = new javax.swing.JPanel();
         lblField = new javax.swing.JLabel();
         lblEstHarvestOn = new javax.swing.JLabel();
         lblPlantedOn = new javax.swing.JLabel();
@@ -372,11 +373,15 @@ public class InsideField extends javax.swing.JPanel {
             }
         });
         add(cmbMetricsChart);
-        cmbMetricsChart.setBounds(210, 10, 130, 30);
+        cmbMetricsChart.setBounds(199, 171, 114, 21);
 
-        panelLineChart.setLayout(new java.awt.BorderLayout());
-        add(panelLineChart);
-        panelLineChart.setBounds(60, 60, 490, 350);
+        panelSalesGraph.setLayout(new java.awt.BorderLayout());
+        add(panelSalesGraph);
+        panelSalesGraph.setBounds(344, 201, 278, 180);
+
+        panelMetricsGraph.setLayout(new java.awt.BorderLayout());
+        add(panelMetricsGraph);
+        panelMetricsGraph.setBounds(32, 201, 278, 180);
 
         lblField.setFont(new java.awt.Font("SF Pro Text", 1, 15)); // NOI18N
         lblField.setForeground(new java.awt.Color(0, 0, 0));
@@ -425,16 +430,16 @@ public class InsideField extends javax.swing.JPanel {
         sVGMetricsGraph.setForeground(new java.awt.Color(0, 0, 0));
         sVGMetricsGraph.setText("sVGMetricsGraph");
         add(sVGMetricsGraph);
-        sVGMetricsGraph.setBounds(25, 164, 292, 183);
+        sVGMetricsGraph.setBounds(25, 164, 292, 224);
 
         sVGSalesGraph.setForeground(new java.awt.Color(0, 0, 0));
         sVGSalesGraph.setText("sVGSalesGraph");
         add(sVGSalesGraph);
-        sVGSalesGraph.setBounds(337, 164, 292, 183);
+        sVGSalesGraph.setBounds(337, 164, 292, 224);
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblFieldMouseClicked
-        this.setVisible(false); // Temp
+
     }//GEN-LAST:event_lblFieldMouseClicked
 
     private void cmbMetricsChartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMetricsChartActionPerformed
@@ -448,7 +453,8 @@ public class InsideField extends javax.swing.JPanel {
     private javax.swing.JLabel lblField;
     private javax.swing.JLabel lblOverview;
     private javax.swing.JLabel lblPlantedOn;
-    private javax.swing.JPanel panelLineChart;
+    private javax.swing.JPanel panelMetricsGraph;
+    private javax.swing.JPanel panelSalesGraph;
     private main.SVGImage sVGEstHarvestOn;
     private main.SVGImage sVGMetricsGraph;
     private main.SVGImage sVGOverview;
