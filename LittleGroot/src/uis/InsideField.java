@@ -4,6 +4,9 @@
  */
 package uis;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.font.NumericShaper.Range;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -15,6 +18,17 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.category.LineAndShapeRenderer;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.general.DatasetUtilities;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 
 /**
  *
@@ -84,6 +98,9 @@ public class InsideField extends javax.swing.JPanel {
     public static String clickField;
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
     FieldMetricsData fData = getFieldData(clickField);
+    DefaultCategoryDataset datasetPH = new DefaultCategoryDataset();
+    DefaultCategoryDataset datasetMoisture = new DefaultCategoryDataset();
+    DefaultCategoryDataset datasetLightIntensity = new DefaultCategoryDataset();
     
     private static FieldMetricsData tomato = new FieldMetricsData("Tomato");
     private static FieldMetricsData corn = new FieldMetricsData("Corn");
@@ -256,6 +273,70 @@ public class InsideField extends javax.swing.JPanel {
                 }
             }
         }
+        
+        showLineChart();
+    }
+    
+    public void showLineChart() { //create dataset for the graph
+        for (Map.Entry<Date, FieldMetricsData> entry : fData.history.entrySet()) {
+            FieldMetricsData data = entry.getValue();
+            java.sql.Date sqlDate = entry.getKey();
+            LocalDate localDate = sqlDate.toLocalDate();
+            String sDate = localDate.format(formatter);
+
+            // Access the fields of the data
+            double pH = data.pH;
+            int moisture = data.moisture;
+            int lightIntensity = data.lightIntensity;
+
+            datasetPH.setValue(pH, "Soil pH", sDate);
+            datasetMoisture.setValue(moisture, "Soil Moisture", sDate);
+            datasetLightIntensity.setValue(lightIntensity, "Light Intensity", sDate);
+        }
+        
+        updateMetricsChart("Soil pH");
+    }
+    
+    private void updateMetricsChart(String selected) {
+        DefaultCategoryDataset dataset;
+        Color color;
+
+        switch (selected) {
+            case "Soil Moisture":
+                dataset = datasetMoisture;
+                color = new Color(0, 128, 0); // Green color for soil moisture
+                break;
+            case "Light Intensity":
+                dataset = datasetLightIntensity;
+                color = new Color(255, 255, 0); // Yellow color for light intensity
+                break;
+            default:
+                dataset = datasetPH;
+                color = new Color(139, 69, 19); // Brown color for soil pH
+        }
+
+        createLineChartAndPanel(dataset, color);
+    }
+
+    private void createLineChartAndPanel(DefaultCategoryDataset dataset, Color color) {
+        JFreeChart linechart = ChartFactory.createLineChart("contribution", "monthly", "amount",
+                dataset, PlotOrientation.VERTICAL, true, true, false);
+        CategoryPlot lineCategoryPlot = linechart.getCategoryPlot();
+        lineCategoryPlot.setBackgroundPaint(Color.white);
+
+        LineAndShapeRenderer lineRenderer = (LineAndShapeRenderer) lineCategoryPlot.getRenderer();
+        lineRenderer.setSeriesPaint(0, color);
+
+        NumberAxis rangeAxis = (NumberAxis) lineCategoryPlot.getRangeAxis();
+        org.jfree.data.Range range = DatasetUtilities.findRangeBounds(dataset);
+        if (range != null) {
+            rangeAxis.setRange(range);
+        }
+
+        ChartPanel lineChartPanel = new ChartPanel(linechart);
+        panelLineChart.removeAll();
+        panelLineChart.add(lineChartPanel, BorderLayout.CENTER);
+        panelLineChart.validate();
     }
 
     /**
@@ -267,6 +348,8 @@ public class InsideField extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        cmbMetricsChart = new javax.swing.JComboBox<>();
+        panelLineChart = new javax.swing.JPanel();
         lblField = new javax.swing.JLabel();
         lblEstHarvestOn = new javax.swing.JLabel();
         lblPlantedOn = new javax.swing.JLabel();
@@ -281,6 +364,19 @@ public class InsideField extends javax.swing.JPanel {
         setForeground(null);
         setSize(new java.awt.Dimension(649, 478));
         setLayout(null);
+
+        cmbMetricsChart.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Soil pH", "Soil Moisture", "Light Intensity" }));
+        cmbMetricsChart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbMetricsChartActionPerformed(evt);
+            }
+        });
+        add(cmbMetricsChart);
+        cmbMetricsChart.setBounds(210, 10, 130, 30);
+
+        panelLineChart.setLayout(new java.awt.BorderLayout());
+        add(panelLineChart);
+        panelLineChart.setBounds(60, 60, 490, 350);
 
         lblField.setFont(new java.awt.Font("SF Pro Text", 1, 15)); // NOI18N
         lblField.setForeground(new java.awt.Color(0, 0, 0));
@@ -341,12 +437,18 @@ public class InsideField extends javax.swing.JPanel {
         this.setVisible(false); // Temp
     }//GEN-LAST:event_lblFieldMouseClicked
 
+    private void cmbMetricsChartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMetricsChartActionPerformed
+        updateMetricsChart(cmbMetricsChart.getSelectedItem().toString());
+    }//GEN-LAST:event_cmbMetricsChartActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cmbMetricsChart;
     private javax.swing.JLabel lblEstHarvestOn;
     private javax.swing.JLabel lblField;
     private javax.swing.JLabel lblOverview;
     private javax.swing.JLabel lblPlantedOn;
+    private javax.swing.JPanel panelLineChart;
     private main.SVGImage sVGEstHarvestOn;
     private main.SVGImage sVGMetricsGraph;
     private main.SVGImage sVGOverview;
