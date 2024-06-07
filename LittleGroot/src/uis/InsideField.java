@@ -7,7 +7,11 @@ package uis;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics2D;
 import java.awt.font.NumericShaper.Range;
+import java.awt.font.TextLayout;
+import java.awt.image.BufferedImage;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -254,6 +258,7 @@ public class InsideField extends javax.swing.JPanel {
             lblField.setText(clickField);
         }
         lblOverview.setText(getPlantCondition(clickField, fData.pH, fData.moisture, fData.lightIntensity));
+        adjustFontSizeOfOverview();
         
         //Get data from database
         try {
@@ -473,6 +478,25 @@ public class InsideField extends javax.swing.JPanel {
 
         createLineChartAndPanel(datasetSales, color, 'S');
     }
+
+    private void adjustFontSizeOfOverview() {
+        Font labelFont = lblOverview.getFont();
+        String labelText = lblOverview.getText();
+
+        int stringWidth = lblOverview.getFontMetrics(labelFont).stringWidth(labelText);
+        int componentWidth = lblOverview.getWidth();
+
+        // Reduce font size until text fits within label width
+        while (stringWidth > componentWidth) {
+            // Reduce font size by 1
+            int fontSize = labelFont.getSize() - 1;
+            labelFont = new Font(labelFont.getName(), Font.PLAIN, fontSize);
+            lblOverview.setFont(labelFont);
+
+            // Recalculate string width with new font size
+            stringWidth = lblOverview.getFontMetrics(labelFont).stringWidth(labelText);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -545,8 +569,12 @@ public class InsideField extends javax.swing.JPanel {
         lblOverview.setFont(new java.awt.Font("SF Pro", 0, 26)); // NOI18N
         lblOverview.setForeground(new java.awt.Color(0, 0, 0));
         lblOverview.setText("lblOverview");
+        lblOverview.setMaximumSize(new java.awt.Dimension(166, 32));
+        lblOverview.setMinimumSize(new java.awt.Dimension(166, 32));
+        lblOverview.setPreferredSize(new java.awt.Dimension(166, 32));
+        lblOverview.setSize(new java.awt.Dimension(166, 32));
         add(lblOverview);
-        lblOverview.setBounds(36, 108, 177, 32);
+        lblOverview.setBounds(36, 108, 166, 32);
 
         sVGOverview.setForeground(new java.awt.Color(0, 0, 0));
         sVGOverview.setText("sVGOverview");
