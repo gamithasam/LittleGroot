@@ -248,6 +248,8 @@ public class AllFields extends javax.swing.JPanel {
         insideField.setVisible(false);
         this.setPreferredSize(new Dimension(649, 682));
         remove(lblBackBtn);
+        // Set the scroll bar to the default position
+        setScrollDef();
     }   
     
     private void selectField(String field) {
@@ -276,19 +278,18 @@ public class AllFields extends javax.swing.JPanel {
         this.revalidate();
         this.repaint();
         
-        /*
-        // Call repaint on the JScrollPane
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                if (getParent().getParent() instanceof JScrollPane) {
-                    JScrollPane scrollPane = (JScrollPane) getParent().getParent();
-                    scrollPane.repaint();
-                    JOptionPane.showMessageDialog(null, "Repaint!");
-                }
-            }
-        });
-        */
+        // Set the scroll bar to the default position
+        setScrollDef();
+    }
+    
+    private void setScrollDef() {
+        // Get the parent JScrollPane
+        JScrollPane jScrollPane = (JScrollPane) SwingUtilities.getAncestorOfClass(JScrollPane.class, this);
+        if (jScrollPane != null) {
+            // Set the scroll bar to the default position
+            jScrollPane.getVerticalScrollBar().setValue(0);
+            jScrollPane.getHorizontalScrollBar().setValue(0);
+        }
     }
 
     /**
