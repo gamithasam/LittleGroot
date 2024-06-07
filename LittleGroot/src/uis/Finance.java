@@ -5,6 +5,7 @@
 package uis;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Cursor;
 import main.ModelPieChart;
 import java.sql.*;
@@ -13,8 +14,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.Vector;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableCellRenderer;
 import main.SVGImage;
 
 /**
@@ -256,7 +263,30 @@ public class Finance extends javax.swing.JPanel {
         sVGFinanceSegCtrlExpenses = new main.SVGImage();
         sVGFinanceSegCtrlBg = new main.SVGImage();
         jScrollPane1 = new main.ScrollPaneWin11();
-        tableFinance = new javax.swing.JTable();
+        Color altRowColor = new Color(251, 251, 251);
+        Color headerBorderColor = new Color(242, 242, 242);
+        Color headerSepColor = new Color(229, 229, 229);
+        Color selectedRowColor = new Color(3, 162, 0);
+        Color secondaryTextColor = new Color(128, 128, 128);
+        tableFinance = new javax.swing.JTable() {
+            @Override
+            public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+                Component c = super.prepareRenderer(renderer, row, column);
+                // Change background color
+                if (!isRowSelected(row)) {
+                    c.setBackground(row % 2 == 0 ? Color.WHITE : altRowColor);
+                    if (column == 0) {
+                        c.setForeground(Color.BLACK);
+                    } else {
+                        c.setForeground(secondaryTextColor);
+                    }
+                } else {
+                    c.setBackground(selectedRowColor);
+                    c.setForeground(Color.WHITE);
+                }
+                return c;
+            }
+        };
 
         setBackground(new java.awt.Color(255, 255, 255));
         setForeground(null);
@@ -351,6 +381,8 @@ public class Finance extends javax.swing.JPanel {
         add(sVGFinanceSegCtrlBg);
         sVGFinanceSegCtrlBg.setBounds(19, 342, 268, 22);
 
+        jScrollPane1.setBorder(null);
+
         tableFinance.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -362,6 +394,42 @@ public class Finance extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        // Remove cell borders
+        tableFinance.setShowGrid(false);
+
+        // Change header color and add border
+        JTableHeader header = tableFinance.getTableHeader();
+        header.setDefaultRenderer(new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                c.setBackground(Color.WHITE);
+                // Set text colors
+                if (column == 0) {
+                    c.setForeground(Color.BLACK);
+                } else {
+                    c.setForeground(secondaryTextColor);
+                }
+                // Add border to the top and bottom
+                ((JComponent) c).setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, headerBorderColor));
+                // Add separator between header cells
+                if (column < table.getColumnCount() - 1) {
+                    ((JComponent) c).setBorder(BorderFactory.createCompoundBorder(
+                        ((JComponent) c).getBorder(),
+                        BorderFactory.createCompoundBorder(
+                            BorderFactory.createEmptyBorder(3, 0, 3, 0),
+                            BorderFactory.createMatteBorder(0, 0, 0, 1, headerSepColor)
+                        )
+                    ));
+                }
+                // Add padding to the text
+                ((JComponent) c).setBorder(BorderFactory.createCompoundBorder(
+                    ((JComponent) c).getBorder(),
+                    BorderFactory.createEmptyBorder(0, 7, 0, 7)
+                ));
+                return c;
+            }
+        });
         jScrollPane1.setViewportView(tableFinance);
 
         add(jScrollPane1);

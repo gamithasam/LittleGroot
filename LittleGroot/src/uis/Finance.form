@@ -230,6 +230,11 @@
       </Constraints>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+      <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="null"/>
+        </Property>
+      </Properties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new main.ScrollPaneWin11()"/>
         <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
@@ -253,6 +258,11 @@
               </Table>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTable() {&#xa;    @Override&#xa;    public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {&#xa;        Component c = super.prepareRenderer(renderer, row, column);&#xa;        // Change background color&#xa;        if (!isRowSelected(row)) {&#xa;            c.setBackground(row % 2 == 0 ? Color.WHITE : altRowColor);&#xa;            if (column == 0) {&#xa;                c.setForeground(Color.BLACK);&#xa;            } else {&#xa;                c.setForeground(secondaryTextColor);&#xa;            }&#xa;        } else {&#xa;            c.setBackground(selectedRowColor);&#xa;            c.setForeground(Color.WHITE);&#xa;        }&#xa;        return c;&#xa;    }&#xa;}"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="Color altRowColor = new Color(251, 251, 251);&#xa;Color headerBorderColor = new Color(242, 242, 242);&#xa;Color headerSepColor = new Color(229, 229, 229);&#xa;Color selectedRowColor = new Color(3, 162, 0);&#xa;Color secondaryTextColor = new Color(128, 128, 128);"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="// Remove cell borders&#xa;tableFinance.setShowGrid(false);&#xa;&#xa;// Change header color and add border&#xa;JTableHeader header = tableFinance.getTableHeader();&#xa;header.setDefaultRenderer(new DefaultTableCellRenderer() {&#xa;    @Override&#xa;    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {&#xa;        Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);&#xa;        c.setBackground(Color.WHITE);&#xa;        // Set text colors&#xa;        if (column == 0) {&#xa;            c.setForeground(Color.BLACK);&#xa;        } else {&#xa;            c.setForeground(secondaryTextColor);&#xa;        }&#xa;        // Add border to the top and bottom&#xa;        ((JComponent) c).setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, headerBorderColor));&#xa;        // Add separator between header cells&#xa;        if (column &lt; table.getColumnCount() - 1) {&#xa;            ((JComponent) c).setBorder(BorderFactory.createCompoundBorder(&#xa;                ((JComponent) c).getBorder(),&#xa;                BorderFactory.createCompoundBorder(&#xa;                    BorderFactory.createEmptyBorder(3, 0, 3, 0),&#xa;                    BorderFactory.createMatteBorder(0, 0, 0, 1, headerSepColor)&#xa;                )&#xa;            ));&#xa;        }&#xa;        // Add padding to the text&#xa;        ((JComponent) c).setBorder(BorderFactory.createCompoundBorder(&#xa;            ((JComponent) c).getBorder(),&#xa;            BorderFactory.createEmptyBorder(0, 7, 0, 7)&#xa;        ));&#xa;        return c;&#xa;    }&#xa;});"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
