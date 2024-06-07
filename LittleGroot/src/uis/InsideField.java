@@ -6,11 +6,14 @@ package uis;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.font.NumericShaper.Range;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
@@ -18,7 +21,9 @@ import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Vector;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -99,6 +104,7 @@ class FieldMetricsData {
 }
 
 public class InsideField extends javax.swing.JPanel {
+    Connection conn = null;
     public static String clickField;
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
     FieldMetricsData fData = getFieldData(clickField);
@@ -249,8 +255,7 @@ public class InsideField extends javax.swing.JPanel {
         }
         lblOverview.setText(getPlantCondition(clickField, fData.pH, fData.moisture, fData.lightIntensity));
         
-        //Get data from database to table
-        Connection conn = null;
+        //Get data from database
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/LittleGroot", "root", "toor");
@@ -267,6 +272,69 @@ public class InsideField extends javax.swing.JPanel {
                 lblEstHarvestOn.setText(estDate.format(formatter));
             }
             
+            Statement stTasks = conn.createStatement();
+            String queryTasks = "SELECT TStatus, Task, Category, Tdate FROM Tasks WHERE TStatus = false AND Category = '" + clickField + "' ORDER BY Tdate ASC";
+
+            ResultSet rsTasks = stTasks.executeQuery(queryTasks);
+
+            // Get metadata
+            ResultSetMetaData rsmd = rsTasks.getMetaData();
+            int columnCount = rsmd.getColumnCount();
+
+            // for storing data from database in an array
+            Vector<Vector<Object>> data = new Vector<Vector<Object>>();
+            while (rsTasks.next()) {
+                Vector<Object> vector = new Vector<Object>();
+                for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
+                    if (columnIndex == 1) {
+                        vector.add(rsTasks.getBoolean(columnIndex)); // Handle TStatus as Boolean
+                    } else {
+                        vector.add(rsTasks.getObject(columnIndex));
+                    }
+                }
+                data.add(vector);
+            }
+
+            // Column names
+            Vector<String> columnNames = new Vector<String>();
+            columnNames.add("Status");
+            columnNames.add("Task");
+            columnNames.add("Category");
+            columnNames.add("Date");
+
+            // Set the data to the table
+            DefaultTableModel model = new DefaultTableModel(data, columnNames) {
+                @Override
+                public Class<?> getColumnClass(int columnIndex) {
+                    if (columnIndex == 0) {
+                        return Boolean.class; // For the first column return Boolean.class
+                    }
+                    return super.getColumnClass(columnIndex);
+                }
+
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return column == 0; // Only the first column is editable
+                }
+
+                @Override
+                public void setValueAt(Object aValue, int row, int column) {
+                    super.setValueAt(aValue, row, column);
+                    if (column == 0) {
+                        try {
+                            String task = getValueAt(row, 1).toString();
+                            PreparedStatement pstmt = conn.prepareStatement("UPDATE Tasks SET TStatus = ? WHERE Task = ?");
+                            pstmt.setBoolean(1, (Boolean) aValue);
+                            pstmt.setString(2, task);
+                            pstmt.executeUpdate();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            };
+            tableTasks.setModel(model);
+            
         } catch (ClassNotFoundException | SQLException e) {
             JOptionPane.showMessageDialog(null, "Database Connection Error");
         } finally {
@@ -278,7 +346,6 @@ public class InsideField extends javax.swing.JPanel {
                 }
             }
         }
-        
         showLineChart();
         showSalesChart();
     }
@@ -427,6 +494,8 @@ public class InsideField extends javax.swing.JPanel {
         sVGEstHarvestOn = new main.SVGImage();
         sVGMetricsGraph = new main.SVGImage();
         sVGSalesGraph = new main.SVGImage();
+        jScrollPane1 = new main.ScrollPaneWin11();
+        tableTasks = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setForeground(null);
@@ -503,6 +572,27 @@ public class InsideField extends javax.swing.JPanel {
         sVGSalesGraph.setText("sVGSalesGraph");
         add(sVGSalesGraph);
         sVGSalesGraph.setBounds(337, 164, 292, 224);
+
+        tableTasks.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tableTasks.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                tableTasksComponentResized(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tableTasks);
+
+        add(jScrollPane1);
+        jScrollPane1.setBounds(20, 408, 600, 406);
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblFieldMouseClicked
@@ -513,9 +603,19 @@ public class InsideField extends javax.swing.JPanel {
         updateMetricsChart(cmbMetricsChart.getSelectedItem().toString());
     }//GEN-LAST:event_cmbMetricsChartActionPerformed
 
+    private void tableTasksComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tableTasksComponentResized
+        int height = 0;
+        for (int row = 0; row < tableTasks.getRowCount(); row++) {
+            height += tableTasks.getRowHeight(row);
+        }
+        jScrollPane1.setPreferredSize(new Dimension(jScrollPane1.getWidth(), height));
+        jScrollPane1.revalidate();
+    }//GEN-LAST:event_tableTasksComponentResized
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cmbMetricsChart;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblEstHarvestOn;
     private javax.swing.JLabel lblField;
     private javax.swing.JLabel lblOverview;
@@ -527,5 +627,6 @@ public class InsideField extends javax.swing.JPanel {
     private main.SVGImage sVGOverview;
     private main.SVGImage sVGPlantedOn;
     private main.SVGImage sVGSalesGraph;
+    private javax.swing.JTable tableTasks;
     // End of variables declaration//GEN-END:variables
 }
