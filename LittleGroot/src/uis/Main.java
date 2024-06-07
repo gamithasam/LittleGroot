@@ -484,7 +484,10 @@ public class Main extends javax.swing.JFrame {
         selectSidebarButton("SidebarSettings");
     }//GEN-LAST:event_sVGSidebarSettingsMouseClicked
 
-    
+    public void repaintJScroll() {
+        allFieldsScroll.revalidate();
+        allFieldsScroll.repaint();
+    }
     /**
      * @param args the command line arguments
      */

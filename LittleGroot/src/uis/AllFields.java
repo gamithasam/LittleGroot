@@ -25,7 +25,9 @@ import java.util.Map;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import uis.AllFields;
+import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
+import uis.Main;
 
 /**
  *
@@ -254,7 +256,7 @@ public class AllFields extends javax.swing.JPanel {
         JPanel insideField = new uis.InsideField();
         add(insideField);
         setComponentZOrder(insideField, 0);
-        insideField.setBounds(0, 0, 649, 478);
+        insideField.setBounds(0, 0, 649, 834);
         
         JLabel lblBackBtn = new javax.swing.JLabel();
         lblBackBtn.setFont(new java.awt.Font("SF Pro Text", 0, 15)); // NOI18N
@@ -270,9 +272,23 @@ public class AllFields extends javax.swing.JPanel {
         setComponentZOrder(lblBackBtn, 0);
         lblBackBtn.setBounds(25, 20, 11, 20);
         
-        this.setPreferredSize(new Dimension(649, 478));
+        this.setPreferredSize(new Dimension(649, 834));
         this.revalidate();
         this.repaint();
+        
+        /*
+        // Call repaint on the JScrollPane
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                if (getParent().getParent() instanceof JScrollPane) {
+                    JScrollPane scrollPane = (JScrollPane) getParent().getParent();
+                    scrollPane.repaint();
+                    JOptionPane.showMessageDialog(null, "Repaint!");
+                }
+            }
+        });
+        */
     }
 
     /**
