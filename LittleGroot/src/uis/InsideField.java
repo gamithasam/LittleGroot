@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,6 +30,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DatasetUtilities;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
+import uis.AllFields;
 
 /**
  *
@@ -101,6 +103,7 @@ public class InsideField extends javax.swing.JPanel {
     DefaultCategoryDataset datasetPH = new DefaultCategoryDataset();
     DefaultCategoryDataset datasetMoisture = new DefaultCategoryDataset();
     DefaultCategoryDataset datasetLightIntensity = new DefaultCategoryDataset();
+    DefaultCategoryDataset datasetSales = new DefaultCategoryDataset();
     
     private static FieldMetricsData tomato = new FieldMetricsData("Tomato");
     private static FieldMetricsData corn = new FieldMetricsData("Corn");
@@ -275,6 +278,7 @@ public class InsideField extends javax.swing.JPanel {
         }
         
         showLineChart();
+        showSalesChart();
     }
     
     public void showLineChart() { //create dataset for the graph
@@ -315,10 +319,10 @@ public class InsideField extends javax.swing.JPanel {
                 color = new Color(139, 69, 19); // Brown color for soil pH
         }
 
-        createLineChartAndPanel(dataset, color);
+        createLineChartAndPanel(dataset, color, 'M');
     }
 
-    private void createLineChartAndPanel(DefaultCategoryDataset dataset, Color color) {
+    private void createLineChartAndPanel(DefaultCategoryDataset dataset, Color color, char chart) {
         JFreeChart linechart = ChartFactory.createLineChart("", "Date", "Amount",
                 dataset, PlotOrientation.VERTICAL, true, true, false);
         CategoryPlot lineCategoryPlot = linechart.getCategoryPlot();
@@ -330,15 +334,72 @@ public class InsideField extends javax.swing.JPanel {
         NumberAxis rangeAxis = (NumberAxis) lineCategoryPlot.getRangeAxis();
         org.jfree.data.Range range = DatasetUtilities.findRangeBounds(dataset);
         if (range != null) {
+            // Check for zero-length range and adjust it
+            if (range.getLength() == 0) {
+                range = new org.jfree.data.Range(range.getLowerBound(), range.getUpperBound() + 0.01);
+            }
             rangeAxis.setRange(range);
         }
 
         ChartPanel lineChartPanel = new ChartPanel(linechart);
-        panelMetricsGraph.removeAll();
-        panelMetricsGraph.add(lineChartPanel, BorderLayout.CENTER);
-        panelMetricsGraph.validate();
+        if (chart == 'M') {
+            panelMetricsGraph.removeAll();
+            panelMetricsGraph.add(lineChartPanel, BorderLayout.CENTER);
+            panelMetricsGraph.validate();
+        } else {
+            panelSalesGraph.removeAll();
+            panelSalesGraph.add(lineChartPanel, BorderLayout.CENTER);
+            panelSalesGraph.validate();
+        }
     }
 
+    static Map<YearMonth, Map<String, Double>> totalByMonthAndCategory = new HashMap<>();
+    
+    public static void getDataFromAllFields(Map<YearMonth, Map<String, Double>> recMap) {
+        totalByMonthAndCategory = recMap;
+    }
+    
+    public void showSalesChart() { //create dataset for the graph
+        String targetCategory = clickField;
+        Map<YearMonth, Double> totalByMonthForCategory = new HashMap<>();
+
+        for (Map.Entry<YearMonth, Map<String, Double>> entry : totalByMonthAndCategory.entrySet()) {
+            YearMonth yearMonth = entry.getKey();
+            Map<String, Double> categoryMap = entry.getValue();
+
+            if (categoryMap.containsKey(targetCategory)) {
+                totalByMonthForCategory.put(yearMonth, categoryMap.get(targetCategory));
+            }
+        }
+        for (Map.Entry<YearMonth, Double> entry : totalByMonthForCategory.entrySet()) {
+            YearMonth yearMonth = entry.getKey();
+            Double totalPrice = entry.getValue();
+
+            String sDate = yearMonth.format(DateTimeFormatter.ofPattern("yyyy-MM"));
+
+            datasetSales.setValue(totalPrice, "Total Price", sDate);
+        }
+
+        updateSalesChart("Total Price");
+    }
+    
+    private void updateSalesChart(String selected) {
+        DefaultCategoryDataset dataset;
+        Color color;
+
+        switch (selected) {
+            case "Tomato":
+                color = new Color(0, 128, 0); // Green color for soil moisture
+                break;
+            case "Light Intensity":
+                color = new Color(255, 255, 0); // Yellow color for light intensity
+                break;
+            default:
+                color = new Color(139, 69, 19); // Brown color for soil pH
+        }
+
+        createLineChartAndPanel(datasetSales, color, 'S');
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

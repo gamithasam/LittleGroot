@@ -25,6 +25,7 @@ import java.util.Map;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import uis.AllFields;
 
 /**
  *
@@ -102,6 +103,8 @@ public class AllFields extends javax.swing.JPanel {
 
                 totalByMonthAndCategory.get(yearMonth).put(category, totalPrice);
             }
+            
+            InsideField.getDataFromAllFields(totalByMonthAndCategory);
 
             // Define the order of categories
             List<String> categories = Arrays.asList("Tomato", "Corn", "Apple", "Carrot", "Orange", "Mango");
