@@ -7,6 +7,7 @@ package uis;
 import javax.swing.ImageIcon;
 import java.awt.Image;
 import java.awt.Cursor;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Insets;
 import java.util.HashMap;
@@ -81,6 +82,16 @@ public class Main extends javax.swing.JFrame {
     }
     
     public Main() {
+        // Set macOS menu bar
+        if (Desktop.isDesktopSupported()) {
+            Desktop desktop = Desktop.getDesktop();
+            // Set the About handler
+            desktop.setAboutHandler(e -> {
+                selectSidebarButton("SidebarSettings");
+                selectContentArea("SidebarSettings");
+            });
+        }
+        
         initComponents();
         
         // Set the size of the Main frame
