@@ -44,6 +44,9 @@ public class Finance extends javax.swing.JPanel {
     public Finance() {
         initComponents();
         
+        // Change background color of the table area
+        jScrollPane1.getViewport().setBackground(Color.WHITE);
+        
         // Set SVGs
         sVGSummary.setSvgImage("./svgcomponents/FinanceSummary.svg", 609, 89);
         sVGIncomeGraph.setSvgImage("./svgcomponents/FinanceIncomeGraph.svg", 295, 183);

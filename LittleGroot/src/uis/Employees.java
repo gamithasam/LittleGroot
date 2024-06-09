@@ -4,10 +4,18 @@
  */
 package uis;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.sql.*;
 import java.util.Vector;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableCellRenderer;
 
 /**
  *
@@ -20,6 +28,9 @@ public class Employees extends javax.swing.JPanel {
      */
     public Employees() {
         initComponents();
+        
+        // Change background color of the table area
+        jScrollPane1.getViewport().setBackground(Color.WHITE);
         
         //Get data from database to table
         Connection conn = null;
@@ -57,7 +68,7 @@ public class Employees extends javax.swing.JPanel {
 
             // Set the data to the table
             DefaultTableModel model = new DefaultTableModel(data, columnNames);
-            tableInventory.setModel(model);
+            tableEmployees.setModel(model);
             
         } catch (ClassNotFoundException | SQLException e) {
             JOptionPane.showMessageDialog(null, "Database Connection Error");
@@ -83,14 +94,42 @@ public class Employees extends javax.swing.JPanel {
     private void initComponents() {
 
         jScrollPane1 = new main.ScrollPaneWin11();
-        tableInventory = new javax.swing.JTable();
+        Color altRowColor = new Color(251, 251, 251);
+        Color headerBorderColor = new Color(242, 242, 242);
+        Color headerSepColor = new Color(229, 229, 229);
+        Color selectedRowColor = new Color(3, 162, 0);
+        Color secondaryTextColor = new Color(128, 128, 128);
+        tableEmployees = new javax.swing.JTable() {
+            @Override
+            public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+                Component c = super.prepareRenderer(renderer, row, column);
+                // Change background color
+                if (!isRowSelected(row)) {
+                    c.setBackground(row % 2 == 0 ? Color.WHITE : altRowColor);
+                    if (column == 0) {
+                        c.setForeground(Color.BLACK);
+                    } else {
+                        c.setForeground(secondaryTextColor);
+                    }
+                } else {
+                    c.setBackground(selectedRowColor);
+                    c.setForeground(Color.WHITE);
+                }
+                return c;
+            }
+        };
 
         setBackground(new java.awt.Color(255, 255, 255));
         setForeground(null);
         setSize(new java.awt.Dimension(649, 478));
         setLayout(null);
 
-        tableInventory.setModel(new javax.swing.table.DefaultTableModel(
+        jScrollPane1.setBorder(null);
+        jScrollPane1.setForeground(null);
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(450, 438));
+        jScrollPane1.setSize(new java.awt.Dimension(606, 438));
+
+        tableEmployees.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -101,15 +140,51 @@ public class Employees extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(tableInventory);
+        // Remove cell borders
+        tableEmployees.setShowGrid(false);
+
+        // Change header color and add border
+        JTableHeader header = tableEmployees.getTableHeader();
+        header.setDefaultRenderer(new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                c.setBackground(Color.WHITE);
+                // Set text colors
+                if (column == 0) {
+                    c.setForeground(Color.BLACK);
+                } else {
+                    c.setForeground(secondaryTextColor);
+                }
+                // Add border to the top and bottom
+                ((JComponent) c).setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, headerBorderColor));
+                // Add separator between header cells
+                if (column < table.getColumnCount() - 1) {
+                    ((JComponent) c).setBorder(BorderFactory.createCompoundBorder(
+                        ((JComponent) c).getBorder(),
+                        BorderFactory.createCompoundBorder(
+                            BorderFactory.createEmptyBorder(3, 0, 3, 0),
+                            BorderFactory.createMatteBorder(0, 0, 0, 1, headerSepColor)
+                        )
+                    ));
+                }
+                // Add padding to the text
+                ((JComponent) c).setBorder(BorderFactory.createCompoundBorder(
+                    ((JComponent) c).getBorder(),
+                    BorderFactory.createEmptyBorder(0, 7, 0, 7)
+                ));
+                return c;
+            }
+        });
+        jScrollPane1.setViewportView(tableEmployees);
 
         add(jScrollPane1);
-        jScrollPane1.setBounds(19, 20, 606, 406);
+        jScrollPane1.setBounds(19, 20, 606, 438);
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tableInventory;
+    private javax.swing.JTable tableEmployees;
     // End of variables declaration//GEN-END:variables
 }

@@ -6,6 +6,7 @@ package uis;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -26,8 +27,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableCellRenderer;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -245,6 +252,9 @@ public class InsideField extends javax.swing.JPanel {
     
     public InsideField() {
         initComponents();
+        
+        // Change background color of the table area
+        jScrollPane1.getViewport().setBackground(Color.WHITE);
         
         // Set SVGs
         sVGOverview.setSvgImage("./svgcomponents/InsideFieldOverview.svg", 188, 89);
@@ -519,7 +529,30 @@ public class InsideField extends javax.swing.JPanel {
         sVGMetricsGraph = new main.SVGImage();
         sVGSalesGraph = new main.SVGImage();
         jScrollPane1 = new main.ScrollPaneWin11();
-        tableTasks = new javax.swing.JTable();
+        Color altRowColor = new Color(251, 251, 251);
+        Color headerBorderColor = new Color(242, 242, 242);
+        Color headerSepColor = new Color(229, 229, 229);
+        Color selectedRowColor = new Color(3, 162, 0);
+        Color secondaryTextColor = new Color(128, 128, 128);
+        tableTasks = new javax.swing.JTable() {
+            @Override
+            public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+                Component c = super.prepareRenderer(renderer, row, column);
+                // Change background color
+                if (!isRowSelected(row)) {
+                    c.setBackground(row % 2 == 0 ? Color.WHITE : altRowColor);
+                    if (column == 0) {
+                        c.setForeground(Color.BLACK);
+                    } else {
+                        c.setForeground(secondaryTextColor);
+                    }
+                } else {
+                    c.setBackground(selectedRowColor);
+                    c.setForeground(Color.WHITE);
+                }
+                return c;
+            }
+        };
 
         setBackground(new java.awt.Color(255, 255, 255));
         setForeground(null);
@@ -601,6 +634,8 @@ public class InsideField extends javax.swing.JPanel {
         add(sVGSalesGraph);
         sVGSalesGraph.setBounds(337, 164, 292, 224);
 
+        jScrollPane1.setBorder(null);
+
         tableTasks.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -617,10 +652,46 @@ public class InsideField extends javax.swing.JPanel {
                 tableTasksComponentResized(evt);
             }
         });
+        // Remove cell borders
+        tableTasks.setShowGrid(false);
+
+        // Change header color and add border
+        JTableHeader header = tableTasks.getTableHeader();
+        header.setDefaultRenderer(new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                c.setBackground(Color.WHITE);
+                // Set text colors
+                if (column == 0) {
+                    c.setForeground(Color.BLACK);
+                } else {
+                    c.setForeground(secondaryTextColor);
+                }
+                // Add border to the top and bottom
+                ((JComponent) c).setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, headerBorderColor));
+                // Add separator between header cells
+                if (column < table.getColumnCount() - 1) {
+                    ((JComponent) c).setBorder(BorderFactory.createCompoundBorder(
+                        ((JComponent) c).getBorder(),
+                        BorderFactory.createCompoundBorder(
+                            BorderFactory.createEmptyBorder(3, 0, 3, 0),
+                            BorderFactory.createMatteBorder(0, 0, 0, 1, headerSepColor)
+                        )
+                    ));
+                }
+                // Add padding to the text
+                ((JComponent) c).setBorder(BorderFactory.createCompoundBorder(
+                    ((JComponent) c).getBorder(),
+                    BorderFactory.createEmptyBorder(0, 7, 0, 7)
+                ));
+                return c;
+            }
+        });
         jScrollPane1.setViewportView(tableTasks);
 
         add(jScrollPane1);
-        jScrollPane1.setBounds(20, 408, 600, 406);
+        jScrollPane1.setBounds(20, 408, 600, 400);
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblFieldMouseClicked
