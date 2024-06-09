@@ -38,7 +38,7 @@ public class Employees extends javax.swing.JPanel {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/LittleGroot", "root", "toor");
             Statement st = conn.createStatement();
-            String query = "SELECT EmpID, FName, LName, EmpRole, Phone, Email, Address FROM Employee";
+            String query = "SELECT EmpID, FName, LName, EmpRole, Phone, Email, Address FROM Employee ORDER BY EmpID ASC";
             
             ResultSet rs = st.executeQuery(query);
 

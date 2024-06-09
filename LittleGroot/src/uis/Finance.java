@@ -67,7 +67,7 @@ public class Finance extends javax.swing.JPanel {
         String queryIncome = "SELECT Category, SUM(Price) FROM Finance WHERE TType = 'I' AND " + dateCondition + " GROUP BY Category";
         String queryTotalIncome = "SELECT SUM(Price) FROM Finance WHERE TType = 'I' AND " + dateCondition;
         String queryTotalExpenses = "SELECT SUM(Price) FROM Finance WHERE TType = 'E' AND " + dateCondition;
-        String queryTable = "SELECT Transactions, Category, TDate, Price FROM Finance";
+        String queryTable = "SELECT Transactions, Category, TDate, Price FROM Finance ORDER BY TDate DESC";
         
         // Establish connection, execute SQL queries and populate pie charts
         try {
