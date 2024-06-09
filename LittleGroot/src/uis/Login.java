@@ -6,13 +6,10 @@ package uis;
 
 import java.awt.Cursor;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.sql.*;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -303,6 +300,7 @@ public class Login extends javax.swing.JPanel {
                 
                 // Open Main
                 Main mainFrame = new Main();
+                mainFrame.setLocationRelativeTo(this);
                 mainFrame.setVisible(true);
                 
                 // Close self

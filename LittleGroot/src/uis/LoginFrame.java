@@ -33,6 +33,8 @@ public class LoginFrame extends javax.swing.JFrame {
         login = new uis.Login();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocation(new java.awt.Point(0, 0));
+        setResizable(false);
         setSize(new java.awt.Dimension(850, 530));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -85,7 +87,9 @@ public class LoginFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new LoginFrame().setVisible(true);
+                LoginFrame loginFrame = new LoginFrame();
+                loginFrame.setLocationRelativeTo(null);
+                loginFrame.setVisible(true);
             }
         });
     }

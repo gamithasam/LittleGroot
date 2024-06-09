@@ -202,7 +202,9 @@ public class Main extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(234, 234, 234));
         setForeground(new java.awt.Color(234, 234, 234));
+        setLocation(new java.awt.Point(0, 0));
         setPreferredSize(new java.awt.Dimension(850, 530));
+        setResizable(false);
         setSize(new java.awt.Dimension(850, 530));
         getContentPane().setLayout(null);
 

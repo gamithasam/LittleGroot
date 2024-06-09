@@ -294,6 +294,7 @@ public class Settings extends javax.swing.JPanel {
     private void sVGLogoutBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGLogoutBtnMouseClicked
         // Open Login
         LoginFrame loginFrame = new LoginFrame();
+        loginFrame.setLocationRelativeTo(null);
         loginFrame.setVisible(true);
 
         // Close self
