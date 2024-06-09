@@ -10,6 +10,7 @@ import java.awt.event.FocusEvent;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.sql.*;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -291,7 +292,12 @@ public class Settings extends javax.swing.JPanel {
     }//GEN-LAST:event_sVGChangePasswordBtnMouseClicked
 
     private void sVGLogoutBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGLogoutBtnMouseClicked
-        
+        // Open Login
+        LoginFrame loginFrame = new LoginFrame();
+        loginFrame.setVisible(true);
+
+        // Close self
+        SwingUtilities.getWindowAncestor(sVGLogoutBtn).dispose();
     }//GEN-LAST:event_sVGLogoutBtnMouseClicked
 
 

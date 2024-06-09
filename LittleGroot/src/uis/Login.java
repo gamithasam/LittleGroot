@@ -16,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -305,8 +306,7 @@ public class Login extends javax.swing.JPanel {
                 mainFrame.setVisible(true);
                 
                 // Close self
-                this.setVisible(false);
-             //   setDefaultCloseOperation(JFrameEXIT_ON_CLOSE);
+                SwingUtilities.getWindowAncestor(sVGLoginBtn).dispose();
                 
             } else {
                 // Display Error Message
