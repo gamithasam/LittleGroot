@@ -19,7 +19,8 @@ import javax.swing.SpinnerNumberModel;
  * @author gamitha
  */
 public class AddTasks extends javax.swing.JPanel {
-
+    public boolean needRefresh = false;
+    public boolean needDashRefresh = false;
     /**
      * Creates new form AddTasks
      */
@@ -280,6 +281,8 @@ public class AddTasks extends javax.swing.JPanel {
                 stepperDay.setValue(day);
                 stepperMonth.setValue(month);
                 stepperYear.setValue(year);
+                needRefresh = true;
+                needDashRefresh = true;
                 // Show message
                 JOptionPane.showMessageDialog(null, "Task added successfully!");
             } else {

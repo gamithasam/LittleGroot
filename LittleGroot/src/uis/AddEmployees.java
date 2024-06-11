@@ -18,6 +18,8 @@ import java.sql.*;
  * @author gamitha
  */
 public class AddEmployees extends javax.swing.JPanel {
+    public boolean needRefresh = false;
+    public boolean needDashRefresh = false;
 
     private void addFocusListener(JTextField textField) {
         textField.addFocusListener(new FocusAdapter() {
@@ -369,6 +371,8 @@ public class AddEmployees extends javax.swing.JPanel {
                 txtAddress.setText("");
                 txtPassword.setText("");
                 cmbRole.setSelectedIndex(0);
+                needRefresh = true;
+                needDashRefresh = true;
                 // Show message
                 JOptionPane.showMessageDialog(null, "Account added successfully!");
             } else {

@@ -475,26 +475,88 @@ public class Main extends javax.swing.JFrame {
     
     private void sVGSidebarAllFieldsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGSidebarAllFieldsMouseClicked
         callSelectContentAreaAndSidebarButton("SidebarAllFields");
+        if (add.addFieldMetrics.needRefresh) { // Check if a refresh is required
+            AllFields refreshed = new AllFields(); // Creates a new instance of Employees
+            contentAreaNToolBar.remove(allFields); // Removes the existing instance
+            allFieldsScroll.setViewportView(refreshed); // Add the new instance
+            allFields = refreshed; // Replace the variable
+            refreshed.setBounds(0, 52, 649, 478); // Set bounds for the new instance
+            this.revalidate();
+            this.repaint();
+            add.addFieldMetrics.needRefresh = false;
+        }
     }//GEN-LAST:event_sVGSidebarAllFieldsMouseClicked
 
     private void sVGSidebarDashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGSidebarDashboardMouseClicked
         callSelectContentAreaAndSidebarButton("SidebarDashboard");
+        if (add.addTasks.needDashRefresh || add.addTransactions.needDashRefresh || add.addFieldMetrics.needDashRefresh) { // Check if a refresh is required
+            Dashboard refreshed = new Dashboard(); // Creates a new instance of Employees
+            contentAreaNToolBar.remove(dashboard); // Removes the existing instance
+            dashboardScroll.setViewportView(refreshed); // Add the new instance
+            dashboard = refreshed; // Replace the variable
+            refreshed.setBounds(0, 52, 649, 478); // Set bounds for the new instance
+            this.revalidate();
+            this.repaint();
+            add.addTasks.needDashRefresh = false;
+            add.addTransactions.needDashRefresh = false;
+            add.addFieldMetrics.needDashRefresh = false;
+        }
     }//GEN-LAST:event_sVGSidebarDashboardMouseClicked
 
     private void sVGSidebarTasksMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGSidebarTasksMouseClicked
         callSelectContentAreaAndSidebarButton("SidebarTasks");
+        if (add.addTasks.needRefresh) { // Check if a refresh is required
+            Tasks refreshed = new Tasks(); // Creates a new instance of Employees
+            contentAreaNToolBar.remove(tasks); // Removes the existing instance
+            contentAreaNToolBar.add(refreshed); // Add the new instance
+            tasks = refreshed; // Replace the variable
+            refreshed.setBounds(0, 52, 649, 478); // Set bounds for the new instance
+            this.revalidate();
+            this.repaint();
+            add.addTasks.needRefresh = false;
+        }
     }//GEN-LAST:event_sVGSidebarTasksMouseClicked
 
     private void sVGSidebarInventoryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGSidebarInventoryMouseClicked
         callSelectContentAreaAndSidebarButton("SidebarInventory");
+        if (add.addInventory.needRefresh) { // Check if a refresh is required
+            Inventory refreshed = new Inventory(); // Creates a new instance of Employees
+            contentAreaNToolBar.remove(inventory); // Removes the existing instance
+            contentAreaNToolBar.add(refreshed); // Add the new instance
+            inventory = refreshed; // Replace the variable
+            refreshed.setBounds(0, 52, 649, 478); // Set bounds for the new instance
+            this.revalidate();
+            this.repaint();
+            add.addInventory.needRefresh = false;
+        }
     }//GEN-LAST:event_sVGSidebarInventoryMouseClicked
 
     private void sVGSidebarFinanceMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGSidebarFinanceMouseClicked
         callSelectContentAreaAndSidebarButton("SidebarFinance");
+        if (add.addTransactions.needRefresh) { // Check if a refresh is required
+            Finance refreshed = new Finance(); // Creates a new instance of Employees
+            contentAreaNToolBar.remove(finance); // Removes the existing instance
+            contentAreaNToolBar.add(refreshed); // Add the new instance
+            finance = refreshed; // Replace the variable
+            refreshed.setBounds(0, 52, 649, 478); // Set bounds for the new instance
+            this.revalidate();
+            this.repaint();
+            add.addTransactions.needRefresh = false;
+        }
     }//GEN-LAST:event_sVGSidebarFinanceMouseClicked
 
     private void sVGSidebarEmployeesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGSidebarEmployeesMouseClicked
         callSelectContentAreaAndSidebarButton("SidebarEmployees");
+        if (add.addEmployees.needRefresh) { // Check if a refresh is required
+            Employees refreshed = new Employees(); // Creates a new instance of Employees
+            contentAreaNToolBar.remove(employees); // Removes the existing instance
+            contentAreaNToolBar.add(refreshed); // Add the new instance
+            employees = refreshed; // Replace the variable
+            refreshed.setBounds(0, 52, 649, 478); // Set bounds for the new instance
+            this.revalidate();
+            this.repaint();
+            add.addEmployees.needRefresh = false;
+        }
     }//GEN-LAST:event_sVGSidebarEmployeesMouseClicked
 
     private void sVGSidebarAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGSidebarAddMouseClicked

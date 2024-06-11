@@ -34,6 +34,7 @@ class InventoryDB {
 }
 
 public class AddInventory extends javax.swing.JPanel {
+    public boolean needRefresh = false;
     Map<String, InventoryDB> inventoryMap = new HashMap<>();
     /**
      * Creates new form AddInventory
@@ -418,6 +419,7 @@ public class AddInventory extends javax.swing.JPanel {
                 // Clear the inputs
                 cmbItem.setSelectedIndex(0);
                 stepperQty.setValue(0);
+                needRefresh = true;
                 // Show message
                 JOptionPane.showMessageDialog(null, "Inventory updated successfully!");
             } else {
@@ -494,6 +496,8 @@ public class AddInventory extends javax.swing.JPanel {
                 // Create an object
                 InventoryDB inventoryAdd = new InventoryDB(item, itemID, cat, unit);
                 inventoryMap.put(item, inventoryAdd);
+                
+                needRefresh = true;
                 
                 // Show message
                 JOptionPane.showMessageDialog(null, "New inventory item added successfully!");

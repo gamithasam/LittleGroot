@@ -248,11 +248,11 @@ public class Add extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private uis.AddEmployees addEmployees;
-    private uis.AddFieldMetrics addFieldMetrics;
-    private uis.AddInventory addInventory;
-    private uis.AddTasks addTasks;
-    private uis.AddTransactions addTransactions;
+    public uis.AddEmployees addEmployees;
+    public uis.AddFieldMetrics addFieldMetrics;
+    public uis.AddInventory addInventory;
+    public uis.AddTasks addTasks;
+    public uis.AddTransactions addTransactions;
     private main.SVGImage sVGAddSegCtrlBg;
     private main.SVGImage sVGAddSegCtrlEmployees;
     private main.SVGImage sVGAddSegCtrlFieldMetrics;

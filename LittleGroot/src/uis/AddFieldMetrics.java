@@ -18,7 +18,9 @@ import java.util.Calendar;
  * @author gamitha
  */
 public class AddFieldMetrics extends javax.swing.JPanel {
-
+    public boolean needRefresh = false;
+    public boolean needDashRefresh = false;
+    
     private void addFocusListener(JTextField textField) {
         textField.addFocusListener(new FocusAdapter() {
             @Override
@@ -249,6 +251,8 @@ public class AddFieldMetrics extends javax.swing.JPanel {
                 cmbField.setSelectedIndex(0);
                 stepperSoilPh.setValue(0);
                 stepperSoilMoisture.setValue(0);
+                needRefresh = true;
+                needDashRefresh = true;
                 // Show message
                 JOptionPane.showMessageDialog(null, "Field metrics added successfully!");
             } else {

@@ -21,7 +21,8 @@ import java.sql.*;
  * @author gamitha
  */
 public class AddTransactions extends javax.swing.JPanel {
-
+    public boolean needRefresh = false;
+    public boolean needDashRefresh = false;
     boolean radioIncome = true;
     
     private void radioSelect(char btn) {
@@ -429,6 +430,8 @@ public class AddTransactions extends javax.swing.JPanel {
                 stepperDay.setValue(day);
                 stepperMonth.setValue(month);
                 stepperYear.setValue(year);
+                needRefresh = true;
+                needDashRefresh = true;
                 // Show message
                 JOptionPane.showMessageDialog(null, "Transaction added successfully!");
             } else {
