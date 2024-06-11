@@ -139,7 +139,7 @@ public class Tasks extends javax.swing.JPanel {
             }
 
         } catch (ClassNotFoundException | SQLException e) {
-            JOptionPane.showMessageDialog(null, "Database Connection Error");
+            MessageDialog dbConnectionFailure = new MessageDialog(1, this, "Database", "Database Connection Failed", "Unable to connect to the database.");
         } finally {
             if (st != null) {
                 try {
@@ -270,7 +270,7 @@ public class Tasks extends javax.swing.JPanel {
             tableTasks.setModel(model);
 
         } catch (ClassNotFoundException | SQLException e) {
-            JOptionPane.showMessageDialog(null, "Database Connection Error");
+            MessageDialog dbConnectionFailure = new MessageDialog(1, this, "Database", "Database Connection Failed", "Unable to connect to the database.");
         } finally {
             if (st != null) {
                 try {

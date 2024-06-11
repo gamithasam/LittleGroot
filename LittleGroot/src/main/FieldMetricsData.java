@@ -64,7 +64,7 @@ public class FieldMetricsData {
                 try {
                     conn.close();
                 } catch (SQLException e) {
-                    JOptionPane.showMessageDialog(null, "Failed to close connection");
+                    MessageDialog closeConnectionFailure = new MessageDialog(1, this, "Database", "Connection Closure Failed", "Failed to close the database connection.");
                 }
             }
         }

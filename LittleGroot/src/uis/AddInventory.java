@@ -125,21 +125,21 @@ public class AddInventory extends javax.swing.JPanel {
                 try {
                     conn.close();
                 } catch (SQLException e) {
-                    JOptionPane.showMessageDialog(null, "Failed to close connection");
+                    MessageDialog closeConnectionFailure = new MessageDialog(1, this, "Database", "Connection Closure Failed", "Failed to close the database connection.");
                 }
             }
             if (st != null) {
                 try {
                     st.close();
                 } catch (SQLException e) {
-                    JOptionPane.showMessageDialog(null, "Failed to close connection");
+                    MessageDialog closeConnectionFailure = new MessageDialog(1, this, "Database", "Connection Closure Failed", "Failed to close the database connection.");
                 }
             }
             if (rs != null) {
                 try {
                     rs.close();
                 } catch (SQLException e) {
-                    JOptionPane.showMessageDialog(null, "Failed to close connection");
+                    MessageDialog closeConnectionFailure = new MessageDialog(1, this, "Database", "Connection Closure Failed", "Failed to close the database connection.");
                 }
             }
         }
@@ -427,13 +427,13 @@ public class AddInventory extends javax.swing.JPanel {
             }
             
         } catch (ClassNotFoundException | SQLException e) {
-            JOptionPane.showMessageDialog(null, "Database Connection Error");
+            MessageDialog dbConnectionFailure = new MessageDialog(1, this, "Database", "Database Connection Failed", "Unable to connect to the database.");
         } finally {
             if (conn != null) {
                 try {
                     conn.close();
                 } catch (SQLException e) {
-                    JOptionPane.showMessageDialog(null, "Failed to close connection");
+                    MessageDialog closeConnectionFailure = new MessageDialog(1, this, "Database", "Connection Closure Failed", "Failed to close the database connection.");
                 }
             }
         }
@@ -506,13 +506,13 @@ public class AddInventory extends javax.swing.JPanel {
             }
             
         } catch (ClassNotFoundException | SQLException e) {
-            JOptionPane.showMessageDialog(null, "Database Connection Error");
+            MessageDialog dbConnectionFailure = new MessageDialog(1, this, "Database", "Database Connection Failed", "Unable to connect to the database.");
         } finally {
             if (conn != null) {
                 try {
                     conn.close();
                 } catch (SQLException e) {
-                    JOptionPane.showMessageDialog(null, "Failed to close connection");
+                    MessageDialog closeConnectionFailure = new MessageDialog(1, this, "Database", "Connection Closure Failed", "Failed to close the database connection.");
                 }
             }
         }

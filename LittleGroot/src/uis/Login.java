@@ -9,9 +9,13 @@ import java.awt.Image;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.sql.*;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
@@ -275,7 +279,7 @@ public class Login extends javax.swing.JPanel {
         if (stringEID.matches("\\d{4}")) {
             eID = Integer.parseInt(stringEID);
         } else {
-            JOptionPane.showMessageDialog(null, "Invalid Employee ID");
+            MessageDialog invEmpID = new MessageDialog(1, this, "Login", "Login Failed", "Invalid employee ID. Please try again.");
             return;
         }
      
@@ -295,8 +299,8 @@ public class Login extends javax.swing.JPanel {
                 // Create user objects
                 Main.createUserObj(eID, rs.getString("Fname"), rs.getString("LName"), rs.getString("EmpRole"), pass);
                 
-                // Displays Message and continue
-                JOptionPane.showMessageDialog(null, "Successfully logged in!");
+                // Display message
+                MessageDialog logSuccess = new MessageDialog(0, this, "Login", "Login Successful", "You have successfully logged in!");
                 
                 // Open Main
                 Main mainFrame = new Main();
@@ -308,17 +312,17 @@ public class Login extends javax.swing.JPanel {
                 
             } else {
                 // Display Error Message
-                JOptionPane.showMessageDialog(null, "Invalid login");
+                MessageDialog logFailure = new MessageDialog(1, this, "Login", "Login Failed", "Invalid password. Please try again.");
             }
             
         } catch (ClassNotFoundException | SQLException e) {
-            JOptionPane.showMessageDialog(null, "Database Connection Error");
+            MessageDialog dbConnectionFailure = new MessageDialog(1, this, "Database", "Database Connection Failed", "Unable to connect to the database.");
         } finally {
             if (conn != null) {
                 try {
                     conn.close();
                 } catch (SQLException e) {
-                    JOptionPane.showMessageDialog(null, "Failed to close connection");
+                    MessageDialog closeConnectionFailure = new MessageDialog(1, this, "Database", "Connection Closure Failed", "Failed to close the database connection.");
                 }
             }
         }
