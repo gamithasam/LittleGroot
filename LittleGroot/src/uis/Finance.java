@@ -335,7 +335,7 @@ public class Finance extends javax.swing.JPanel {
         lblTotalIncome.setBounds(38, 59, 268, 32);
 
         lblTotalExpenses.setFont(new java.awt.Font("SF Pro Text", 0, 26)); // NOI18N
-        lblTotalExpenses.setForeground(new java.awt.Color(0, 0, 0));
+        lblTotalExpenses.setForeground(new java.awt.Color(255, 59, 48));
         lblTotalExpenses.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTotalExpenses.setText("lblTotalExpenses");
         lblTotalExpenses.setToolTipText("");

@@ -25,7 +25,7 @@ public class Dashboard extends javax.swing.JPanel {
         // Set SVGs
         sVGFieldDetails.setSvgImage("./svgcomponents/DashboardFieldDetails.svg", 156, 153);
         sVGFieldsOverviewBg.setSvgImage("./svgcomponents/DashboardFieldOverviewBg.svg", 156, 89);
-        sVGFinancesBg.setSvgImage("./svgcomponents/DashboardFinancesBg.svg", 198, 89);
+        sVGFinancesBg.setSvgImage("./svgcomponents/DashboardFinancesBg.svg", 416, 120);
         sVGSalesGraph.setSvgImage("./svgcomponents/SalesGraph.svg", 604, 294);
         sVGTaskCompletedBg.setSvgImage("./svgcomponents/DashboardTaskCompletedBg.svg", 416, 89);
         
@@ -112,19 +112,19 @@ public class Dashboard extends javax.swing.JPanel {
         lblIncome.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblIncome.setText("lblIncome");
         lblIncome.setToolTipText("");
-        lblIncome.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        lblIncome.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         add(lblIncome);
-        lblIncome.setBounds(208, 182, 87, 32);
+        lblIncome.setBounds(211, 199, 177, 32);
         lblIncome.getAccessibleContext().setAccessibleName("lblIncome");
 
         lblExpenses.setFont(new java.awt.Font("SF Pro Text", 0, 26)); // NOI18N
-        lblExpenses.setForeground(new java.awt.Color(0, 0, 0));
+        lblExpenses.setForeground(new java.awt.Color(255, 59, 48));
         lblExpenses.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblExpenses.setText("lblExpenses");
         lblExpenses.setToolTipText("");
-        lblExpenses.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        lblExpenses.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         add(lblExpenses);
-        lblExpenses.setBounds(295, 182, 87, 32);
+        lblExpenses.setBounds(420, 199, 177, 32);
 
         sVGFieldsOverviewBg.setForeground(new java.awt.Color(0, 0, 0));
         sVGFieldsOverviewBg.setText("sVGFieldsOverviewBg");
@@ -144,7 +144,7 @@ public class Dashboard extends javax.swing.JPanel {
         sVGFinancesBg.setForeground(new java.awt.Color(0, 0, 0));
         sVGFinancesBg.setText("sVGFinancesBg");
         add(sVGFinancesBg);
-        sVGFinancesBg.setBounds(196, 129, 198, 89);
+        sVGFinancesBg.setBounds(196, 129, 416, 120);
 
         sVGSalesGraph.setForeground(new java.awt.Color(0, 0, 0));
         sVGSalesGraph.setText("sVGSalesGraph");
