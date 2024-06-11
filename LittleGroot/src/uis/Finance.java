@@ -16,7 +16,6 @@ import java.util.Random;
 import java.util.Vector;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -139,7 +138,7 @@ public class Finance extends javax.swing.JPanel {
             tableFinance.removeColumn(tableFinance.getColumnModel().getColumn(4));
 
         } catch (ClassNotFoundException | SQLException e) {
-            JOptionPane.showMessageDialog(null, "Database Connection Error" + e.getMessage());
+            MessageDialog dbConnectionFailure = new MessageDialog(1, this, "Database", "Database Connection Failed", "Unable to connect to the database.");
         } finally {
             if (conn != null) {
                 try {
@@ -255,7 +254,7 @@ public class Finance extends javax.swing.JPanel {
                 try {
                     st.close();
                 } catch (SQLException e) {
-                    JOptionPane.showMessageDialog(null, "Failed to close statement");
+                    MessageDialog closeStatementFailure = new MessageDialog(1, this, "Database", "Statement Closure Failed", "Failed to close the database statement.");
                 }
             }
         }
@@ -503,7 +502,8 @@ public class Finance extends javax.swing.JPanel {
                 lblTotalIncome.setText(String.format("$%.2f", totalIncome));
             }
         } catch (ClassNotFoundException | SQLException e) {
-            JOptionPane.showMessageDialog(null, "Database Connection Error" + e.getMessage());
+            MessageDialog dbConnectionFailure = new MessageDialog(1, this, "Database", "Database Connection Failed", "Unable to connect to the database.");
+
         } finally {
             if (conn != null) {
                 try {
@@ -550,7 +550,8 @@ public class Finance extends javax.swing.JPanel {
                 lblTotalExpenses.setText(String.format("$%.2f", totalExpenses));
             }
         } catch (ClassNotFoundException | SQLException e) {
-            JOptionPane.showMessageDialog(null, "Database Connection Error" + e.getMessage());
+            MessageDialog dbConnectionFailure = new MessageDialog(1, this, "Database", "Database Connection Failed", "Unable to connect to the database.");
+
         } finally {
             if (conn != null) {
                 try {

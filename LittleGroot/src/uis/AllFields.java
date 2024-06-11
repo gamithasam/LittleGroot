@@ -9,7 +9,6 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import javax.swing.ImageIcon;
 import java.awt.Image;
-import java.awt.Insets;
 import main.ModelChart;
 import java.sql.*;
 import java.time.LocalDate;
@@ -23,11 +22,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
-import uis.Main;
 
 /**
  *
@@ -130,7 +127,7 @@ public class AllFields extends javax.swing.JPanel {
                 chartData.add(new ModelChart(monthName, totalsArray));
             }
         } catch (ClassNotFoundException | SQLException e) {
-            JOptionPane.showMessageDialog(null, "Database Connection Error" + e.getMessage());
+            MessageDialog dbConnectionFailure = new MessageDialog(1, this, "Database", "Database Connection Failed", "Unable to connect to the database.");
         } finally {
             if (conn != null) {
                 try {

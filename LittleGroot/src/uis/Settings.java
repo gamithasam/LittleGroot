@@ -7,7 +7,6 @@ package uis;
 import java.awt.Cursor;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.sql.*;
 import javax.swing.SwingUtilities;
@@ -268,9 +267,9 @@ public class Settings extends javax.swing.JPanel {
                         txtNewPassword.setText("");
                         txtVerifyPassword.setText("");
                         // Show message
-                        JOptionPane.showMessageDialog(null, "Password updated successfully!");
+                        MessageDialog passwordUpdatedSuccess = new MessageDialog(0, this, "Settings", "Password Updated", "Password has been updated successfully.");
                     } else {
-                        JOptionPane.showMessageDialog(null, "Failed to update password");
+                        MessageDialog passwordUpdateFailure = new MessageDialog(1, this, "Settings", "Password Update Failed", "Failed to update password. Please try again.");
                     }
                 } catch (ClassNotFoundException | SQLException e) {
                     MessageDialog dbConnectionFailure = new MessageDialog(1, this, "Database", "Database Connection Failed", "Unable to connect to the database.");
@@ -284,10 +283,10 @@ public class Settings extends javax.swing.JPanel {
                     }
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Incorrect Password");
+                MessageDialog incorrectPassword = new MessageDialog(1, this, "Settings", "Incorrect Password", "Password is incorrect. Try again.");
             }
         } else {
-            JOptionPane.showMessageDialog(null, "New password and verify password doesn't match");
+            MessageDialog passwordMismatch = new MessageDialog(1, this, "Settings", "Password Mismatch", "New password and verify password doesn't match. Please try again.");
         }
     }//GEN-LAST:event_sVGChangePasswordBtnMouseClicked
 

@@ -8,10 +8,8 @@ import java.awt.Cursor;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyEvent;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.sql.*;
-import java.util.Calendar;
 
 /**
  *
@@ -254,11 +252,10 @@ public class AddFieldMetrics extends javax.swing.JPanel {
                 needRefresh = true;
                 needDashRefresh = true;
                 // Show message
-                JOptionPane.showMessageDialog(null, "Field metrics added successfully!");
+                MessageDialog fieldMetricsAddedSuccess = new MessageDialog(0, this, "Add", "Field Metrics Added", "Field metrics have been added successfully.");
             } else {
-                JOptionPane.showMessageDialog(null, "Failed to add field metrics");
+                MessageDialog fieldMetricsAdditionFailure = new MessageDialog(1, this, "Add", "Field Metrics Addition Failed", "Failed to add field metrics. Please try again.");
             }
-            
         } catch (ClassNotFoundException | SQLException e) {
             MessageDialog dbConnectionFailure = new MessageDialog(1, this, "Database", "Database Connection Failed", "Unable to connect to the database.");
         } finally {

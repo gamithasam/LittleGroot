@@ -25,7 +25,6 @@ import java.util.Map;
 import java.util.Vector;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;

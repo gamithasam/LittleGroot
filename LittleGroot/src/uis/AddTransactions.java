@@ -10,7 +10,6 @@ import java.awt.event.FocusEvent;
 import java.awt.event.KeyEvent;
 import java.util.Calendar;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
@@ -433,9 +432,9 @@ public class AddTransactions extends javax.swing.JPanel {
                 needRefresh = true;
                 needDashRefresh = true;
                 // Show message
-                JOptionPane.showMessageDialog(null, "Transaction added successfully!");
+                MessageDialog transactionAddedSuccess = new MessageDialog(0, this, "Add", "Transaction Added", "Transaction has been added successfully.");
             } else {
-                JOptionPane.showMessageDialog(null, "Failed to add transaction");
+                MessageDialog transactionAdditionFailure = new MessageDialog(1, this, "Add", "Transaction Addition Failed", "Failed to add transaction. Please try again.");
             }
             
         } catch (ClassNotFoundException | SQLException e) {

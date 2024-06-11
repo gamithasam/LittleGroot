@@ -7,7 +7,6 @@ package uis;
 import java.awt.Cursor;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import javax.swing.JOptionPane;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -119,7 +118,7 @@ public class AddInventory extends javax.swing.JPanel {
             }
             
         } catch (ClassNotFoundException | SQLException e) {
-            JOptionPane.showMessageDialog(null, "Database Connection Error" + e);
+            MessageDialog dbConnectionFailure = new MessageDialog(1, this, "Database", "Database Connection Failed", "Unable to connect to the database.");
         } finally {
             if (conn != null) {
                 try {
@@ -132,14 +131,14 @@ public class AddInventory extends javax.swing.JPanel {
                 try {
                     st.close();
                 } catch (SQLException e) {
-                    MessageDialog closeConnectionFailure = new MessageDialog(1, this, "Database", "Connection Closure Failed", "Failed to close the database connection.");
+                    MessageDialog closeStatementFailure = new MessageDialog(1, this, "Database", "Statement Closure Failed", "Failed to close the database statement.");
                 }
             }
             if (rs != null) {
                 try {
                     rs.close();
                 } catch (SQLException e) {
-                    MessageDialog closeConnectionFailure = new MessageDialog(1, this, "Database", "Connection Closure Failed", "Failed to close the database connection.");
+                    MessageDialog rsConnectionFailure = new MessageDialog(1, this, "Database", "Resultset Closure Failed", "Failed to close the database result set.");
                 }
             }
         }
@@ -421,9 +420,9 @@ public class AddInventory extends javax.swing.JPanel {
                 stepperQty.setValue(0);
                 needRefresh = true;
                 // Show message
-                JOptionPane.showMessageDialog(null, "Inventory updated successfully!");
+                MessageDialog inventoryUpdatedSuccess = new MessageDialog(0, this, "Add", "Inventory Updated", "Inventory has been updated successfully.");
             } else {
-                JOptionPane.showMessageDialog(null, "Failed to update inventory");
+                MessageDialog inventoryUpdateFailure = new MessageDialog(1, this, "Add", "Inventory Update Failed", "Failed to update the inventory. Please try again.");
             }
             
         } catch (ClassNotFoundException | SQLException e) {
@@ -500,9 +499,9 @@ public class AddInventory extends javax.swing.JPanel {
                 needRefresh = true;
                 
                 // Show message
-                JOptionPane.showMessageDialog(null, "New inventory item added successfully!");
+                MessageDialog inventoryItemAddedSuccess = new MessageDialog(0, this, "Add", "New Inventory Item Added", "New inventory item has been added successfully.");
             } else {
-                JOptionPane.showMessageDialog(null, "Failed to add new inventory item");
+                MessageDialog inventoryItemAdditionFailure = new MessageDialog(1, this, "Add", "Inventory Item Addition Failed", "Failed to add new inventory item. Please try again.");
             }
             
         } catch (ClassNotFoundException | SQLException e) {

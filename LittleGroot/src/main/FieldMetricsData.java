@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
-import javax.swing.JOptionPane;
+import uis.MessageDialog;
 
 /**
  *
@@ -58,13 +58,13 @@ public class FieldMetricsData {
                 }
             }
         } catch (ClassNotFoundException | SQLException e) {
-            JOptionPane.showMessageDialog(null, "Database Connection Error" + e);
+            MessageDialog dbConnectionFailure = new MessageDialog(1, null, "Database", "Database Connection Failed", "Unable to connect to the database.");
         } finally {
             if (conn != null) {
                 try {
                     conn.close();
                 } catch (SQLException e) {
-                    MessageDialog closeConnectionFailure = new MessageDialog(1, this, "Database", "Connection Closure Failed", "Failed to close the database connection.");
+                    MessageDialog closeConnectionFailure = new MessageDialog(1, null, "Database", "Connection Closure Failed", "Failed to close the database connection.");
                 }
             }
         }

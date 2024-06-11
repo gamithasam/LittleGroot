@@ -9,7 +9,6 @@ import java.awt.Cursor;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyEvent;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.sql.*;
 
@@ -374,9 +373,9 @@ public class AddEmployees extends javax.swing.JPanel {
                 needRefresh = true;
                 needDashRefresh = true;
                 // Show message
-                JOptionPane.showMessageDialog(null, "Account added successfully!");
+                MessageDialog accountAddedSuccess = new MessageDialog(0, this, "Add", "Account Added", "The account has been added successfully.");
             } else {
-                JOptionPane.showMessageDialog(null, "Failed to add account");
+                MessageDialog accountAdditionFailure = new MessageDialog(1, this, "Add", "Account Addition Failed", "Failed to add the account. Please try again.");
             }
             
         } catch (ClassNotFoundException | SQLException e) {

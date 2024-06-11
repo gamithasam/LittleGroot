@@ -14,7 +14,6 @@ import java.util.Map;
 import java.util.Vector;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -145,7 +144,7 @@ public class Tasks extends javax.swing.JPanel {
                 try {
                     st.close();
                 } catch (SQLException e) {
-                    JOptionPane.showMessageDialog(null, "Failed to close statement");
+                    MessageDialog closeStatementFailure = new MessageDialog(1, this, "Database", "Statement Closure Failed", "Failed to close the database statement.");
                 }
             }
         }
@@ -276,7 +275,7 @@ public class Tasks extends javax.swing.JPanel {
                 try {
                     st.close();
                 } catch (SQLException e) {
-                    JOptionPane.showMessageDialog(null, "Failed to close statement");
+                    MessageDialog closeStatementFailure = new MessageDialog(1, this, "Database", "Statement Closure Failed", "Failed to close the database statement.");
                 }
             }
         }

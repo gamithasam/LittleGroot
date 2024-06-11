@@ -9,7 +9,6 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.sql.*;
 import java.util.Calendar;
-import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
@@ -284,9 +283,9 @@ public class AddTasks extends javax.swing.JPanel {
                 needRefresh = true;
                 needDashRefresh = true;
                 // Show message
-                JOptionPane.showMessageDialog(null, "Task added successfully!");
+                MessageDialog taskAddedSuccess = new MessageDialog(0, this, "Add", "Task Added", "Task has been added successfully.");
             } else {
-                JOptionPane.showMessageDialog(null, "Failed to add Task");
+                MessageDialog taskAdditionFailure = new MessageDialog(1, this, "Add", "Task Addition Failed", "Failed to add task. Please try again.");
             }
             
         } catch (ClassNotFoundException | SQLException e) {
