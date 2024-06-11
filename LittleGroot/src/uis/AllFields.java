@@ -35,6 +35,7 @@ import uis.Main;
  */
 public class AllFields extends javax.swing.JPanel {
     Cursor hand = new Cursor(Cursor.HAND_CURSOR);
+    static List<ModelChart> chartData = new ArrayList<>();
     /**
      * Creates new form AllFields
      */  
@@ -64,7 +65,7 @@ public class AllFields extends javax.swing.JPanel {
         salesChart.addLegend("Orange", new Color(255, 140, 0));
         salesChart.addLegend("Mango", new Color(255, 130, 67));
         
-        // Establish connection, execute SQL queries and populate pie charts
+        // Establish connection, execute SQL queries and populate the chart
         Connection conn = null;
         Statement st = null;
         try {
@@ -124,6 +125,9 @@ public class AllFields extends javax.swing.JPanel {
                 String monthName = yearMonth.getMonth().getDisplayName(TextStyle.FULL, Locale.ENGLISH);
 
                 salesChart.addData(new ModelChart(monthName, totalsArray));
+                
+                // Sends data to dashboard
+                chartData.add(new ModelChart(monthName, totalsArray));
             }
         } catch (ClassNotFoundException | SQLException e) {
             JOptionPane.showMessageDialog(null, "Database Connection Error" + e.getMessage());
@@ -136,6 +140,10 @@ public class AllFields extends javax.swing.JPanel {
                 }
             }
         }
+    }
+    
+    public static List<ModelChart> getChartDate() {
+        return chartData;
     }
     
     private void addImageToLabel() {

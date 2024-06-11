@@ -4,7 +4,11 @@
  */
 package uis;
 
+import java.awt.Color;
 import java.awt.Cursor;
+import java.util.ArrayList;
+import java.util.List;
+import main.ModelChart;
 
 
 /**
@@ -12,15 +16,11 @@ import java.awt.Cursor;
  * @author gamitha
  */
 public class Dashboard extends javax.swing.JPanel {
-
     /**
      * Creates new form Dashboard
      */
     public Dashboard() {
         initComponents();
-        
-        
-    
         
         // Set SVGs
         sVGFieldDetails.setSvgImage("./svgcomponents/DashboardFieldDetails.svg", 156, 153);
@@ -48,6 +48,18 @@ public class Dashboard extends javax.swing.JPanel {
         Finance finance = new Finance();
         lblIncome.setText(finance.getTotalIncomeText());
         lblExpenses.setText(finance.getTotalExpensesText());
+        
+        // Set chart
+        salesChart.addLegend("Tomato", new Color(255, 99, 71));
+        salesChart.addLegend("Corn", new Color(255, 255, 0));
+        salesChart.addLegend("Apple", new Color(0, 255, 0));
+        salesChart.addLegend("Carrot", new Color(255, 165, 0));
+        salesChart.addLegend("Orange", new Color(255, 140, 0));
+        salesChart.addLegend("Mango", new Color(255, 130, 67));
+        for (ModelChart data : AllFields.getChartDate()) {
+            salesChart.addData(data);
+            System.out.println(data);
+        }
     }
 
     /**
@@ -69,11 +81,13 @@ public class Dashboard extends javax.swing.JPanel {
         sVGTaskCompletedBg = new main.SVGImage();
         sVGFieldDetails = new main.SVGImage();
         sVGFinancesBg = new main.SVGImage();
-        sVGSalesGraph = new main.SVGImage();
         salesChart = new main.Chart();
+        sVGSalesGraph = new main.SVGImage();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setForeground(null);
+        setPreferredSize(new java.awt.Dimension(649, 616));
+        setSize(new java.awt.Dimension(649, 616));
         setLayout(null);
 
         lblOverview.setFont(new java.awt.Font("SF Pro", 0, 26)); // NOI18N
@@ -145,13 +159,13 @@ public class Dashboard extends javax.swing.JPanel {
         sVGFinancesBg.setText("sVGFinancesBg");
         add(sVGFinancesBg);
         sVGFinancesBg.setBounds(196, 129, 416, 120);
+        add(salesChart);
+        salesChart.setBounds(27, 339, 590, 250);
 
         sVGSalesGraph.setForeground(new java.awt.Color(0, 0, 0));
         sVGSalesGraph.setText("sVGSalesGraph");
         add(sVGSalesGraph);
         sVGSalesGraph.setBounds(20, 302, 604, 294);
-        add(salesChart);
-        salesChart.setBounds(27, 339, 590, 250);
     }// </editor-fold>//GEN-END:initComponents
 
 

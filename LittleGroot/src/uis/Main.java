@@ -189,16 +189,16 @@ public class Main extends javax.swing.JFrame {
         lblLogoName = new javax.swing.JLabel();
         pngToolBarLogo = new javax.swing.JLabel();
         sVGToolBar = new main.SVGImage();
-        dashboardScroll = new main.ScrollPaneWin11();
-        dashboard = new uis.Dashboard();
+        allFieldsScroll = new main.ScrollPaneWin11();
+        allFields = new uis.AllFields();
         finance = new uis.Finance();
         tasks = new uis.Tasks();
         employees = new uis.Employees();
         inventory = new uis.Inventory();
         add = new uis.Add();
-        allFieldsScroll = new main.ScrollPaneWin11();
-        allFields = new uis.AllFields();
         settings = new uis.Settings();
+        dashboardScroll = new main.ScrollPaneWin11();
+        dashboard = new uis.Dashboard();
         sVGSeparator = new main.SVGImage();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -331,11 +331,14 @@ public class Main extends javax.swing.JFrame {
         contentAreaNToolBar.add(toolBar);
         toolBar.setBounds(0, 0, 649, 52);
 
-        dashboardScroll.setBorder(null);
-        dashboardScroll.setViewportView(dashboard);
+        allFieldsScroll.setBorder(null);
 
-        contentAreaNToolBar.add(dashboardScroll);
-        dashboardScroll.setBounds(0, 52, 649, 478);
+        allFields.setMinimumSize(new java.awt.Dimension(649, 682));
+        allFields.setPreferredSize(new java.awt.Dimension(649, 682));
+        allFieldsScroll.setViewportView(allFields);
+
+        contentAreaNToolBar.add(allFieldsScroll);
+        allFieldsScroll.setBounds(0, 52, 649, 478);
         contentAreaNToolBar.add(finance);
         finance.setBounds(0, 52, 649, 478);
         contentAreaNToolBar.add(tasks);
@@ -346,15 +349,6 @@ public class Main extends javax.swing.JFrame {
         inventory.setBounds(0, 52, 649, 478);
         contentAreaNToolBar.add(add);
         add.setBounds(0, 52, 649, 478);
-
-        allFieldsScroll.setBorder(null);
-
-        allFields.setMinimumSize(new java.awt.Dimension(649, 682));
-        allFields.setPreferredSize(new java.awt.Dimension(649, 682));
-        allFieldsScroll.setViewportView(allFields);
-
-        contentAreaNToolBar.add(allFieldsScroll);
-        allFieldsScroll.setBounds(0, 52, 649, 478);
 
         javax.swing.GroupLayout settingsLayout = new javax.swing.GroupLayout(settings);
         settings.setLayout(settingsLayout);
@@ -369,6 +363,12 @@ public class Main extends javax.swing.JFrame {
 
         contentAreaNToolBar.add(settings);
         settings.setBounds(0, 52, 649, 478);
+
+        dashboardScroll.setBorder(null);
+        dashboardScroll.setViewportView(dashboard);
+
+        contentAreaNToolBar.add(dashboardScroll);
+        dashboardScroll.setBounds(0, 52, 649, 478);
 
         getContentPane().add(contentAreaNToolBar);
         contentAreaNToolBar.setBounds(201, 0, 649, 530);
