@@ -6,6 +6,7 @@ package uis;
 
 import java.awt.Cursor;
 
+
 /**
  *
  * @author gamitha
@@ -17,6 +18,9 @@ public class Dashboard extends javax.swing.JPanel {
      */
     public Dashboard() {
         initComponents();
+        
+        
+    
         
         // Set SVGs
         sVGFieldDetails.setSvgImage("./svgcomponents/DashboardFieldDetails.svg", 156, 153);
@@ -33,6 +37,17 @@ public class Dashboard extends javax.swing.JPanel {
         sVGFinancesBg.setCursor(hand);
         sVGSalesGraph.setCursor(hand);
         sVGTaskCompletedBg.setCursor(hand);
+        
+        // Set labels
+        lblOverview.setText(main.PlantConditions.getFieldOverview());
+        main.PlantConditions.adjustFontSizeOfOverview(lblOverview);
+        Tasks tasks = new Tasks();
+        lblTask.setText(tasks.getTaskText());
+        lblDate.setText(tasks.getDateText());
+        lblPercentage.setText(tasks.getPercentageText());
+        Finance finance = new Finance();
+        lblIncome.setText(finance.getTotalIncomeText());
+        lblExpenses.setText(finance.getTotalExpensesText());
     }
 
     /**

@@ -9,10 +9,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.font.NumericShaper.Range;
-import java.awt.font.TextLayout;
-import java.awt.image.BufferedImage;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -46,73 +42,12 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.LineAndShapeRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DatasetUtilities;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
-import uis.AllFields;
+import main.FieldMetricsData;
 
 /**
  *
  * @author gamitha
  */
-
-class FieldMetricsData {
-    private final String field;
-    public double pH;
-    public int moisture;
-    public int lightIntensity;
-    public Map<Date, FieldMetricsData> history;
-
-    public FieldMetricsData(String field) {
-        this.field = field;
-        this.history = new HashMap<>();
-
-        Connection conn = null;
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/LittleGroot", "root" , "toor");
-            Statement st = conn.createStatement();
-
-            String sql = "SELECT * FROM Field WHERE Field = '" + field + "' ORDER BY fmDate DESC";
-            ResultSet rs = st.executeQuery(sql);
-
-            // Populate the map and the latest data
-            boolean first = true;
-            while (rs.next()) {
-                FieldMetricsData data = new FieldMetricsData(field, 'x');
-                data.pH = rs.getDouble("pH");
-                data.moisture = rs.getInt("moisture");
-                data.lightIntensity = rs.getInt("lightIntensity");
-
-                // Store the data in the map
-                history.put(rs.getDate("fmDate"), data);
-
-                // If this is the first row, it's the latest data
-                if (first) {
-                    this.pH = data.pH;
-                    this.moisture = data.moisture;
-                    this.lightIntensity = data.lightIntensity;
-                    first = false;
-                }
-            }
-        } catch (ClassNotFoundException | SQLException e) {
-            JOptionPane.showMessageDialog(null, "Database Connection Error" + e);
-        } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException e) {
-                    JOptionPane.showMessageDialog(null, "Failed to close connection");
-                }
-            }
-        }
-    }
-
-    // Empty constructor for creating FieldMetricsData objects without opening a new connection
-    private FieldMetricsData(String field, char x) {
-        this.field = field;
-        this.history = null;
-    }
-}
 
 public class InsideField extends javax.swing.JPanel {
     Connection conn = null;
@@ -197,59 +132,6 @@ public class InsideField extends javax.swing.JPanel {
         }
     }
     
-    private String getPlantCondition(String plantType, double ph, int soilMoisture, int lightIntensity) {
-        String condition = "Healthy";
-
-        switch (plantType) {
-            case "Tomato":
-                if (!(ph >= 6.0 && ph <= 6.8)) condition = "Adjust pH";
-                else if (soilMoisture < 60) condition = "Low water";
-                else if (soilMoisture > 80) condition = "Too much water";
-                else if (lightIntensity < 200) condition = "Low light";
-                else if (lightIntensity > 300) condition = "Too much light";
-                break;
-            case "Corn":
-                if (!(ph >= 5.8 && ph <= 7.0)) condition = "Adjust pH";
-                else if (soilMoisture < 70) condition = "Low water";
-                else if (soilMoisture > 90) condition = "Too much water";
-                else if (lightIntensity < 250) condition = "Low light";
-                else if (lightIntensity > 350) condition = "Too much light";
-                break;
-            case "Apple":
-                if (!(ph >= 6.0 && ph <= 7.0)) condition = "Adjust pH";
-                else if (soilMoisture < 80) condition = "Low water";
-                else if (soilMoisture > 100) condition = "Too much water";
-                else if (lightIntensity < 300) condition = "Low light";
-                else if (lightIntensity > 400) condition = "Too much light";
-                break;
-            case "Carrot":
-                if (!(ph >= 6.0 && ph <= 6.8)) condition = "Adjust pH";
-                else if (soilMoisture < 60) condition = "Low water";
-                else if (soilMoisture > 80) condition = "Too much water";
-                else if (lightIntensity < 250) condition = "Low light";
-                else if (lightIntensity > 350) condition = "Too much light";
-                break;
-            case "Orange":
-                if (!(ph >= 6.0 && ph <= 7.5)) condition = "Adjust pH";
-                else if (soilMoisture < 50) condition = "Low water";
-                else if (soilMoisture > 70) condition = "Too much water";
-                else if (lightIntensity < 250) condition = "Low light";
-                else if (lightIntensity > 350) condition = "Too much light";
-                break;
-            case "Mango":
-                if (!(ph >= 5.5 && ph <= 7.5)) condition = "Adjust pH";
-                else if (soilMoisture < 50) condition = "Low water";
-                else if (soilMoisture > 70) condition = "Too much water";
-                else if (lightIntensity < 300) condition = "Low light";
-                else if (lightIntensity > 400) condition = "Too much light";
-                break;
-            default:
-                condition = "Unknown plant";
-        }
-
-        return condition;
-    }
-    
     public InsideField() {
         initComponents();
         
@@ -267,8 +149,8 @@ public class InsideField extends javax.swing.JPanel {
         if(clickField != null) {
             lblField.setText(clickField);
         }
-        lblOverview.setText(getPlantCondition(clickField, fData.pH, fData.moisture, fData.lightIntensity));
-        adjustFontSizeOfOverview();
+        lblOverview.setText(main.PlantConditions.getPlantCondition(clickField, fData.pH, fData.moisture, fData.lightIntensity));
+        main.PlantConditions.adjustFontSizeOfOverview(lblOverview);
         
         //Get data from database
         try {
@@ -489,24 +371,6 @@ public class InsideField extends javax.swing.JPanel {
         createLineChartAndPanel(datasetSales, color, 'S');
     }
 
-    private void adjustFontSizeOfOverview() {
-        Font labelFont = lblOverview.getFont();
-        String labelText = lblOverview.getText();
-
-        int stringWidth = lblOverview.getFontMetrics(labelFont).stringWidth(labelText);
-        int componentWidth = lblOverview.getWidth();
-
-        // Reduce font size until text fits within label width
-        while (stringWidth > componentWidth) {
-            // Reduce font size by 1
-            int fontSize = labelFont.getSize() - 1;
-            labelFont = new Font(labelFont.getName(), Font.PLAIN, fontSize);
-            lblOverview.setFont(labelFont);
-
-            // Recalculate string width with new font size
-            stringWidth = lblOverview.getFontMetrics(labelFont).stringWidth(labelText);
-        }
-    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

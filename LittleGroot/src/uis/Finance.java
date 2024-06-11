@@ -148,6 +148,14 @@ public class Finance extends javax.swing.JPanel {
         
     }
     
+    public String getTotalIncomeText() {
+        return lblTotalIncome.getText();
+    }
+    
+    public String getTotalExpensesText() {
+        return lblTotalExpenses.getText();
+    }
+    
     private void selectSegCtrlButton(String button) {
         // Declare and initialize the map
         Map<String, SVGImage> svgMap = new HashMap<>();

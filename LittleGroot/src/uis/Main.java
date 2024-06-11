@@ -189,13 +189,15 @@ public class Main extends javax.swing.JFrame {
         lblLogoName = new javax.swing.JLabel();
         pngToolBarLogo = new javax.swing.JLabel();
         sVGToolBar = new main.SVGImage();
+        dashboardScroll = new main.ScrollPaneWin11();
+        dashboard = new uis.Dashboard();
         finance = new uis.Finance();
         tasks = new uis.Tasks();
         employees = new uis.Employees();
         inventory = new uis.Inventory();
         add = new uis.Add();
         allFieldsScroll = new main.ScrollPaneWin11();
-        allFields1 = new uis.AllFields();
+        allFields = new uis.AllFields();
         settings = new uis.Settings();
         sVGSeparator = new main.SVGImage();
 
@@ -328,6 +330,12 @@ public class Main extends javax.swing.JFrame {
 
         contentAreaNToolBar.add(toolBar);
         toolBar.setBounds(0, 0, 649, 52);
+
+        dashboardScroll.setBorder(null);
+        dashboardScroll.setViewportView(dashboard);
+
+        contentAreaNToolBar.add(dashboardScroll);
+        dashboardScroll.setBounds(0, 52, 649, 478);
         contentAreaNToolBar.add(finance);
         finance.setBounds(0, 52, 649, 478);
         contentAreaNToolBar.add(tasks);
@@ -341,9 +349,9 @@ public class Main extends javax.swing.JFrame {
 
         allFieldsScroll.setBorder(null);
 
-        allFields1.setMinimumSize(new java.awt.Dimension(649, 682));
-        allFields1.setPreferredSize(new java.awt.Dimension(649, 682));
-        allFieldsScroll.setViewportView(allFields1);
+        allFields.setMinimumSize(new java.awt.Dimension(649, 682));
+        allFields.setPreferredSize(new java.awt.Dimension(649, 682));
+        allFieldsScroll.setViewportView(allFields);
 
         contentAreaNToolBar.add(allFieldsScroll);
         allFieldsScroll.setBounds(0, 52, 649, 478);
@@ -411,7 +419,7 @@ public class Main extends javax.swing.JFrame {
     private void selectContentArea(String selectedArea) {
         // Declare and initialize the map
         Map<String, JComponent> contentAreaMap = new HashMap<>();
-//        contentAreaMap.put("SidebarDashboard", dashboard);
+        contentAreaMap.put("SidebarDashboard", dashboardScroll);
         contentAreaMap.put("SidebarAllFields", allFieldsScroll);
         contentAreaMap.put("SidebarTasks", tasks);
         contentAreaMap.put("SidebarInventory", inventory);
@@ -443,7 +451,7 @@ public class Main extends javax.swing.JFrame {
 
     private void sVGSidebarDashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGSidebarDashboardMouseClicked
         // Select ContentArea
-        // TODO: Write your code here
+        selectContentArea("SidebarDashboard");
         
         // Select Button
         selectSidebarButton("SidebarDashboard");
@@ -509,9 +517,11 @@ public class Main extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private uis.Add add;
-    private uis.AllFields allFields1;
+    private uis.AllFields allFields;
     private javax.swing.JScrollPane allFieldsScroll;
     private javax.swing.JPanel contentAreaNToolBar;
+    private uis.Dashboard dashboard;
+    private javax.swing.JScrollPane dashboardScroll;
     private uis.Employees employees;
     private uis.Finance finance;
     private uis.Inventory inventory;

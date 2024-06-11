@@ -118,7 +118,7 @@ public class Tasks extends javax.swing.JPanel {
             };
             tableTasks.setModel(model);
             
-            // Set the text of lblTask
+            // Set the text of lblTask and lblDate
             if (data.size() > 0) {
                 lblTask.setText(data.get(0).get(1).toString());
                 lblDate.setText(data.get(0).get(3).toString());
@@ -152,6 +152,18 @@ public class Tasks extends javax.swing.JPanel {
         
     }
     
+    public String getTaskText() {
+        return lblTask.getText();
+    }
+
+    public String getDateText() {
+        return lblDate.getText();
+    }
+    
+    public String getPercentageText() {
+        return lblPercentage.getText();
+    }
+
     private void selectSegCtrlButton(String button) {
         // Declare and initialize the map
         Map<String, SVGImage> svgMap = new HashMap<>();
