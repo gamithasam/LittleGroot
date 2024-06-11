@@ -67,7 +67,7 @@ public class Finance extends javax.swing.JPanel {
         String queryIncome = "SELECT Category, SUM(Price) FROM Finance WHERE TType = 'I' AND " + dateCondition + " GROUP BY Category";
         String queryTotalIncome = "SELECT SUM(Price) FROM Finance WHERE TType = 'I' AND " + dateCondition;
         String queryTotalExpenses = "SELECT SUM(Price) FROM Finance WHERE TType = 'E' AND " + dateCondition;
-        String queryTable = "SELECT Transactions, Category, TDate, Price FROM Finance ORDER BY TDate DESC";
+        String queryTable = "SELECT Transactions, Category, TDate, Price, TType FROM Finance ORDER BY TDate DESC";
         
         // Establish connection, execute SQL queries and populate pie charts
         try {
@@ -129,10 +129,14 @@ public class Finance extends javax.swing.JPanel {
             columnNames.add("Category");
             columnNames.add("Date");
             columnNames.add("Price ($)");
+            columnNames.add("TType");
 
             // Set the data to the table
             DefaultTableModel model = new DefaultTableModel(data, columnNames);
             tableFinance.setModel(model);
+            
+            // Hide TType column
+            tableFinance.removeColumn(tableFinance.getColumnModel().getColumn(4));
 
         } catch (ClassNotFoundException | SQLException e) {
             JOptionPane.showMessageDialog(null, "Database Connection Error" + e.getMessage());
@@ -184,6 +188,8 @@ public class Finance extends javax.swing.JPanel {
             }
         }
         
+        jScrollPane1.getVerticalScrollBar().setValue(0);
+        
         // Repaint
         this.revalidate(); // TODO: check if this correct
         this.repaint();
@@ -197,11 +203,11 @@ public class Finance extends javax.swing.JPanel {
 
             String query;
             if (filter.equals("FinanceSegCtrlIncome")) {
-                query = "SELECT Transactions, Category, TDate, Price FROM Finance WHERE TType = 'I'";
-            } else if (filter.equals("FinanceSegCtrlIncome")) {
-                query = "SELECT Transactions, Category, TDate, Price FROM Finance WHERE TType = 'E'";
+                query = "SELECT Transactions, Category, TDate, Price, TType FROM Finance WHERE TType = 'I' ORDER BY TDate DESC";
+            } else if (filter.equals("FinanceSegCtrlExpenses")) {
+                query = "SELECT Transactions, Category, TDate, Price, TType FROM Finance WHERE TType = 'E' ORDER BY TDate DESC";
             } else {
-                query = "SELECT Transactions, Category, TDate, Price FROM Finance";
+                query = "SELECT Transactions, Category, TDate, Price, TType FROM Finance ORDER BY TDate DESC";
             }
 
             ResultSet rs = st.executeQuery(query);
@@ -226,10 +232,14 @@ public class Finance extends javax.swing.JPanel {
             columnNames.add("Category");
             columnNames.add("Date");
             columnNames.add("Price ($)");
+            columnNames.add("TType");
 
             // Set the data to the table
             DefaultTableModel model = new DefaultTableModel(data, columnNames);
             tableFinance.setModel(model);
+
+            // Hide TType column
+            tableFinance.removeColumn(tableFinance.getColumnModel().getColumn(4));
 
         } catch (ClassNotFoundException | SQLException e) {
             JOptionPane.showMessageDialog(null, "Database Connection Error");
@@ -279,21 +289,31 @@ public class Finance extends javax.swing.JPanel {
         Color headerSepColor = new Color(229, 229, 229);
         Color selectedRowColor = new Color(3, 162, 0);
         Color secondaryTextColor = new Color(128, 128, 128);
+        Color vibrantRedTextColor = new Color(241, 33, 25);
+        Color vibrantRedDarkSelectedTextColor = new Color(255, 235, 0);
         tableFinance = new javax.swing.JTable() {
             @Override
             public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
                 Component c = super.prepareRenderer(renderer, row, column);
+                // Get TType from the model
+                String tType = tableFinance.getModel().getValueAt(row, tableFinance.getModel().getColumnCount() - 1).toString();
                 // Change background color
                 if (!isRowSelected(row)) {
                     c.setBackground(row % 2 == 0 ? Color.WHITE : altRowColor);
                     if (column == 0) {
                         c.setForeground(Color.BLACK);
+                    } else if (tType.equals("E") && column == 3) {
+                        c.setForeground(vibrantRedTextColor);
                     } else {
                         c.setForeground(secondaryTextColor);
                     }
                 } else {
                     c.setBackground(selectedRowColor);
-                    c.setForeground(Color.WHITE);
+                    if (tType.equals("E") && column == 3) {
+                        c.setForeground(vibrantRedDarkSelectedTextColor);
+                    } else {
+                        c.setForeground(Color.WHITE);
+                    }
                 }
                 return c;
             }
@@ -565,7 +585,6 @@ public class Finance extends javax.swing.JPanel {
         // Select Button
         selectSegCtrlButton("FinanceSegCtrlExpenses");
     }//GEN-LAST:event_sVGFinanceSegCtrlExpensesMouseClicked
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cmbExpenses;
