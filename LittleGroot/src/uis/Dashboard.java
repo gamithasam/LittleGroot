@@ -6,8 +6,6 @@ package uis;
 
 import java.awt.Color;
 import java.awt.Cursor;
-import java.util.ArrayList;
-import java.util.List;
 import main.ModelChart;
 
 
@@ -58,7 +56,6 @@ public class Dashboard extends javax.swing.JPanel {
         salesChart.addLegend("Mango", new Color(255, 130, 67));
         for (ModelChart data : AllFields.getChartDate()) {
             salesChart.addData(data);
-            System.out.println(data);
         }
     }
 
@@ -142,6 +139,11 @@ public class Dashboard extends javax.swing.JPanel {
 
         sVGFieldsOverviewBg.setForeground(new java.awt.Color(0, 0, 0));
         sVGFieldsOverviewBg.setText("sVGFieldsOverviewBg");
+        sVGFieldsOverviewBg.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sVGFieldsOverviewBgMouseClicked(evt);
+            }
+        });
         add(sVGFieldsOverviewBg);
         sVGFieldsOverviewBg.setBounds(20, 20, 156, 89);
 
@@ -168,6 +170,10 @@ public class Dashboard extends javax.swing.JPanel {
         sVGSalesGraph.setBounds(20, 302, 604, 294);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void sVGFieldsOverviewBgMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGFieldsOverviewBgMouseClicked
+        
+    }//GEN-LAST:event_sVGFieldsOverviewBgMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel lblDate;
@@ -176,11 +182,11 @@ public class Dashboard extends javax.swing.JPanel {
     private javax.swing.JLabel lblOverview;
     private javax.swing.JLabel lblPercentage;
     private javax.swing.JLabel lblTask;
-    private main.SVGImage sVGFieldDetails;
-    private main.SVGImage sVGFieldsOverviewBg;
-    private main.SVGImage sVGFinancesBg;
-    private main.SVGImage sVGSalesGraph;
-    private main.SVGImage sVGTaskCompletedBg;
+    public main.SVGImage sVGFieldDetails;
+    public main.SVGImage sVGFieldsOverviewBg;
+    public main.SVGImage sVGFinancesBg;
+    public main.SVGImage sVGSalesGraph;
+    public main.SVGImage sVGTaskCompletedBg;
     private main.Chart salesChart;
     // End of variables declaration//GEN-END:variables
 }

@@ -94,6 +94,33 @@ public class Main extends javax.swing.JFrame {
         
         initComponents();
         
+        // Add click events to dashboard elements
+        dashboard.sVGFieldsOverviewBg.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                callSelectContentAreaAndSidebarButton("SidebarAllFields");
+            }
+        });
+        dashboard.sVGTaskCompletedBg.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                callSelectContentAreaAndSidebarButton("SidebarTasks");
+            }
+        });
+        dashboard.sVGFieldDetails.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                callSelectContentAreaAndSidebarButton("SidebarAllFields");
+            }
+        });
+        dashboard.sVGFinancesBg.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                callSelectContentAreaAndSidebarButton("SidebarFinance");
+            }
+        });
+        dashboard.sVGSalesGraph.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                callSelectContentAreaAndSidebarButton("SidebarFinance");
+            }
+        });
+        
         // Set the size of the Main frame
         /* I had to implement this because no matter how many times I set this up in the visual editor
         it changes in the runtime for some reason */
@@ -441,68 +468,41 @@ public class Main extends javax.swing.JFrame {
         }
     }
     
+    private void callSelectContentAreaAndSidebarButton(String content) {
+        selectContentArea(content);
+        selectSidebarButton(content);
+    }
+    
     private void sVGSidebarAllFieldsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGSidebarAllFieldsMouseClicked
-        // Select ContentArea
-        selectContentArea("SidebarAllFields");
-        
-        // Select Button
-        selectSidebarButton("SidebarAllFields");
+        callSelectContentAreaAndSidebarButton("SidebarAllFields");
     }//GEN-LAST:event_sVGSidebarAllFieldsMouseClicked
 
     private void sVGSidebarDashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGSidebarDashboardMouseClicked
-        // Select ContentArea
-        selectContentArea("SidebarDashboard");
-        
-        // Select Button
-        selectSidebarButton("SidebarDashboard");
+        callSelectContentAreaAndSidebarButton("SidebarDashboard");
     }//GEN-LAST:event_sVGSidebarDashboardMouseClicked
 
     private void sVGSidebarTasksMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGSidebarTasksMouseClicked
-        // Select ContentArea
-        selectContentArea("SidebarTasks");
-        
-        // Select Button
-        selectSidebarButton("SidebarTasks");
+        callSelectContentAreaAndSidebarButton("SidebarTasks");
     }//GEN-LAST:event_sVGSidebarTasksMouseClicked
 
     private void sVGSidebarInventoryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGSidebarInventoryMouseClicked
-        // Select ContentArea
-        selectContentArea("SidebarInventory");
-        
-        // Select Button
-        selectSidebarButton("SidebarInventory");
+        callSelectContentAreaAndSidebarButton("SidebarInventory");
     }//GEN-LAST:event_sVGSidebarInventoryMouseClicked
 
     private void sVGSidebarFinanceMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGSidebarFinanceMouseClicked
-        // Select ContentArea
-        selectContentArea("SidebarFinance");
-        
-        // Select Button
-        selectSidebarButton("SidebarFinance");
+        callSelectContentAreaAndSidebarButton("SidebarFinance");
     }//GEN-LAST:event_sVGSidebarFinanceMouseClicked
 
     private void sVGSidebarEmployeesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGSidebarEmployeesMouseClicked
-        // Select ContentArea
-        selectContentArea("SidebarEmployees");
-        
-        // Select Button
-        selectSidebarButton("SidebarEmployees");
+        callSelectContentAreaAndSidebarButton("SidebarEmployees");
     }//GEN-LAST:event_sVGSidebarEmployeesMouseClicked
 
     private void sVGSidebarAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGSidebarAddMouseClicked
-        // Select ContentArea
-        selectContentArea("SidebarAdd");
-        
-        // Select Button
-        selectSidebarButton("SidebarAdd");
+        callSelectContentAreaAndSidebarButton("SidebarAdd");
     }//GEN-LAST:event_sVGSidebarAddMouseClicked
 
     private void sVGSidebarSettingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGSidebarSettingsMouseClicked
-        // Select ContentArea
-        selectContentArea("SidebarSettings");
-        
-        // Select Button
-        selectSidebarButton("SidebarSettings");
+        callSelectContentAreaAndSidebarButton("SidebarSettings");
     }//GEN-LAST:event_sVGSidebarSettingsMouseClicked
 
     public void repaintJScroll() {
