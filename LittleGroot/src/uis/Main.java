@@ -25,13 +25,19 @@ class User {
     public final String lName;
     public final String role;
     protected String passWord;
+    protected final String phone;
+    protected final String email;
+    protected final String address;
     
-    public User(int eid, String fName, String lName, String role, String passWord) {
+    public User(int eid, String fName, String lName, String role, String passWord, String phone, String email, String address) {
         this.eid = eid;
         this.fName = fName;
         this.lName = lName;
         this.role = role;
         this.passWord = passWord;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
     }
     
     public String[] returnSidebarItems() {
@@ -41,8 +47,8 @@ class User {
 }
 
 class Manager extends User {
-    public Manager(int eid, String fName, String lName, String role, String passWord) {
-        super(eid, fName, lName, role, passWord);
+    public Manager(int eid, String fName, String lName, String role, String passWord, String phone, String email, String address) {
+        super(eid, fName, lName, role, passWord, phone, email, address);
     }
     
     @Override
@@ -61,12 +67,12 @@ public class Main extends javax.swing.JFrame {
     private static User user;
     
     // Function to create a user object
-    public static void createUserObj(int eid, String fName, String lName, String role, String passWord) {
+    public static void createUserObj(int eid, String fName, String lName, String role, String passWord, String phone, String email, String address) {
         switch (role) {
             case "Manager" :
-                user = new Manager(eid, fName, lName, role, passWord);
+                user = new Manager(eid, fName, lName, role, passWord, phone, email, address);
             default :
-                user = new User(eid, fName, lName, role, passWord);
+                user = new User(eid, fName, lName, role, passWord, phone, email, address);
         }
     }
     

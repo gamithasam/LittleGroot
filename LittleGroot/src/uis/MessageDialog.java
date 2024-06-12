@@ -184,19 +184,19 @@ public class MessageDialog {
             lblEmpID.setFont(new java.awt.Font("SF Pro Display", 0, 13));
             lblEmpID.setForeground(new java.awt.Color(120, 120, 120));
             
-            JLabel lblPhone = new JLabel("0760026902");
+            JLabel lblPhone = new JLabel(user.phone);
             lblPhone.setHorizontalAlignment(SwingConstants.RIGHT);
             lblPhone.setBounds(112, 46, 106, 16);
             lblPhone.setFont(new java.awt.Font("SF Pro Display", 0, 13));
             lblPhone.setForeground(new java.awt.Color(120, 120, 120));
             
-            JLabel lblEmail = new JLabel("heshani@littlegroot.com");
+            JLabel lblEmail = new JLabel(user.email);
             lblEmail.setHorizontalAlignment(SwingConstants.RIGHT);
             lblEmail.setBounds(57, 82, 161, 16);
             lblEmail.setFont(new java.awt.Font("SF Pro Display", 0, 13));
             lblEmail.setForeground(new java.awt.Color(120, 120, 120));
             
-            JLabel lblAddress = new JLabel("Peradeniya, Sri Lanka");
+            JLabel lblAddress = new JLabel(user.address);
             lblAddress.setHorizontalAlignment(SwingConstants.RIGHT);
             lblAddress.setBounds(74, 118, 144, 16);
             lblAddress.setFont(new java.awt.Font("SF Pro Display", 0, 13));

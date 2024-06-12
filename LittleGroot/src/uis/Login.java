@@ -292,7 +292,8 @@ public class Login extends javax.swing.JPanel {
             
             if (rs.next()) {
                 // Create user objects
-                Main.createUserObj(eID, rs.getString("Fname"), rs.getString("LName"), rs.getString("EmpRole"), pass);
+                String phone = String.format("%010d", rs.getInt("Phone"));
+                Main.createUserObj(eID, rs.getString("Fname"), rs.getString("LName"), rs.getString("EmpRole"), pass, phone, rs.getString("Email"), rs.getString("Address"));
                 
                 // Display message
                 MessageDialog logSuccess = new MessageDialog(0, this, "Login", "Login Successful", "You have successfully logged in!");

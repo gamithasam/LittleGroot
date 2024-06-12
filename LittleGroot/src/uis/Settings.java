@@ -16,7 +16,7 @@ import javax.swing.SwingUtilities;
  * @author gamitha
  */
 public class Settings extends javax.swing.JPanel {
-
+    User user = Main.getUser();
     /**
      * Creates new form Settings
      */
@@ -66,7 +66,6 @@ public class Settings extends javax.swing.JPanel {
         sVGLogoutBtn.setCursor(hand);
         
         // Set user related
-        User user = Main.getUser();
         if (user != null) {
             lblUserName.setText(user.fName);
             lblUserRole.setText(user.role);
@@ -314,9 +313,9 @@ public class Settings extends javax.swing.JPanel {
         MessageDialog empDialog = new MessageDialog(
                 3,
                 this,
-                null,
-                null,
-                null
+                "User",
+                user.fName + " " + user.lName,
+                user.role
         );
     }//GEN-LAST:event_sVGInfo1MouseClicked
 
