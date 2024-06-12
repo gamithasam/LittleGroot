@@ -125,11 +125,21 @@ public class Settings extends javax.swing.JPanel {
 
         sVGInfo2.setForeground(new java.awt.Color(0, 0, 0));
         sVGInfo2.setText("sVGInfo2");
+        sVGInfo2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sVGInfo2MouseClicked(evt);
+            }
+        });
         add(sVGInfo2);
         sVGInfo2.setBounds(445, 386, 16, 16);
 
         sVGInfo1.setForeground(new java.awt.Color(0, 0, 0));
         sVGInfo1.setText("sVGInfo1");
+        sVGInfo1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sVGInfo1MouseClicked(evt);
+            }
+        });
         add(sVGInfo1);
         sVGInfo1.setBounds(445, 64, 16, 16);
 
@@ -299,6 +309,25 @@ public class Settings extends javax.swing.JPanel {
         // Close self
         SwingUtilities.getWindowAncestor(sVGLogoutBtn).dispose();
     }//GEN-LAST:event_sVGLogoutBtnMouseClicked
+
+    private void sVGInfo1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGInfo1MouseClicked
+        MessageDialog empDialog = new MessageDialog(
+                4,
+                this,
+                null,
+                null,
+                null
+        );
+    }//GEN-LAST:event_sVGInfo1MouseClicked
+
+    private void sVGInfo2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGInfo2MouseClicked
+        MessageDialog aboutDialog = new MessageDialog(
+                3,
+                this,
+                "About",
+                "About",
+                "LittleGroot is a farm management system developed in Java. It is designed to streamline the process of managing a farm, from tracking finances to monitoring crop growth. It is developed as an assignment of the module \"Object-oriented programming with Java\" at NIBM Kandy Innovation Center.");
+    }//GEN-LAST:event_sVGInfo2MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
