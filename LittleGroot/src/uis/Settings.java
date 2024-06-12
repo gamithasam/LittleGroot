@@ -312,7 +312,7 @@ public class Settings extends javax.swing.JPanel {
 
     private void sVGInfo1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGInfo1MouseClicked
         MessageDialog empDialog = new MessageDialog(
-                4,
+                3,
                 this,
                 null,
                 null,
@@ -322,7 +322,7 @@ public class Settings extends javax.swing.JPanel {
 
     private void sVGInfo2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sVGInfo2MouseClicked
         MessageDialog aboutDialog = new MessageDialog(
-                3,
+                2,
                 this,
                 "About",
                 "About",

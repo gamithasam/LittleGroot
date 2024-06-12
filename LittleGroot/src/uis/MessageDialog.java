@@ -76,9 +76,9 @@ public class MessageDialog {
         
         // Button
         SVGImage sVGOKBtn = new SVGImage();
-        if (type == 2) {
+        if (type == 1) {
             sVGOKBtn.setSvgImage("./svgcomponents/MessageDialogOKBtnDest.svg", 228, 28);
-        } else if (type == 3) {
+        } else if (type == 2) {
             sVGOKBtn.setSvgImage("./svgcomponents/MessageDialogCloseBtn.svg", 110, 28);
         } else {
             sVGOKBtn.setSvgImage("./svgcomponents/MessageDialogOKBtn.svg", 228, 28);
@@ -99,7 +99,7 @@ public class MessageDialog {
         dialog.getContentPane().add(createCenteredBox(lblDesc)); // Desc
         dialog.getContentPane().add(Box.createVerticalStrut(16));
         // Name buttons
-        if (type == 3) {
+        if (type == 2) {
             SVGImage sVGGamitha = new SVGImage();
             SVGImage sVGHeshani = new SVGImage();
             SVGImage sVGHimasha = new SVGImage();
@@ -151,7 +151,7 @@ public class MessageDialog {
             dialog.getContentPane().add(Box.createVerticalStrut(16));
         }
         // Emp Details
-        if (type == 4) {
+        if (type == 3) {
             // Create panel
             JPanel empPanel = new JPanel();
             empPanel.setLayout(null);
@@ -216,7 +216,7 @@ public class MessageDialog {
             dialog.getContentPane().add(Box.createVerticalStrut(16));
         }
         
-        if (type == 3) {
+        if (type == 2) {
             JPanel buttonPanel = new JPanel();
             buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.LINE_AXIS));
             SVGImage sVGRepoBtn = new SVGImage();
