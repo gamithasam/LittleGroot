@@ -156,6 +156,9 @@ public class MessageDialog {
             JPanel empPanel = new JPanel();
             empPanel.setLayout(null);
             empPanel.setPreferredSize(new Dimension(228, 144));
+            empPanel.setSize(new Dimension(228, 144));
+            empPanel.setMaximumSize(new Dimension(228, 144));
+            empPanel.setMinimumSize(new Dimension(228, 144));
             empPanel.setBackground(bgColor);
             // Create SVGs
             SVGImage sVGEmpForm = new SVGImage();
