@@ -295,17 +295,25 @@ public class Login extends javax.swing.JPanel {
                 String phone = String.format("%010d", rs.getInt("Phone"));
                 Main.createUserObj(eID, rs.getString("Fname"), rs.getString("LName"), rs.getString("EmpRole"), pass, phone, rs.getString("Email"), rs.getString("Address"));
                 
-                // Display message
-                MessageDialog logSuccess = new MessageDialog(0, this, "Login", "Login Successful", "You have successfully logged in!");
-                
-                // Open Main
-                Main mainFrame = new Main();
-                mainFrame.setLocationRelativeTo(this);
-                mainFrame.setVisible(true);
-                
-                // Close self
-                SwingUtilities.getWindowAncestor(sVGLoginBtn).dispose();
-                
+                if (rs.getString("SecQQ") == null) {
+                    LoginFirstTime loginFirstTime = new LoginFirstTime();
+                    add(loginFirstTime);
+                    setComponentZOrder(loginFirstTime, 0); 
+                    loginFirstTime.setBounds(0, 0, 850, 530); 
+                    this.revalidate(); 
+                    this.repaint();
+                } else {
+                    // Display message
+                    MessageDialog logSuccess = new MessageDialog(0, this, "Login", "Login Successful", "You have successfully logged in!");
+
+                    // Open Main
+                    Main mainFrame = new Main();
+                    mainFrame.setLocationRelativeTo(this);
+                    mainFrame.setVisible(true);
+
+                    // Close self
+                    SwingUtilities.getWindowAncestor(sVGLoginBtn).dispose();
+                }
             } else {
                 // Display Error Message
                 MessageDialog logFailure = new MessageDialog(1, this, "Login", "Login Failed", "Invalid password. Please try again.");
