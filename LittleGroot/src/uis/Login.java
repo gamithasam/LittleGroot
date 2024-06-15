@@ -227,6 +227,11 @@ public class Login extends javax.swing.JPanel {
         lblForgotPass.setFont(new java.awt.Font("SF Pro Text", 0, 11)); // NOI18N
         lblForgotPass.setForeground(new java.awt.Color(0, 0, 0));
         lblForgotPass.setText("<html><u>Forgot Password?</u></html>");
+        lblForgotPass.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblForgotPassMouseClicked(evt);
+            }
+        });
         add(lblForgotPass);
         lblForgotPass.setBounds(320, 398, 100, 14);
     }// </editor-fold>//GEN-END:initComponents
@@ -331,6 +336,15 @@ public class Login extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_sVGLoginBtnMouseClicked
+
+    private void lblForgotPassMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblForgotPassMouseClicked
+        LoginReset loginReset = new LoginReset();
+        add(loginReset);
+        setComponentZOrder(loginReset, 0); 
+        loginReset.setBounds(0, 0, 850, 530); 
+        this.revalidate(); 
+        this.repaint();
+    }//GEN-LAST:event_lblForgotPassMouseClicked
 
 
     
