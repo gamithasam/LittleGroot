@@ -40,8 +40,8 @@ class User {
         this.address = address;
     }
     
-    public String[] returnSidebarItems() {
-        String[] sidebarItems = {"Dashboard", "All Fields", "Tasks", "Inventory", "Add", "Settings"};
+    public String[] returnHiddenSidebarItems() {
+        String[] sidebarItems = {"SidebarFinance", "SidebarEmployees"};
         return sidebarItems;
     }
 }
@@ -51,9 +51,8 @@ class Manager extends User {
         super(eid, fName, lName, role, passWord, phone, email, address);
     }
     
-    @Override
-    public String[] returnSidebarItems() {
-        String[] sidebarItems = {"Dashboard", "All Fields", "Tasks", "Inventory", "Finance", "Employees", "Add", "Settings"};
+    public String[] returnHiddenSidebarItems() {
+        String[] sidebarItems = {};
         return sidebarItems;
     }
 }
@@ -71,6 +70,7 @@ public class Main extends javax.swing.JFrame {
         switch (role) {
             case "Manager" :
                 user = new Manager(eid, fName, lName, role, passWord, phone, email, address);
+                break;
             default :
                 user = new User(eid, fName, lName, role, passWord, phone, email, address);
         }
@@ -85,6 +85,34 @@ public class Main extends javax.swing.JFrame {
     public static void passwordChange(String newPass) {
         user.passWord = newPass;
         System.out.println(user.passWord);
+    }
+    
+    // Method to restrict access
+    public void restrictAccess() {
+        // Declare and initialize the map
+        Map<String, JComponent> svgMap = new HashMap<>();
+        svgMap.put("SidebarDashboard", sVGSidebarDashboard);
+        svgMap.put("SidebarAllFields", sVGSidebarAllFields);
+        svgMap.put("SidebarTasks", sVGSidebarTasks);
+        svgMap.put("SidebarInventory", sVGSidebarInventory);
+        svgMap.put("SidebarFinance", sVGSidebarFinance);
+        svgMap.put("SidebarEmployees", sVGSidebarEmployees);
+        svgMap.put("SidebarAdd", sVGSidebarAdd);
+        svgMap.put("SidebarSettings", sVGSidebarSettings);
+        
+        String[] restrc = user.returnHiddenSidebarItems();
+        
+        // Iterate
+        for (String idx : restrc) {
+            for (Map.Entry<String, JComponent> entry : svgMap.entrySet()) {
+                JComponent component = entry.getValue();
+                if (entry.getKey().equals(idx)) {
+                    // Select Content Area
+                    component.setVisible(false);
+                }
+            }   
+        }
+        
     }
     
     public Main() {
@@ -175,6 +203,9 @@ public class Main extends javax.swing.JFrame {
         sVGSidebarEmployees.setCursor(hand);
         sVGSidebarAdd.setCursor(hand);
         sVGSidebarSettings.setCursor(hand);
+        
+        // Restrict access based on the type of user
+        restrictAccess();
     }
     
     private void addImageToLabel() {
@@ -343,7 +374,7 @@ public class Main extends javax.swing.JFrame {
         lblUserRole.setFont(new java.awt.Font("SF Pro Display", 0, 11)); // NOI18N
         lblUserRole.setForeground(new java.awt.Color(0, 0, 0));
         lblUserRole.setText("Role");
-        toolBar.add(lblUserRole, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 29, 70, -1));
+        toolBar.add(lblUserRole, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 29, -1, -1));
 
         lblUserName.setFont(new java.awt.Font("SF Pro Display", 1, 15)); // NOI18N
         lblUserName.setForeground(new java.awt.Color(0, 0, 0));
