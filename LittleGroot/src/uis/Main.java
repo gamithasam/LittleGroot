@@ -373,13 +373,15 @@ public class Main extends javax.swing.JFrame {
 
         lblUserRole.setFont(new java.awt.Font("SF Pro Display", 0, 11)); // NOI18N
         lblUserRole.setForeground(new java.awt.Color(0, 0, 0));
+        lblUserRole.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblUserRole.setText("Role");
-        toolBar.add(lblUserRole, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 29, -1, -1));
+        toolBar.add(lblUserRole, new org.netbeans.lib.awtextra.AbsoluteConstraints(425, 29, 215, -1));
 
         lblUserName.setFont(new java.awt.Font("SF Pro Display", 1, 15)); // NOI18N
         lblUserName.setForeground(new java.awt.Color(0, 0, 0));
+        lblUserName.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblUserName.setText("Name");
-        toolBar.add(lblUserName, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 9, -1, 20));
+        toolBar.add(lblUserName, new org.netbeans.lib.awtextra.AbsoluteConstraints(425, 9, 215, 20));
 
         lblLogoName.setBackground(new java.awt.Color(0, 0, 0));
         lblLogoName.setFont(new java.awt.Font("SF Pro Text", 1, 15)); // NOI18N
